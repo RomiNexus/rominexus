@@ -122,7 +122,6 @@
             text-align: center;
             transition: transform 0.3s ease;
         }
-        .infra-card:hover { transform: scale(1.02); }
         .infra-card h3 { font-size: 2rem; margin-bottom: 0.5rem; }
         .infra-card p { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
 
@@ -193,7 +192,7 @@
 
         /* Intake Forms */
         .intake-section {
-            padding: 0 5% 100px 5%;
+            padding: 0 5% 40px 5%;
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
@@ -361,13 +360,26 @@
         <div class="form-card">
             <h2>Supplier Manifest</h2>
             <p>List your available goods for our buyer network.</p>
-            <form action="https://formspree.io/f/mojnkdpp" method="POST">
-                <input type="hidden" name="_subject" value="New Supplier Manifest - Romi Nexus">
+            <form action="https://formspree.io/f/ID_FOR_SUPPLIERS" method="POST">
+                <input type="hidden" name="_subject" value="URGENT: New Supplier Manifest">
                 <input type="hidden" name="_next" value="https://rominexus.com/welcome.html">
+                
                 <div class="form-group">
                     <label>Legal Producing Entity</label>
                     <input type="text" name="Supplier_Entity" required>
                 </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label>Contact Email</label>
+                        <input type="email" name="Supplier_Email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone (WhatsApp)</label>
+                        <input type="tel" name="Supplier_Phone" required placeholder="+971...">
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label>Asset Class</label>
                     <select name="Asset_Type" required>
@@ -387,13 +399,26 @@
         <div class="form-card" id="buyer-form">
             <h2>Buyer Registration</h2>
             <p>Access our pipeline of available commodities.</p>
-            <form action="https://formspree.io/f/mojnkdpp" method="POST">
-                <input type="hidden" name="_subject" value="New Buyer Registration - Romi Nexus">
+            <form action="https://formspree.io/f/ID_FOR_BUYERS" method="POST">
+                <input type="hidden" name="_subject" value="URGENT: New Buyer Registration">
                 <input type="hidden" name="_next" value="https://rominexus.com/welcome.html">
+                
                 <div class="form-group">
                     <label>Purchasing Entity</label>
                     <input type="text" name="Purchasing_Entity" required>
                 </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label>Business Email</label>
+                        <input type="email" name="Buyer_Email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Direct Phone</label>
+                        <input type="tel" name="Buyer_Phone" required>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label>Target Requirement</label>
                     <input type="text" name="Target_Asset" required>
@@ -414,9 +439,9 @@
     <section class="intake-section" id="contact" style="padding-top: 0;">
         <div class="form-card" style="grid-column: 1 / -1;">
             <h2>General Inquiry</h2>
-            <p>For partnership proposals, general questions, or corporate communications.</p>
-            <form action="https://formspree.io/f/mojnkdpp" method="POST">
-                <input type="hidden" name="_subject" value="New General Inquiry - Romi Nexus">
+            <p>For partnership proposals or corporate communications.</p>
+            <form action="https://formspree.io/f/ID_FOR_GENERAL" method="POST">
+                <input type="hidden" name="_subject" value="General Web Inquiry - Romi Nexus">
                 <input type="hidden" name="_next" value="https://rominexus.com/welcome.html">
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
                     <div class="form-group">
