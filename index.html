@@ -49,7 +49,6 @@
             font-weight: 500;
             color: var(--text-muted);
         }
-        .live-gold-ticker { color: var(--gold-light); font-weight: 600; }
 
         @keyframes ticker-move {
             0% { transform: translate3d(0, 0, 0); }
@@ -77,33 +76,44 @@
 
         .infra-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 1200px; margin: 0 auto 80px; padding: 0 5%; }
         .infra-card { background: var(--panel-bg); border: 1px solid var(--glass-border); border-radius: 18px; padding: 2.5rem; text-align: center; backdrop-filter: blur(20px); }
-        .infra-card h3 { font-size: 2rem; margin-bottom: 0.5rem; color: var(--white); }
+        .infra-card h3 { font-size: 2.2rem; margin-bottom: 0.5rem; color: var(--gold-light); font-weight: 600; }
         .infra-card p { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
 
         .pipeline-section { max-width: 1200px; margin: 0 auto 80px; padding: 5rem 5%; background: var(--panel-bg); border-radius: 24px; border: 1px solid var(--glass-border); }
         .pipeline-header { text-align: center; margin-bottom: 4rem; }
+        .pipeline-header h2 { font-size: 2.5rem; font-weight: 600; }
         .pipeline-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.5rem; }
-        .step-num { font-size: 3.5rem; font-weight: 700; color: rgba(245, 208, 97, 0.15); margin-bottom: 1rem; }
+        .step-num { font-size: 3.5rem; font-weight: 700; color: rgba(245, 208, 97, 0.15); line-height: 1; margin-bottom: 1rem; }
         .step h4 { font-size: 1.2rem; margin-bottom: 0.8rem; }
         .step p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; }
 
         .credentials-section { max-width: 1200px; margin: 0 auto 80px; padding: 0 5%; }
-        .credentials-card { background: var(--panel-bg); border: 1px solid var(--glass-border); border-radius: 24px; padding: 4rem; text-align: center; }
-        .registry-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; border-top: 1px solid #333; padding-top: 3rem; text-align: left; }
+        .credentials-card { background: var(--panel-bg); border: 1px solid var(--glass-border); border-radius: 24px; padding: 4rem 3rem; text-align: center; }
+        .credentials-card h2 { font-size: 2.5rem; margin-bottom: 1rem; font-weight: 600; }
+        .credentials-card > p { color: var(--text-muted); max-width: 750px; margin: 0 auto 3rem auto; font-size: 1.05rem; }
+        .registry-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; border-top: 1px solid #333; padding-top: 3rem; text-align: left; }
+        .reg-item { display: flex; flex-direction: column; gap: 0.5rem; }
         .reg-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 500; }
-        .reg-value { font-size: 1.1rem; color: var(--white); font-weight: 600; }
+        .reg-value { font-size: 1rem; color: var(--white); font-weight: 600; line-height: 1.3; }
 
         .intake-section { padding: 0 5% 40px; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
         .form-card { background: #151516; padding: 4rem 3rem; border-radius: 24px; border: 1px solid #2D2D2D; }
         .form-card h2 { margin-bottom: 0.5rem; font-size: 2rem; }
+        .form-card > p { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 2.5rem; }
+        
         .form-group { margin-bottom: 1.5rem; }
         .form-group label { display: block; margin-bottom: 0.5rem; font-size: 0.8rem; color: var(--text-muted); font-weight: 500; }
         .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 16px; border: 1px solid #333; border-radius: 12px; background: #000; color: #fff; font-family: inherit; font-size: 1rem; }
         .btn-submit { width: 100%; padding: 18px; background: var(--white); color: #000; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+        .btn-submit:hover { background: #D1D1D6; }
 
-        footer { text-align: center; padding: 5rem 5%; border-top: 1px solid #1D1D1F; color: #6E6E73; font-size: 0.8rem; line-height: 1.6; }
+        footer { text-align: center; padding: 5rem 5%; border-top: 1px solid #1D1D1F; color: #6E6E73; font-size: 0.85rem; line-height: 1.6; }
 
-        @media (max-width: 900px) { .intake-section, .infra-grid, .pipeline-grid, .registry-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 3rem; } }
+        @media (max-width: 900px) { 
+            .intake-section, .infra-grid, .pipeline-grid { grid-template-columns: 1fr; } 
+            .registry-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+            .hero h1 { font-size: 3rem; } 
+        }
     </style>
 </head>
 <body>
@@ -117,19 +127,19 @@
     </header>
 
     <section class="hero">
-        <h1>Global Assets.<br><span class="gold-accent">Strategic Trade Desk.</span></h1>
+        <h1>Global Assets.<br><span class="gold-accent">Strategic Trade Desk</span></h1>
         <p>Facilitating high-volume commodity exchange via the Romi Nexus network. We execute strategic trade mandates for primary producers and institutional buyers, ensuring secure settlement and direct asset routing.</p>
     </section>
 
     <section class="infra-grid">
-        <div class="infra-card"><h3 id="gold-price-card" class="gold-accent">---</h3><p>Live Market Value (Gold 1KG)</p></div>
-        <div class="infra-card"><h3>Trade Execution</h3><p>Strategic Routing & Buyer Network</p></div>
-        <div class="infra-card"><h3>Settlement</h3><p>Institutional Compliance & Direct Routing</p></div>
+        <div class="infra-card"><h3 id="gold-price-card">---</h3><p>Live Market Value (Gold 1KG)</p></div>
+        <div class="infra-card"><h3>Institutional</h3><p>Trade Execution</p></div>
+        <div class="infra-card"><h3>Secure</h3><p>Direct Asset Settlement</p></div>
     </section>
 
     <section class="pipeline-section">
         <div class="pipeline-header">
-            <h2>The Trade Protocol.</h2>
+            <h2>The Trade Protocol</h2>
             <p style="color: var(--text-muted);">How we execute institutional mandates.</p>
         </div>
         <div class="pipeline-grid">
@@ -142,7 +152,8 @@
 
     <section class="credentials-section">
         <div class="credentials-card">
-            <h2>Corporate Registry & Credentials.</h2>
+            <h2>Corporate Registry & Credentials</h2>
+            <p>For security and compliance, official corporate documents are exclusively distributed to verified partners. Below is our public registry data.</p>
             <div class="registry-grid">
                 <div class="reg-item"><span class="reg-label">Legal Entity</span><span class="reg-value">Romi Group FZC</span></div>
                 <div class="reg-item"><span class="reg-label">Jurisdiction</span><span class="reg-value">Ajman Free Zone (AFZA), UAE</span></div>
@@ -164,7 +175,7 @@
                     <div class="form-group"><label>Phone Number (WhatsApp)</label><input type="tel" name="WhatsApp" required placeholder="+971..."></div>
                 </div>
                 <div class="form-group"><label>Asset Class</label>
-                    <select name="Asset_Type" required><option value="Gold">Unworked Gold</option><option value="Agri">Agricultural Bulk</option></select>
+                    <select name="Asset_Type" required><option value="Unworked Gold">Unworked Gold</option><option value="Agricultural Bulk">Agricultural Bulk</option></select>
                 </div>
                 <div class="form-group"><label>Available Volume & Location</label><input type="text" name="Volume" required></div>
                 <button type="submit" class="btn-submit">Submit Manifest</button>
@@ -183,7 +194,7 @@
                 </div>
                 <div class="form-group"><label>Target Requirement</label><input type="text" name="Target" required></div>
                 <div class="form-group"><label>Proof of Funds Status</label>
-                    <select name="POF" required><option value="Ready">Verified & Ready</option><option value="Pending">Pending Clearance</option></select>
+                    <select name="POF" required><option value="Verified & Ready">Verified & Ready</option><option value="Pending Clearance">Pending Clearance</option></select>
                 </div>
                 <button type="submit" class="btn-submit">Request Full CIS/KYC</button>
             </form>
@@ -221,7 +232,7 @@
 
         function updateTicker() {
             const ticker = document.getElementById('market-ticker');
-            let content = `<span class="ticker-item live-gold-ticker" id="live-gold-val">GOLD: ---</span>`;
+            let content = "";
             commodities.forEach(com => {
                 const change = (Math.random() * 2 - 1).toFixed(2);
                 const color = change >= 0 ? 'var(--pos)' : 'var(--neg)';
@@ -238,7 +249,6 @@
                 if (data && data.price) {
                     const priceKG = (data.price * 32.1507).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
                     document.getElementById('gold-price-card').innerText = priceKG;
-                    if(document.getElementById('live-gold-val')) document.getElementById('live-gold-val').innerText = `GOLD: ${priceKG}`;
                 }
             } catch (e) {}
         }
