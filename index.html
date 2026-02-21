@@ -166,22 +166,10 @@
             <h2>Corporate Registry & Credentials</h2>
             <p>For security and compliance, official corporate documents are exclusively distributed to verified partners. Below is our public registry data.</p>
             <div class="registry-grid">
-                <div class="reg-item">
-                    <span class="reg-label">Legal Entity</span>
-                    <span class="reg-value">Romi Group FZC</span>
-                </div>
-                <div class="reg-item">
-                    <span class="reg-label">Jurisdiction</span>
-                    <span class="reg-value">Ajman Free Zone (AFZA), UAE</span>
-                </div>
-                <div class="reg-item">
-                    <span class="reg-label">License Number</span>
-                    <span class="reg-value">40601</span>
-                </div>
-                <div class="reg-item">
-                    <span class="reg-label">Authorized Scopes</span>
-                    <span class="reg-value">Wholesale Gold & Foodstuff Trading</span>
-                </div>
+                <div class="reg-item"><span class="reg-label">Legal Entity</span><span class="reg-value">Romi Group FZC</span></div>
+                <div class="reg-item"><span class="reg-label">Jurisdiction</span><span class="reg-value">Ajman Free Zone (AFZA), UAE</span></div>
+                <div class="reg-item"><span class="reg-label">License Number</span><span class="reg-value">40601</span></div>
+                <div class="reg-item"><span class="reg-label">Authorized Scopes</span><span class="reg-value">Wholesale Gold & Foodstuff Trading</span></div>
             </div>
         </div>
     </section>
@@ -197,8 +185,27 @@
                     <div class="form-group"><label>Contact Email</label><input type="email" name="Supplier_Email" required></div>
                     <div class="form-group"><label>Phone Number (WhatsApp)</label><input type="tel" name="Supplier_WhatsApp" required placeholder="+971..."></div>
                 </div>
-                <div class="form-group"><label>Asset Class</label>
-                    <select name="Asset_Type" required><option value="Unworked Gold">Unworked Gold</option><option value="Agricultural Bulk">Agricultural Bulk</option></select>
+                <div class="form-group">
+                    <label>Asset Class</label>
+                    <select name="Supplier_Asset_Class" required onchange="toggleSupplierOther(this.value)">
+                        <option value="">Select Asset...</option>
+                        <option value="Gold">Unworked Gold (AU)</option>
+                        <option value="Sugar">Refined Sugar (ICUMSA 45)</option>
+                        <option value="Wheat">Milling Wheat</option>
+                        <option value="Corn">Yellow Corn / Maize</option>
+                        <option value="Soybeans">Soybeans (Grade 2)</option>
+                        <option value="Coffee">Coffee Beans</option>
+                        <option value="Rice">Long Grain Rice</option>
+                        <option value="Cocoa">Cocoa Beans</option>
+                        <option value="Palm Oil">Palm Oil</option>
+                        <option value="Cotton">Raw Cotton</option>
+                        <option value="Barley">Barley</option>
+                        <option value="Other">Other (Specify below)</option>
+                    </select>
+                </div>
+                <div class="form-group" id="supplier-other-div" style="display:none;">
+                    <label>Specify Other Commodity</label>
+                    <input type="text" name="Supplier_Asset_Other">
                 </div>
                 <div class="form-group"><label>Available Volume & Location</label><input type="text" name="Supplier_Volume_Location" required></div>
                 <button type="submit" class="btn-submit">Submit Manifest</button>
@@ -215,7 +222,28 @@
                     <div class="form-group"><label>Business Email</label><input type="email" name="Buyer_Email" required></div>
                     <div class="form-group"><label>Phone Number (WhatsApp)</label><input type="tel" name="Buyer_WhatsApp" required placeholder="+1 ..."></div>
                 </div>
-                <div class="form-group"><label>Target Requirement</label><input type="text" name="Target_Requirement" required></div>
+                <div class="form-group">
+                    <label>Target Requirement</label>
+                    <select name="Target_Requirement" required onchange="toggleBuyerOther(this.value)">
+                        <option value="">Select Target Asset...</option>
+                        <option value="Gold">Unworked Gold (AU)</option>
+                        <option value="Sugar">Refined Sugar (ICUMSA 45)</option>
+                        <option value="Wheat">Milling Wheat</option>
+                        <option value="Corn">Yellow Corn / Maize</option>
+                        <option value="Soybeans">Soybeans (Grade 2)</option>
+                        <option value="Coffee">Coffee Beans</option>
+                        <option value="Rice">Long Grain Rice</option>
+                        <option value="Cocoa">Cocoa Beans</option>
+                        <option value="Palm Oil">Palm Oil</option>
+                        <option value="Cotton">Raw Cotton</option>
+                        <option value="Barley">Barley</option>
+                        <option value="Other">Other (Specify below)</option>
+                    </select>
+                </div>
+                <div class="form-group" id="buyer-other-div" style="display:none;">
+                    <label>Specify Other Commodity</label>
+                    <input type="text" name="Target_Asset_Other">
+                </div>
                 <div class="form-group"><label>Proof of Funds Status</label>
                     <select name="POF_Status" required><option value="Verified & Ready">Verified & Ready</option><option value="Pending Clearance">Pending Clearance</option></select>
                 </div>
@@ -246,6 +274,13 @@
     </footer>
 
     <script>
+        function toggleSupplierOther(val) {
+            document.getElementById('supplier-other-div').style.display = (val === 'Other') ? 'block' : 'none';
+        }
+        function toggleBuyerOther(val) {
+            document.getElementById('buyer-other-div').style.display = (val === 'Other') ? 'block' : 'none';
+        }
+
         const commodities = [
             { name: "SUGAR", price: 21.45 }, { name: "WHEAT", price: 585.50 },
             { name: "CORN", price: 442.25 }, { name: "SOYBEANS", price: 1152.00 },
@@ -275,18 +310,12 @@
                 if (data && data.price) {
                     const currentKGPrice = data.price * 32.1507;
                     const priceDisplay = document.getElementById('gold-price-card');
-                    
-                    if (currentKGPrice > lastGoldPrice) {
-                        priceDisplay.style.color = "var(--pos)";
-                    } else if (currentKGPrice < lastGoldPrice) {
-                        priceDisplay.style.color = "var(--neg)";
-                    } else {
-                        priceDisplay.style.color = "var(--gold-light)";
-                    }
+                    if (currentKGPrice > lastGoldPrice) priceDisplay.style.color = "var(--pos)";
+                    else if (currentKGPrice < lastGoldPrice) priceDisplay.style.color = "var(--neg)";
+                    else priceDisplay.style.color = "var(--gold-light)";
 
                     priceDisplay.innerText = currentKGPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
                     lastGoldPrice = currentKGPrice;
-                    
                     setTimeout(() => { priceDisplay.style.color = "var(--gold-light)"; }, 5000);
                 }
             } catch (e) {}
