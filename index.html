@@ -79,7 +79,8 @@
             border-radius: 24px;
             border: 1px solid #2D2D2D;
         }
-        .form-card h2 { margin-bottom: 1.5rem; font-size: 2rem; }
+        .form-card h2 { margin-bottom: 0.5rem; font-size: 2rem; }
+        .form-card > p { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 2.5rem; }
         
         .form-group { margin-bottom: 1.5rem; text-align: left; }
         .form-group label { display: block; margin-bottom: 0.5rem; font-size: 0.8rem; color: var(--text-muted); }
@@ -114,7 +115,6 @@
             <span class="ticker-item">WHEAT ▲ 602.25</span>
             <span class="ticker-item">CORN ▼ 431.50</span>
             <span class="ticker-item" style="color:var(--gold-light)">XAU/USD: $2,043.12</span>
-            <span class="ticker-item" id="gold-ticker-2">LIVE GOLD (1 KG): $65,842.50</span>
         </div>
     </div>
 
@@ -129,6 +129,7 @@
     <div class="intake-section">
         <div class="form-card">
             <h2>Supplier Manifest</h2>
+            <p>List available goods for our buyer network.</p>
             <form action="https://formspree.io/f/mreaylgk" method="POST">
                 <input type="hidden" name="_next" value="https://rominexus.com/welcome.html">
                 <input type="text" name="_gotcha" style="display:none">
@@ -137,13 +138,30 @@
                     <label>Legal Producing Entity</label>
                     <input type="text" name="Supplier_Entity" required>
                 </div>
-                <div class="form-group">
-                    <label>Contact Email</label>
-                    <input type="email" name="Email" required>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label>Contact Email</label>
+                        <input type="email" name="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number (WhatsApp)</label>
+                        <input type="tel" name="WhatsApp" required placeholder="+971...">
+                    </div>
                 </div>
+
                 <div class="form-group">
-                    <label>Phone Number (WhatsApp)</label>
-                    <input type="tel" name="WhatsApp" required placeholder="+971...">
+                    <label>Asset Class</label>
+                    <select name="Asset_Type" required>
+                        <option value="">Select...</option>
+                        <option value="Gold">Unworked Gold</option>
+                        <option value="Agri">Agricultural Bulk</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Available Volume & Location</label>
+                    <input type="text" name="Volume_Location" required>
                 </div>
 
                 <div class="g-recaptcha" data-sitekey="YOUR_SITE_KEY_HERE" style="margin-bottom: 20px;"></div>
@@ -154,6 +172,7 @@
 
         <div class="form-card" id="buyer-form">
             <h2>Buyer Registration</h2>
+            <p>Access our pipeline of available commodities.</p>
             <form action="https://formspree.io/f/xbdazkjk" method="POST">
                 <input type="hidden" name="_next" value="https://rominexus.com/welcome.html">
                 <input type="text" name="_gotcha" style="display:none">
@@ -162,13 +181,30 @@
                     <label>Purchasing Entity</label>
                     <input type="text" name="Purchasing_Entity" required>
                 </div>
-                <div class="form-group">
-                    <label>Business Email</label>
-                    <input type="email" name="Email" required>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label>Business Email</label>
+                        <input type="email" name="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number (WhatsApp)</label>
+                        <input type="tel" name="WhatsApp" required placeholder="+1 ...">
+                    </div>
                 </div>
+
                 <div class="form-group">
-                    <label>Phone Number (WhatsApp)</label>
-                    <input type="tel" name="WhatsApp" required placeholder="+1 ...">
+                    <label>Target Requirement</label>
+                    <input type="text" name="Target_Asset" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Proof of Funds Status</label>
+                    <select name="POF_Status" required>
+                        <option value="">Select...</option>
+                        <option value="Ready">Verified & Ready</option>
+                        <option value="Pending">Pending Clearance</option>
+                    </select>
                 </div>
 
                 <div class="g-recaptcha" data-sitekey="YOUR_SITE_KEY_HERE" style="margin-bottom: 20px;"></div>
@@ -190,7 +226,6 @@
                 if (data && data.price) {
                     const formatted = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(data.price * 32.1507);
                     document.getElementById('gold-ticker').innerHTML = `LIVE GOLD (1 KG): ${formatted}`;
-                    document.getElementById('gold-ticker-2').innerHTML = `LIVE GOLD (1 KG): ${formatted}`;
                 }
             } catch (e) { console.log("Ticker Delay"); }
         }
