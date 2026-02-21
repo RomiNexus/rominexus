@@ -12,8 +12,8 @@
             --gold-light: #F5D061;
             --white: #F5F5F7;
             --text-muted: #86868B;
-            --pos: #34C759; /* Green */
-            --neg: #FF3B30; /* Red */
+            --pos: #34C759;
+            --neg: #FF3B30;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -166,10 +166,22 @@
             <h2>Corporate Registry & Credentials</h2>
             <p>For security and compliance, official corporate documents are exclusively distributed to verified partners. Below is our public registry data.</p>
             <div class="registry-grid">
-                <div class="reg-item"><span class="reg-label">Legal Entity</span><span class="reg-value">Romi Group FZC</span></div>
-                <div class="reg-item"><span class="reg-label">Jurisdiction</span><span class="reg-value">Ajman Free Zone (AFZA), UAE</span></div>
-                <div class="reg-item"><span class="reg-label">License Number</span><span class="reg-value">40601</span></div>
-                <div class="reg-item"><span class="reg-label">Authorized Scopes</span><span class="reg-value">Wholesale Gold & Foodstuff Trading</span></div>
+                <div class="reg-item">
+                    <span class="reg-label">Legal Entity</span>
+                    <span class="reg-value">Romi Group FZC</span>
+                </div>
+                <div class="reg-item">
+                    <span class="reg-label">Jurisdiction</span>
+                    <span class="reg-value">Ajman Free Zone (AFZA), UAE</span>
+                </div>
+                <div class="reg-item">
+                    <span class="reg-label">License Number</span>
+                    <span class="reg-value">40601</span>
+                </div>
+                <div class="reg-item">
+                    <span class="reg-label">Authorized Scopes</span>
+                    <span class="reg-value">Wholesale Gold & Foodstuff Trading</span>
+                </div>
             </div>
         </div>
     </section>
@@ -182,13 +194,13 @@
                 <input type="hidden" name="_next" value="https://rominexus.com/welcome.html">
                 <div class="form-group"><label>Legal Producing Entity</label><input type="text" name="Supplier_Entity" required></div>
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem">
-                    <div class="form-group"><label>Contact Email</label><input type="email" name="Email" required></div>
-                    <div class="form-group"><label>Phone Number (WhatsApp)</label><input type="tel" name="WhatsApp" required placeholder="+971..."></div>
+                    <div class="form-group"><label>Contact Email</label><input type="email" name="Supplier_Email" required></div>
+                    <div class="form-group"><label>Phone Number (WhatsApp)</label><input type="tel" name="Supplier_WhatsApp" required placeholder="+971..."></div>
                 </div>
                 <div class="form-group"><label>Asset Class</label>
                     <select name="Asset_Type" required><option value="Unworked Gold">Unworked Gold</option><option value="Agricultural Bulk">Agricultural Bulk</option></select>
                 </div>
-                <div class="form-group"><label>Available Volume & Location</label><input type="text" name="Volume" required></div>
+                <div class="form-group"><label>Available Volume & Location</label><input type="text" name="Supplier_Volume_Location" required></div>
                 <button type="submit" class="btn-submit">Submit Manifest</button>
             </form>
         </div>
@@ -198,14 +210,14 @@
             <p>Access our pipeline of available commodities.</p>
             <form action="https://formspree.io/f/xbdazkjk" method="POST">
                 <input type="hidden" name="_next" value="https://rominexus.com/welcome.html">
-                <div class="form-group"><label>Purchasing Entity</label><input type="text" name="Buyer_Entity" required></div>
+                <div class="form-group"><label>Purchasing Entity</label><input type="text" name="Purchasing_Entity" required></div>
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem">
-                    <div class="form-group"><label>Business Email</label><input type="email" name="Email" required></div>
-                    <div class="form-group"><label>Phone Number (WhatsApp)</label><input type="tel" name="WhatsApp" required placeholder="+1 ..."></div>
+                    <div class="form-group"><label>Business Email</label><input type="email" name="Buyer_Email" required></div>
+                    <div class="form-group"><label>Phone Number (WhatsApp)</label><input type="tel" name="Buyer_WhatsApp" required placeholder="+1 ..."></div>
                 </div>
-                <div class="form-group"><label>Target Requirement</label><input type="text" name="Target" required></div>
+                <div class="form-group"><label>Target Requirement</label><input type="text" name="Target_Requirement" required></div>
                 <div class="form-group"><label>Proof of Funds Status</label>
-                    <select name="POF" required><option value="Verified & Ready">Verified & Ready</option><option value="Pending Clearance">Pending Clearance</option></select>
+                    <select name="POF_Status" required><option value="Verified & Ready">Verified & Ready</option><option value="Pending Clearance">Pending Clearance</option></select>
                 </div>
                 <button type="submit" class="btn-submit">Request Full CIS/KYC</button>
             </form>
@@ -218,11 +230,11 @@
             <form action="https://formspree.io/f/mdalwdop" method="POST">
                 <input type="hidden" name="_next" value="https://rominexus.com/welcome.html">
                 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
-                    <div class="form-group"><label>Full Name</label><input type="text" name="Name" required></div>
-                    <div class="form-group"><label>Email Address</label><input type="email" name="Email" required></div>
+                    <div class="form-group"><label>Full Name</label><input type="text" name="Full_Name" required></div>
+                    <div class="form-group"><label>Email Address</label><input type="email" name="Inquiry_Email" required></div>
                 </div>
-                <div class="form-group"><label>Subject</label><input type="text" name="Subject" required></div>
-                <div class="form-group"><label>Message</label><textarea name="Message" rows="5" required></textarea></div>
+                <div class="form-group"><label>Subject</label><input type="text" name="Inquiry_Subject" required></div>
+                <div class="form-group"><label>Message</label><textarea name="Inquiry_Message" rows="5" required></textarea></div>
                 <button type="submit" class="btn-submit">Dispatch Inquiry</button>
             </form>
         </div>
@@ -275,7 +287,6 @@
                     priceDisplay.innerText = currentKGPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
                     lastGoldPrice = currentKGPrice;
                     
-                    // Reset to gold after 5 seconds to indicate baseline
                     setTimeout(() => { priceDisplay.style.color = "var(--gold-light)"; }, 5000);
                 }
             } catch (e) {}
