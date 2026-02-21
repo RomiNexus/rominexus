@@ -183,7 +183,7 @@
                 <div class="form-group"><label>Legal Producing Entity</label><input type="text" name="Supplier_Entity" required></div>
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem">
                     <div class="form-group"><label>Contact Email</label><input type="email" name="Supplier_Email" required></div>
-                    <div class="form-group"><label>Phone Number (WhatsApp)</label><input type="tel" name="Supplier_WhatsApp" required placeholder="+971..."></div>
+                    <div class="form-group"><label>Phone Number (WhatsApp)</label><input type="tel" name="Supplier_Phone" required placeholder="+971..."></div>
                 </div>
                 <div class="form-group">
                     <label>Asset Class</label>
@@ -219,8 +219,8 @@
                 <input type="hidden" name="_next" value="https://rominexus.com/welcome.html">
                 <div class="form-group"><label>Purchasing Entity</label><input type="text" name="Purchasing_Entity" required></div>
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem">
-                    <div class="form-group"><label>Business Email</label><input type="email" name="Buyer_Email" required></div>
-                    <div class="form-group"><label>Phone Number (WhatsApp)</label><input type="tel" name="Buyer_WhatsApp" required placeholder="+1 ..."></div>
+                    <div class="form-group"><label>Business Email</label><input type="email" name="Business_Email" required></div>
+                    <div class="form-group"><label>Phone Number (WhatsApp)</label><input type="tel" name="WhatsApp_Number" required placeholder="+1 ..."></div>
                 </div>
                 <div class="form-group">
                     <label>Target Requirement</label>
@@ -310,12 +310,18 @@
                 if (data && data.price) {
                     const currentKGPrice = data.price * 32.1507;
                     const priceDisplay = document.getElementById('gold-price-card');
-                    if (currentKGPrice > lastGoldPrice) priceDisplay.style.color = "var(--pos)";
-                    else if (currentKGPrice < lastGoldPrice) priceDisplay.style.color = "var(--neg)";
-                    else priceDisplay.style.color = "var(--gold-light)";
+                    
+                    if (currentKGPrice > lastGoldPrice) {
+                        priceDisplay.style.color = "var(--pos)";
+                    } else if (currentKGPrice < lastGoldPrice) {
+                        priceDisplay.style.color = "var(--neg)";
+                    } else {
+                        priceDisplay.style.color = "var(--gold-light)";
+                    }
 
                     priceDisplay.innerText = currentKGPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
                     lastGoldPrice = currentKGPrice;
+                    
                     setTimeout(() => { priceDisplay.style.color = "var(--gold-light)"; }, 5000);
                 }
             } catch (e) {}
