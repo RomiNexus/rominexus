@@ -12,8 +12,8 @@
             --gold-light: #F5D061;
             --white: #F5F5F7;
             --text-muted: #86868B;
-            --pos: #34C759;
-            --neg: #FF3B30;
+            --pos: #34C759; /* Green */
+            --neg: #FF3B30; /* Red */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -76,7 +76,7 @@
 
         .infra-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 1200px; margin: 0 auto 80px; padding: 0 5%; }
         .infra-card { background: var(--panel-bg); border: 1px solid var(--glass-border); border-radius: 18px; padding: 2.5rem; text-align: center; backdrop-filter: blur(20px); }
-        .infra-card h3 { font-size: 2.2rem; margin-bottom: 0.5rem; color: var(--gold-light); font-weight: 600; }
+        .infra-card h3 { font-size: 2.2rem; margin-bottom: 0.5rem; color: var(--gold-light); font-weight: 600; transition: color 0.6s ease; }
         .infra-card p { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
 
         .pipeline-section { max-width: 1200px; margin: 0 auto 80px; padding: 5rem 5%; background: var(--panel-bg); border-radius: 24px; border: 1px solid var(--glass-border); }
@@ -90,11 +90,19 @@
         .credentials-section { max-width: 1200px; margin: 0 auto 80px; padding: 0 5%; }
         .credentials-card { background: var(--panel-bg); border: 1px solid var(--glass-border); border-radius: 24px; padding: 4rem 3rem; text-align: center; }
         .credentials-card h2 { font-size: 2.5rem; margin-bottom: 1rem; font-weight: 600; }
-        .credentials-card > p { color: var(--text-muted); max-width: 750px; margin: 0 auto 3rem auto; font-size: 1.05rem; }
-        .registry-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; border-top: 1px solid #333; padding-top: 3rem; text-align: left; }
-        .reg-item { display: flex; flex-direction: column; gap: 0.5rem; }
+        .credentials-card > p { color: var(--text-muted); max-width: 750px; margin: 0 auto 3.5rem auto; font-size: 1.05rem; }
+        
+        .registry-grid { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 2rem; 
+            border-top: 1px solid #333; 
+            padding-top: 3.5rem; 
+            justify-content: center;
+        }
+        .reg-item { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.8rem; }
         .reg-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 500; }
-        .reg-value { font-size: 1rem; color: var(--white); font-weight: 600; line-height: 1.3; }
+        .reg-value { font-size: 1.1rem; color: var(--white); font-weight: 600; line-height: 1.4; max-width: 200px; }
 
         .intake-section { padding: 0 5% 40px; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
         .form-card { background: #151516; padding: 4rem 3rem; border-radius: 24px; border: 1px solid #2D2D2D; }
@@ -111,7 +119,7 @@
 
         @media (max-width: 900px) { 
             .intake-section, .infra-grid, .pipeline-grid { grid-template-columns: 1fr; } 
-            .registry-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+            .registry-grid { grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
             .hero h1 { font-size: 3rem; } 
         }
     </style>
@@ -127,12 +135,15 @@
     </header>
 
     <section class="hero">
-        <h1>Global Assets.<br><span class="gold-accent">Strategic Trade Desk</span></h1>
+        <h1>Global Assets<br><span class="gold-accent">Strategic Trade Desk</span></h1>
         <p>Facilitating high-volume commodity exchange via the Romi Nexus network. We execute strategic trade mandates for primary producers and institutional buyers, ensuring secure settlement and direct asset routing.</p>
     </section>
 
     <section class="infra-grid">
-        <div class="infra-card"><h3 id="gold-price-card">---</h3><p>Live Market Value (Gold 1KG)</p></div>
+        <div class="infra-card">
+            <h3 id="gold-price-card">$164,222.56</h3>
+            <p>Live Market Value (Gold 1KG)</p>
+        </div>
         <div class="infra-card"><h3>Institutional</h3><p>Trade Execution</p></div>
         <div class="infra-card"><h3>Secure</h3><p>Direct Asset Settlement</p></div>
     </section>
@@ -206,10 +217,11 @@
             <h2>General Inquiry</h2>
             <form action="https://formspree.io/f/mdalwdop" method="POST">
                 <input type="hidden" name="_next" value="https://rominexus.com/welcome.html">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
                     <div class="form-group"><label>Full Name</label><input type="text" name="Name" required></div>
                     <div class="form-group"><label>Email Address</label><input type="email" name="Email" required></div>
                 </div>
+                <div class="form-group"><label>Subject</label><input type="text" name="Subject" required></div>
                 <div class="form-group"><label>Message</label><textarea name="Message" rows="5" required></textarea></div>
                 <button type="submit" class="btn-submit">Dispatch Inquiry</button>
             </form>
@@ -242,13 +254,29 @@
             ticker.innerHTML = content + content;
         }
 
+        let lastGoldPrice = 164222.56;
+
         async function fetchRealGold() {
             try {
                 const response = await fetch('https://api.gold-api.com/price/XAU');
                 const data = await response.json();
                 if (data && data.price) {
-                    const priceKG = (data.price * 32.1507).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-                    document.getElementById('gold-price-card').innerText = priceKG;
+                    const currentKGPrice = data.price * 32.1507;
+                    const priceDisplay = document.getElementById('gold-price-card');
+                    
+                    if (currentKGPrice > lastGoldPrice) {
+                        priceDisplay.style.color = "var(--pos)";
+                    } else if (currentKGPrice < lastGoldPrice) {
+                        priceDisplay.style.color = "var(--neg)";
+                    } else {
+                        priceDisplay.style.color = "var(--gold-light)";
+                    }
+
+                    priceDisplay.innerText = currentKGPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+                    lastGoldPrice = currentKGPrice;
+                    
+                    // Reset to gold after 5 seconds to indicate baseline
+                    setTimeout(() => { priceDisplay.style.color = "var(--gold-light)"; }, 5000);
                 }
             } catch (e) {}
         }
@@ -256,6 +284,7 @@
         updateTicker();
         fetchRealGold();
         setInterval(updateTicker, 10000);
+        setInterval(fetchRealGold, 30000);
     </script>
 </body>
 </html>
