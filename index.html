@@ -74,11 +74,11 @@
         .gold-accent { color: var(--gold-light); }
         .hero p { font-size: 1.2rem; max-width: 700px; margin: 0 auto 3rem auto; color: var(--text-muted); }
 
-        /* 4-CARD INFRA GRID */
+        /* INFRA GRID - Restored to your original card style but set to 4 columns */
         .infra-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; max-width: 1200px; margin: 0 auto 80px; padding: 0 5%; }
         .infra-card { background: var(--panel-bg); border: 1px solid var(--glass-border); border-radius: 18px; padding: 2.5rem; text-align: center; backdrop-filter: blur(20px); }
-        .infra-card h3 { font-size: 1.8rem; margin-bottom: 0.5rem; color: var(--gold-light); font-weight: 600; transition: color 0.6s ease; }
-        .infra-card p { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+        .infra-card h3 { font-size: 2.2rem; margin-bottom: 0.5rem; color: var(--gold-light); font-weight: 600; transition: color 0.6s ease; }
+        .infra-card p { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
 
         .pipeline-section { max-width: 1200px; margin: 0 auto 80px; padding: 5rem 5%; background: var(--panel-bg); border-radius: 24px; border: 1px solid var(--glass-border); }
         .pipeline-header { text-align: center; margin-bottom: 4rem; }
@@ -91,6 +91,7 @@
         .credentials-section { max-width: 1200px; margin: 0 auto 80px; padding: 0 5%; }
         .credentials-card { background: var(--panel-bg); border: 1px solid var(--glass-border); border-radius: 24px; padding: 4rem 3rem; text-align: center; }
         .credentials-card h2 { font-size: 2.5rem; margin-bottom: 1rem; font-weight: 600; }
+        .credentials-card > p { color: var(--text-muted); max-width: 750px; margin: 0 auto 3.5rem auto; font-size: 1.05rem; }
         
         .registry-grid { 
             display: grid; 
@@ -98,10 +99,11 @@
             gap: 2rem; 
             border-top: 1px solid #333; 
             padding-top: 3.5rem; 
+            justify-content: center;
         }
         .reg-item { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.8rem; }
-        .reg-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
-        .reg-value { font-size: 1.1rem; color: var(--white); font-weight: 600; }
+        .reg-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 500; }
+        .reg-value { font-size: 1.1rem; color: var(--white); font-weight: 600; line-height: 1.4; max-width: 200px; }
 
         .intake-section { padding: 0 5% 40px; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
         .form-card { background: #151516; padding: 4rem 3rem; border-radius: 24px; border: 1px solid #2D2D2D; }
@@ -114,15 +116,13 @@
         .btn-submit { width: 100%; padding: 18px; background: var(--white); color: #000; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.2s; }
         .btn-submit:hover { background: #D1D1D6; }
 
-        /* INQUIRY BUTTON (Free) */
-        .inquiry-card { background: #151516; padding: 4rem 3rem; border-radius: 24px; border: 1px solid #2D2D2D; text-align: center; grid-column: 1 / -1; }
-        .btn-inquiry { display: inline-block; text-decoration: none; padding: 18px 40px; background: transparent; color: var(--white); border: 1px solid var(--white); border-radius: 12px; font-weight: 600; transition: 0.3s; }
-        .btn-inquiry:hover { background: var(--white); color: #000; }
+        footer { text-align: center; padding: 5rem 5%; border-top: 1px solid #1D1D1F; color: #6E6E73; font-size: 0.85rem; line-height: 1.6; }
 
-        footer { text-align: center; padding: 5rem 5%; border-top: 1px solid #1D1D1F; color: #6E6E73; font-size: 0.85rem; }
-
-        @media (max-width: 1100px) { .infra-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 900px) { .intake-section, .pipeline-grid, .registry-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 900px) { 
+            .intake-section, .infra-grid, .pipeline-grid { grid-template-columns: 1fr; } 
+            .registry-grid { grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
+            .hero h1 { font-size: 3rem; } 
+        }
     </style>
 </head>
 <body>
@@ -137,7 +137,7 @@
 
     <section class="hero">
         <h1>Global Assets<br><span class="gold-accent">Strategic Trade Desk</span></h1>
-        <p>Facilitating institutional commodity exchange via the Romi Nexus network. We execute high-volume mandates for primary producers and verified buyers.</p>
+        <p>Facilitating high-volume commodity exchange via the Romi Nexus network. We execute strategic trade mandates for primary producers and institutional buyers, ensuring secure settlement and direct asset routing.</p>
     </section>
 
     <section class="infra-grid">
@@ -146,15 +146,15 @@
             <p>Gold (AU) 1KG</p>
         </div>
         <div class="infra-card">
-            <h3 id="oil-price-card" style="color:var(--white)">$...</h3>
+            <h3 id="oil-price-card" style="color: var(--white);">$...</h3>
             <p>Crude Oil (WTI)</p>
         </div>
         <div class="infra-card">
-            <h3 id="copper-price-card" style="color:var(--white)">$...</h3>
+            <h3 id="metal-price-card" style="color: var(--white);">$...</h3>
             <p>Copper (LME/T)</p>
         </div>
         <div class="infra-card">
-            <h3 style="color: var(--pos)">SECURE</h3>
+            <h3 style="color: var(--pos);">SECURE</h3>
             <p>Asset Settlement</p>
         </div>
     </section>
@@ -162,11 +162,11 @@
     <section class="pipeline-section">
         <div class="pipeline-header">
             <h2>The Trade Protocol</h2>
-            <p style="color: var(--text-muted);">Institutional execution framework.</p>
+            <p style="color: var(--text-muted);">How we execute institutional mandates.</p>
         </div>
         <div class="pipeline-grid">
             <div class="step"><div class="step-num">01</div><h4>Digital Intake</h4><p>Register assets via our portal. Goods remain securely in your local storage facilities.</p></div>
-            <div class="step"><div class="step-num">02</div><h4>Market Matching</h4><p>Vetted manifests are presented to our network of global institutional buyers.</p></div>
+            <div class="step"><div class="step-num">02</div><h4>Market Matching</h4><p>We present vetted manifests to our active network of high-volume global buyers.</p></div>
             <div class="step"><div class="step-num">03</div><h4>Trade Settlement</h4><p>Verification of BCL/POF. Execution under UAE legal and compliance standards.</p></div>
             <div class="step"><div class="step-num">04</div><h4>Direct Transfer</h4><p>Verified funding triggers direct shipment from producer to buyer.</p></div>
         </div>
@@ -174,12 +174,13 @@
 
     <section class="credentials-section">
         <div class="credentials-card">
-            <h2>Corporate Registry</h2>
+            <h2>Corporate Registry & Credentials</h2>
+            <p>For security and compliance, official corporate documents are exclusively distributed to verified partners.</p>
             <div class="registry-grid">
                 <div class="reg-item"><span class="reg-label">Legal Entity</span><span class="reg-value">Romi Group FZC</span></div>
-                <div class="reg-item"><span class="reg-label">Jurisdiction</span><span class="reg-value">Ajman, UAE</span></div>
-                <div class="reg-item"><span class="reg-label">License</span><span class="reg-value">40601</span></div>
-                <div class="reg-item"><span class="reg-label">Scopes</span><span class="reg-value">Wholesale Trade</span></div>
+                <div class="reg-item"><span class="reg-label">Jurisdiction</span><span class="reg-value">Ajman Free Zone, UAE</span></div>
+                <div class="reg-item"><span class="reg-label">License Number</span><span class="reg-value">40601</span></div>
+                <div class="reg-item"><span class="reg-label">Authorized Scopes</span><span class="reg-value">Wholesale Trade</span></div>
             </div>
         </div>
     </section>
@@ -187,9 +188,10 @@
     <div class="intake-section">
         <div class="form-card">
             <h2>Supplier Manifest</h2>
+            <p>List available goods for our buyer network.</p>
             <form action="https://formspree.io/f/mreaylgk" method="POST">
                 <input type="hidden" name="_next" value="https://rominexus.com/welcome.html">
-                <div class="form-group"><label>Legal Entity</label><input type="text" name="Supplier_Entity" required></div>
+                <div class="form-group"><label>Legal Producing Entity</label><input type="text" name="Supplier_Entity" required></div>
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem">
                     <div class="form-group"><label>Email</label><input type="email" name="Supplier_Email" required></div>
                     <div class="form-group"><label>WhatsApp</label><input type="tel" name="Supplier_Phone" required></div>
@@ -213,6 +215,7 @@
 
         <div class="form-card">
             <h2>Buyer Registration</h2>
+            <p>Access our pipeline of available commodities.</p>
             <form action="https://formspree.io/f/xbdazkjk" method="POST">
                 <input type="hidden" name="_next" value="https://rominexus.com/welcome.html">
                 <div class="form-group"><label>Purchasing Entity</label><input type="text" name="Purchasing_Entity" required></div>
@@ -230,18 +233,74 @@
     </div>
 
     <div class="intake-section" style="padding-top: 0;">
-        <div class="inquiry-card">
+        <div class="form-card" style="grid-column: 1 / -1; text-align: center;">
             <h2>General Inquiry</h2>
-            <p style="color:var(--text-muted); margin-bottom: 2rem;">For partnership requests or general correspondence.</p>
-            <a href="mailto:ops@rominexus.com?subject=Inquiry%20-%20Romi%20Group" class="btn-inquiry">Send Email to Desk</a>
+            <p>For partnership requests or general correspondence. This channel is for correspondence only.</p>
+            <a href="mailto:ops@rominexus.com?subject=Inquiry%20-%20Romi%20Group%20FZC" class="btn-submit" style="display: inline-block; text-decoration: none; width: auto; min-width: 300px; margin-top: 20px;">Send Email to Desk</a>
         </div>
     </div>
 
     <footer>
-        Romi Nexus | Romi Group FZC | License No. 40601
+        Romi Nexus is a commercial trade desk operating under Romi Group FZC.<br>
+        Registered in the Free Zones Authority of Ajman | License No. 40601.
     </footer>
 
     <script>
         function toggleSupplierOther(val) {
             document.getElementById('supplier-other-div').style.display = (val === 'Other') ? 'block' : 'none';
         }
+
+        const commodities = [
+            { name: "COPPER (LME)", price: 8432 }, { name: "ALUMINUM", price: 2245 },
+            { name: "NICKEL", price: 17540 }, { name: "LITHIUM", price: 13450 },
+            { name: "WTI CRUDE", price: 78.40 }, { name: "SUGAR", price: 21.45 }
+        ];
+
+        function updateTicker() {
+            const ticker = document.getElementById('market-ticker');
+            let content = "";
+            commodities.forEach(com => {
+                const change = (Math.random() * 2 - 1).toFixed(2);
+                const color = change >= 0 ? 'var(--pos)' : 'var(--neg)';
+                content += `<span class="ticker-item">${com.name}: $${com.price.toLocaleString()} <span style="color:${color}">${change >= 0 ? '▲' : '▼'} ${Math.abs(change)}%</span></span>`;
+            });
+            ticker.innerHTML = content + content;
+        }
+
+        let lastGold = 164222;
+        let lastOil = 78.40;
+        let lastCopper = 8432;
+
+        async function fetchPrices() {
+            try {
+                const goldResp = await fetch('https://api.gold-api.com/price/XAU');
+                const goldData = await goldResp.json();
+                if (goldData.price) {
+                    const currentKG = goldData.price * 32.1507;
+                    const el = document.getElementById('gold-price-card');
+                    el.style.color = currentKG > lastGold ? "var(--pos)" : "var(--neg)";
+                    el.innerText = currentKG.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+                    lastGold = currentKG;
+                }
+
+                const oilEl = document.getElementById('oil-price-card');
+                const currentOil = lastOil + (Math.random() * 0.4 - 0.2);
+                oilEl.style.color = currentOil > lastOil ? "var(--pos)" : "var(--neg)";
+                oilEl.innerText = `$${currentOil.toFixed(2)}`;
+                lastOil = currentOil;
+
+                const copperEl = document.getElementById('metal-price-card');
+                const currentCopper = lastCopper + (Math.random() * 10 - 5);
+                copperEl.style.color = currentCopper > lastCopper ? "var(--pos)" : "var(--neg)";
+                copperEl.innerText = `$${currentCopper.toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+                lastCopper = currentCopper;
+
+            } catch (e) { }
+        }
+
+        updateTicker(); fetchPrices();
+        setInterval(updateTicker, 10000);
+        setInterval(fetchPrices, 30000);
+    </script>
+</body>
+</html>
