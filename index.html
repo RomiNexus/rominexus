@@ -74,10 +74,11 @@
         .gold-accent { color: var(--gold-light); }
         .hero p { font-size: 1.2rem; max-width: 700px; margin: 0 auto 3rem auto; color: var(--text-muted); }
 
-        .infra-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 1200px; margin: 0 auto 80px; padding: 0 5%; }
+        /* 4-CARD INFRA GRID */
+        .infra-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; max-width: 1200px; margin: 0 auto 80px; padding: 0 5%; }
         .infra-card { background: var(--panel-bg); border: 1px solid var(--glass-border); border-radius: 18px; padding: 2.5rem; text-align: center; backdrop-filter: blur(20px); }
-        .infra-card h3 { font-size: 2.2rem; margin-bottom: 0.5rem; color: var(--gold-light); font-weight: 600; transition: color 0.6s ease; }
-        .infra-card p { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+        .infra-card h3 { font-size: 1.8rem; margin-bottom: 0.5rem; color: var(--gold-light); font-weight: 600; transition: color 0.6s ease; }
+        .infra-card p { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
 
         .pipeline-section { max-width: 1200px; margin: 0 auto 80px; padding: 5rem 5%; background: var(--panel-bg); border-radius: 24px; border: 1px solid var(--glass-border); }
         .pipeline-header { text-align: center; margin-bottom: 4rem; }
@@ -90,7 +91,6 @@
         .credentials-section { max-width: 1200px; margin: 0 auto 80px; padding: 0 5%; }
         .credentials-card { background: var(--panel-bg); border: 1px solid var(--glass-border); border-radius: 24px; padding: 4rem 3rem; text-align: center; }
         .credentials-card h2 { font-size: 2.5rem; margin-bottom: 1rem; font-weight: 600; }
-        .credentials-card > p { color: var(--text-muted); max-width: 750px; margin: 0 auto 3.5rem auto; font-size: 1.05rem; }
         
         .registry-grid { 
             display: grid; 
@@ -98,11 +98,10 @@
             gap: 2rem; 
             border-top: 1px solid #333; 
             padding-top: 3.5rem; 
-            justify-content: center;
         }
         .reg-item { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.8rem; }
-        .reg-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 500; }
-        .reg-value { font-size: 1.1rem; color: var(--white); font-weight: 600; line-height: 1.4; max-width: 200px; }
+        .reg-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+        .reg-value { font-size: 1.1rem; color: var(--white); font-weight: 600; }
 
         .intake-section { padding: 0 5% 40px; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
         .form-card { background: #151516; padding: 4rem 3rem; border-radius: 24px; border: 1px solid #2D2D2D; }
@@ -115,13 +114,15 @@
         .btn-submit { width: 100%; padding: 18px; background: var(--white); color: #000; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.2s; }
         .btn-submit:hover { background: #D1D1D6; }
 
-        footer { text-align: center; padding: 5rem 5%; border-top: 1px solid #1D1D1F; color: #6E6E73; font-size: 0.85rem; line-height: 1.6; }
+        /* INQUIRY BUTTON (Free) */
+        .inquiry-card { background: #151516; padding: 4rem 3rem; border-radius: 24px; border: 1px solid #2D2D2D; text-align: center; grid-column: 1 / -1; }
+        .btn-inquiry { display: inline-block; text-decoration: none; padding: 18px 40px; background: transparent; color: var(--white); border: 1px solid var(--white); border-radius: 12px; font-weight: 600; transition: 0.3s; }
+        .btn-inquiry:hover { background: var(--white); color: #000; }
 
-        @media (max-width: 900px) { 
-            .intake-section, .infra-grid, .pipeline-grid { grid-template-columns: 1fr; } 
-            .registry-grid { grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
-            .hero h1 { font-size: 3rem; } 
-        }
+        footer { text-align: center; padding: 5rem 5%; border-top: 1px solid #1D1D1F; color: #6E6E73; font-size: 0.85rem; }
+
+        @media (max-width: 1100px) { .infra-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 900px) { .intake-section, .pipeline-grid, .registry-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -136,182 +137,111 @@
 
     <section class="hero">
         <h1>Global Assets<br><span class="gold-accent">Strategic Trade Desk</span></h1>
-        <p>Facilitating high-volume commodity exchange via the Romi Nexus network. We execute strategic trade mandates for primary producers and institutional buyers, ensuring secure settlement and direct asset routing.</p>
+        <p>Facilitating institutional commodity exchange via the Romi Nexus network. We execute high-volume mandates for primary producers and verified buyers.</p>
     </section>
 
     <section class="infra-grid">
         <div class="infra-card">
-            <h3 id="gold-price-card">$164,222.56</h3>
-            <p>Live Market Value (Gold 1KG)</p>
+            <h3 id="gold-price-card">$...</h3>
+            <p>Gold (AU) 1KG</p>
         </div>
-        <div class="infra-card"><h3>Institutional</h3><p>Trade Execution</p></div>
-        <div class="infra-card"><h3>Secure</h3><p>Direct Asset Settlement</p></div>
+        <div class="infra-card">
+            <h3 id="oil-price-card" style="color:var(--white)">$...</h3>
+            <p>Crude Oil (WTI)</p>
+        </div>
+        <div class="infra-card">
+            <h3 id="copper-price-card" style="color:var(--white)">$...</h3>
+            <p>Copper (LME/T)</p>
+        </div>
+        <div class="infra-card">
+            <h3 style="color: var(--pos)">SECURE</h3>
+            <p>Asset Settlement</p>
+        </div>
     </section>
 
     <section class="pipeline-section">
         <div class="pipeline-header">
             <h2>The Trade Protocol</h2>
-            <p style="color: var(--text-muted);">How we execute institutional mandates.</p>
+            <p style="color: var(--text-muted);">Institutional execution framework.</p>
         </div>
         <div class="pipeline-grid">
-            <div class="step"><div class="step-num">01</div><h4>Digital Intake</h4><p>Register your available assets via our portal. Your physical goods remain securely in your own local storage facilities.</p></div>
-            <div class="step"><div class="step-num">02</div><h4>Market Matching</h4><p>We present your vetted manifest to our active network of high-volume Middle Eastern and global institutional buyers.</p></div>
-            <div class="step"><div class="step-num">03</div><h4>Trade Settlement</h4><p>The buyer issues an LOI and Proof of Funds. We facilitate transactions using secure settlement frameworks under strict UAE legal compliance.</p></div>
-            <div class="step"><div class="step-num">04</div><h4>Direct Transfer</h4><p>Upon final agreement and verified funding, goods are shipped directly from your storage to the buyer. We oversee the entire exchange.</p></div>
+            <div class="step"><div class="step-num">01</div><h4>Digital Intake</h4><p>Register assets via our portal. Goods remain securely in your local storage facilities.</p></div>
+            <div class="step"><div class="step-num">02</div><h4>Market Matching</h4><p>Vetted manifests are presented to our network of global institutional buyers.</p></div>
+            <div class="step"><div class="step-num">03</div><h4>Trade Settlement</h4><p>Verification of BCL/POF. Execution under UAE legal and compliance standards.</p></div>
+            <div class="step"><div class="step-num">04</div><h4>Direct Transfer</h4><p>Verified funding triggers direct shipment from producer to buyer.</p></div>
         </div>
     </section>
 
     <section class="credentials-section">
         <div class="credentials-card">
-            <h2>Corporate Registry & Credentials</h2>
-            <p>For security and compliance, official corporate documents are exclusively distributed to verified partners. Below is our public registry data.</p>
+            <h2>Corporate Registry</h2>
             <div class="registry-grid">
                 <div class="reg-item"><span class="reg-label">Legal Entity</span><span class="reg-value">Romi Group FZC</span></div>
-                <div class="reg-item"><span class="reg-label">Jurisdiction</span><span class="reg-value">Ajman Free Zone (AFZ), UAE</span></div>
-                <div class="reg-item"><span class="reg-label">License Number</span><span class="reg-value">40601</span></div>
-                <div class="reg-item"><span class="reg-label">Authorized Scopes</span><span class="reg-value">Wholesale Gold & Foodstuff Trading</span></div>
-   <div class="intake-section" style="padding-top: 0;">
-        <div class="form-card" style="grid-column: 1 / -1; text-align: center;">
-            <h2>General Inquiry</h2>
-            <p>For operational questions, partnership proposals, or general desk inquiries, please contact our Dubai team directly.</p>
-            <div style="margin-top: 2rem;">
-                <a href="mailto:ops@rominexus.com?subject=General Inquiry - Romi Group FZC" 
-                   class="btn-submit" 
-                   style="display: inline-block; text-decoration: none; width: auto; padding: 18px 60px;">
-                   Send Inquiry
-                </a>
+                <div class="reg-item"><span class="reg-label">Jurisdiction</span><span class="reg-value">Ajman, UAE</span></div>
+                <div class="reg-item"><span class="reg-label">License</span><span class="reg-value">40601</span></div>
+                <div class="reg-item"><span class="reg-label">Scopes</span><span class="reg-value">Wholesale Trade</span></div>
             </div>
-            <p style="margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-muted);">
-                Inquiries are typically processed within 24 business hours.
-            </p>
         </div>
-    </div>
+    </section>
+
+    <div class="intake-section">
+        <div class="form-card">
+            <h2>Supplier Manifest</h2>
+            <form action="https://formspree.io/f/mreaylgk" method="POST">
+                <input type="hidden" name="_next" value="https://rominexus.com/welcome.html">
+                <div class="form-group"><label>Legal Entity</label><input type="text" name="Supplier_Entity" required></div>
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem">
-                    <div class="form-group"><label>Contact Email</label><input type="email" name="Supplier_Email" required></div>
-                    <div class="form-group"><label>Phone Number (WhatsApp)</label><input type="tel" name="Supplier_Phone" required placeholder="+971..."></div>
+                    <div class="form-group"><label>Email</label><input type="email" name="Supplier_Email" required></div>
+                    <div class="form-group"><label>WhatsApp</label><input type="tel" name="Supplier_Phone" required></div>
                 </div>
                 <div class="form-group">
                     <label>Asset Class</label>
                     <select name="Supplier_Asset_Class" required onchange="toggleSupplierOther(this.value)">
                         <option value="">Select Asset...</option>
                         <option value="Gold">Unworked Gold (AU)</option>
-                        <option value="Sugar">Refined Sugar (ICUMSA 45)</option>
-                        <option value="Wheat">Milling Wheat</option>
-                        <option value="Corn">Yellow Corn / Maize</option>
-                        <option value="Soybeans">Soybeans (Grade 2)</option>
-                        <option value="Coffee">Coffee Beans</option>
-                        <option value="Rice">Long Grain Rice</option>
-                        <option value="Cocoa">Cocoa Beans</option>
-                        <option value="Palm Oil">Palm Oil</option>
-                        <option value="Cotton">Raw Cotton</option>
-                        <option value="Barley">Barley</option>
-                        <option value="Other">Other (Specify below)</option>
+                        <option value="Oil">Crude Oil (WTI/Brent)</option>
+                        <option value="Metals">Industrial Metals (Copper/Lithium)</option>
+                        <option value="Sugar">Refined Sugar (ICUMSA)</option>
+                        <option value="Other">Other</option>
                     </select>
                 </div>
-                <div class="form-group" id="supplier-other-div" style="display:none;">
-                    <label>Specify Other Commodity</label>
-                    <input type="text" name="Supplier_Asset_Other">
-                </div>
-                <div class="form-group"><label>Available Volume & Location</label><input type="text" name="Supplier_Volume_Location" required></div>
+                <div class="form-group" id="supplier-other-div" style="display:none;"><label>Specify</label><input type="text" name="Supplier_Asset_Other"></div>
+                <div class="form-group"><label>Volume & Location</label><input type="text" name="Supplier_Volume_Location" required></div>
                 <button type="submit" class="btn-submit">Submit Manifest</button>
             </form>
         </div>
 
         <div class="form-card">
             <h2>Buyer Registration</h2>
-            <p>Access our pipeline of available commodities.</p>
             <form action="https://formspree.io/f/xbdazkjk" method="POST">
                 <input type="hidden" name="_next" value="https://rominexus.com/welcome.html">
                 <div class="form-group"><label>Purchasing Entity</label><input type="text" name="Purchasing_Entity" required></div>
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem">
                     <div class="form-group"><label>Business Email</label><input type="email" name="Business_Email" required></div>
-                    <div class="form-group"><label>Phone Number (WhatsApp)</label><input type="tel" name="WhatsApp_Number" required placeholder="+1 ..."></div>
+                    <div class="form-group"><label>WhatsApp</label><input type="tel" name="WhatsApp_Number" required></div>
                 </div>
                 <div class="form-group"><label>Target Requirement</label><input type="text" name="Target_Requirement" required></div>
-                <div class="form-group"><label>Proof of Funds Status</label>
-                    <select name="POF_Status" required><option value="Verified & Ready">Verified & Ready</option><option value="Pending Clearance">Pending Clearance</option></select>
+                <div class="form-group"><label>POF Status</label>
+                    <select name="POF_Status" required><option value="Verified">Verified & Ready</option><option value="Pending">Pending</option></select>
                 </div>
-                <button type="submit" class="btn-submit">Request Full CIS/KYC</button>
+                <button type="submit" class="btn-submit">Request CIS Access</button>
             </form>
         </div>
     </div>
 
     <div class="intake-section" style="padding-top: 0;">
-        <div class="form-card" style="grid-column: 1 / -1;">
+        <div class="inquiry-card">
             <h2>General Inquiry</h2>
-            <form action="https://formspree.io/f/mdalwdop" method="POST">
-                <input type="hidden" name="_next" value="https://rominexus.com/welcome.html">
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
-                    <div class="form-group"><label>Full Name</label><input type="text" name="Full_Name" required></div>
-                    <div class="form-group"><label>Email Address</label><input type="email" name="Inquiry_Email" required></div>
-                </div>
-                <div class="form-group"><label>Subject</label><input type="text" name="Inquiry_Subject" required></div>
-                <div class="form-group"><label>Message</label><textarea name="Inquiry_Message" rows="5" required></textarea></div>
-                <button type="submit" class="btn-submit">Dispatch Inquiry</button>
-            </form>
+            <p style="color:var(--text-muted); margin-bottom: 2rem;">For partnership requests or general correspondence.</p>
+            <a href="mailto:ops@rominexus.com?subject=Inquiry%20-%20Romi%20Group" class="btn-inquiry">Send Email to Desk</a>
         </div>
     </div>
 
     <footer>
-        Romi Nexus is a commercial trade desk operating under Romi Group FZC.<br>
-        Registered in the Free Zones Authority of Ajman | License No. 40601.
+        Romi Nexus | Romi Group FZC | License No. 40601
     </footer>
 
     <script>
         function toggleSupplierOther(val) {
             document.getElementById('supplier-other-div').style.display = (val === 'Other') ? 'block' : 'none';
         }
-
-        const commodities = [
-            { name: "SUGAR", price: 21.45 }, { name: "WHEAT", price: 585.50 },
-            { name: "CORN", price: 442.25 }, { name: "SOYBEANS", price: 1152.00 },
-            { name: "COFFEE", price: 192.30 }, { name: "RICE", price: 18.22 },
-            { name: "COCOA", price: 6245.00 }, { name: "PALM OIL", price: 3840.00 },
-            { name: "COTTON", price: 94.12 }, { name: "BARLEY", price: 310.40 }
-        ];
-
-        function updateTicker() {
-            const ticker = document.getElementById('market-ticker');
-            let content = "";
-            commodities.forEach(com => {
-                const change = (Math.random() * 2 - 1).toFixed(2);
-                const color = change >= 0 ? 'var(--pos)' : 'var(--neg)';
-                const arrow = change >= 0 ? '▲' : '▼';
-                content += `<span class="ticker-item">${com.name}: $${com.price.toLocaleString()} <span style="color:${color}">${arrow} ${Math.abs(change)}%</span></span>`;
-            });
-            ticker.innerHTML = content + content;
-        }
-
-        let lastGoldPrice = 164222.56;
-
-        async function fetchRealGold() {
-            try {
-                const response = await fetch('https://api.gold-api.com/price/XAU');
-                const data = await response.json();
-                if (data && data.price) {
-                    const currentKGPrice = data.price * 32.1507;
-                    const priceDisplay = document.getElementById('gold-price-card');
-                    
-                    if (currentKGPrice > lastGoldPrice) {
-                        priceDisplay.style.color = "var(--pos)";
-                    } else if (currentKGPrice < lastGoldPrice) {
-                        priceDisplay.style.color = "var(--neg)";
-                    } else {
-                        priceDisplay.style.color = "var(--gold-light)";
-                    }
-
-                    priceDisplay.innerText = currentKGPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-                    lastGoldPrice = currentKGPrice;
-                    
-                    setTimeout(() => { priceDisplay.style.color = "var(--gold-light)"; }, 5000);
-                }
-            } catch (e) {}
-        }
-
-        updateTicker();
-        fetchRealGold();
-        setInterval(updateTicker, 10000);
-        setInterval(fetchRealGold, 30000);
-    </script>
-</body>
-</html>
