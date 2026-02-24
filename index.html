@@ -105,23 +105,21 @@
         .reg-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 500; }
         .reg-value { font-size: 1.1rem; color: var(--white); font-weight: 600; line-height: 1.4; max-width: 200px; }
 
-        .intake-section { padding: 0 5% 40px; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-        .form-card { background: #151516; padding: 4rem 3rem; border-radius: 24px; border: 1px solid #2D2D2D; }
-        .form-card h2 { margin-bottom: 0.5rem; font-size: 2rem; }
-        .form-card > p { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 2.5rem; }
+        .intake-section { padding: 0 5% 40px; max-width: 1200px; margin: 0 auto; display: flex; justify-content: center;}
+        .form-card { background: #151516; padding: 4rem 3rem; border-radius: 24px; border: 1px solid #2D2D2D; width: 100%; max-width: 800px; }
+        .form-card h2 { margin-bottom: 0.5rem; font-size: 2rem; text-align: center;}
+        .form-card > p { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 2.5rem; text-align: center;}
         
-        .form-group { margin-bottom: 1.5rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; font-size: 0.8rem; color: var(--text-muted); font-weight: 500; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 16px; border: 1px solid #333; border-radius: 12px; background: #000; color: #fff; font-family: inherit; font-size: 1rem; }
         .btn-submit { width: 100%; padding: 18px; background: var(--white); color: #000; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.2s; }
         .btn-submit:hover { background: #D1D1D6; }
 
         footer { text-align: center; padding: 5rem 5%; border-top: 1px solid #1D1D1F; color: #6E6E73; font-size: 0.85rem; line-height: 1.6; }
 
         @media (max-width: 900px) { 
-            .intake-section, .infra-grid, .pipeline-grid { grid-template-columns: 1fr; } 
+            .infra-grid, .pipeline-grid { grid-template-columns: 1fr; } 
             .registry-grid { grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
             .hero h1 { font-size: 3rem; } 
+            .form-card { padding: 2rem 1.5rem; }
         }
     </style>
 </head>
@@ -187,78 +185,16 @@
 
     <div class="intake-section">
         <div class="form-card">
-            <h2>Supplier Manifest</h2>
-            <p>List available goods for our buyer network.</p>
-            <form action="https://formspree.io/f/mreaylgk" method="POST">
-                <input type="hidden" name="_next" value="https://rominexus.com/welcome.html">
-                <div class="form-group"><label>Legal Producing Entity</label><input type="text" name="Supplier_Entity" required></div>
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem">
-                    <div class="form-group"><label>Email</label><input type="email" name="Supplier_Email" required></div>
-                    <div class="form-group"><label>WhatsApp</label><input type="tel" name="Supplier_Phone" required></div>
-                </div>
-                <div class="form-group">
-                    <label>Asset Class</label>
-                    <select name="Supplier_Asset_Class" required onchange="toggleSupplierOther(this.value)">
-                        <option value="">Select Asset...</option>
-                        <option value="Gold">Unworked Gold (AU)</option>
-                        <option value="Oil">Crude Oil (WTI/Brent)</option>
-                        <option value="Metals">Industrial Metals (Copper/Lithium)</option>
-                        <option value="Foodstuff">Foodstuff Trading</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-                <div class="form-group" id="supplier-other-div" style="display:none;"><label>Specify</label><input type="text" name="Supplier_Asset_Other"></div>
-                <div class="form-group"><label>Volume & Location</label><input type="text" name="Supplier_Volume_Location" required></div>
-                <button type="submit" class="btn-submit">Submit Manifest</button>
-            </form>
-        </div>
-
-        <div class="form-card">
-            <h2>Buyer Registration</h2>
-            <p>Access our pipeline of available commodities.</p>
-            <form action="https://formspree.io/f/xbdazkjk" method="POST">
-                <input type="hidden" name="_next" value="https://rominexus.com/welcome.html">
-                <div class="form-group"><label>Purchasing Entity</label><input type="text" name="Purchasing_Entity" required></div>
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem">
-                    <div class="form-group"><label>Business Email</label><input type="email" name="Business_Email" required></div>
-                    <div class="form-group"><label>WhatsApp</label><input type="tel" name="WhatsApp_Number" required></div>
-                </div>
-                <div class="form-group"><label>Target Requirement</label><input type="text" name="Target_Requirement" required></div>
-                <div class="form-group"><label>POF Status</label>
-                    <select name="POF_Status" required><option value="Verified">Verified & Ready</option><option value="Pending">Pending</option></select>
-                </div>
-                <button type="submit" class="btn-submit">Request CIS Access</button>
-            </form>
-        </div>
+            <h2>Global Due Diligence Portal</h2>
+            <p>Please complete the intake form below to begin the assessment process for Romi Nexus.</p>
+            
+            <iframe data-tally-src="https://tally.so/embed/VL0dYN?transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="200" frameborder="0" marginheight="0" marginwidth="0" title="Global Due Diligence Portal"></iframe>
+            <script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
+            </div>
     </div>
 
     <div class="intake-section" style="padding-top: 0;">
-        <div class="form-card" style="grid-column: 1 / -1; text-align: center;">
+        <div class="form-card" style="text-align: center;">
             <h2>General Inquiry</h2>
             <p>For partnership requests or general correspondence. This channel is for correspondence only.</p>
-            <a href="mailto:ops@rominexus.com?subject=Inquiry%20-%20Romi%20Group%20FZC" class="btn-submit" style="display: inline-block; text-decoration: none; width: auto; min-width: 300px; margin-top: 20px;">Send Email to Desk</a>
-        </div>
-    </div>
-
-    <footer>
-        Romi Nexus is a commercial trade desk operating under Romi Group FZC.<br>
-        Registered in the Free Zones Authority of Ajman | License No. 40601.
-    </footer>
-
-    <script>
-        function toggleSupplierOther(val) {
-            document.getElementById('supplier-other-div').style.display = (val === 'Other') ? 'block' : 'none';
-        }
-
-        const commodities = [
-            { name: "COPPER (LME)", price: 8432 }, { name: "ALUMINUM", price: 2245 },
-            { name: "NICKEL", price: 17540 }, { name: "LITHIUM", price: 13450 },
-            { name: "WTI CRUDE", price: 78.40 }, { name: "FOODSTUFF", price: 21.45 }
-        ];
-
-        function updateTicker() {
-            const ticker = document.getElementById('market-ticker');
-            let content = "";
-            commodities.forEach(com => {
-                const change = (Math.random() * 2 - 1).toFixed(2);
-                const color = change
+            <a href="mailto:ops@rominexus.com?subject=Inquiry%20-%20Romi%20Group%20FZC" class="btn-submit" style="display: inline-block; text-decoration: none; width: auto; min-width: 300px; margin-top: 20px;">
