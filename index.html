@@ -74,7 +74,7 @@
         .gold-accent { color: var(--gold-light); }
         .hero p { font-size: 1.2rem; max-width: 700px; margin: 0 auto 3rem auto; color: var(--text-muted); }
 
-        /* INFRA GRID - Restored to your original card style but set to 4 columns */
+        /* INFRA GRID */
         .infra-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; max-width: 1200px; margin: 0 auto 80px; padding: 0 5%; }
         .infra-card { background: var(--panel-bg); border: 1px solid var(--glass-border); border-radius: 18px; padding: 2.5rem; text-align: center; backdrop-filter: blur(20px); }
         .infra-card h3 { font-size: 2.2rem; margin-bottom: 0.5rem; color: var(--gold-light); font-weight: 600; transition: color 0.6s ease; }
@@ -203,7 +203,7 @@
                         <option value="Gold">Unworked Gold (AU)</option>
                         <option value="Oil">Crude Oil (WTI/Brent)</option>
                         <option value="Metals">Industrial Metals (Copper/Lithium)</option>
-                        <option value="Sugar">Refined Sugar (ICUMSA)</option>
+                        <option value="Foodstuff">Foodstuff Trading</option>
                         <option value="Other">Other</option>
                     </select>
                 </div>
@@ -253,7 +253,7 @@
         const commodities = [
             { name: "COPPER (LME)", price: 8432 }, { name: "ALUMINUM", price: 2245 },
             { name: "NICKEL", price: 17540 }, { name: "LITHIUM", price: 13450 },
-            { name: "WTI CRUDE", price: 78.40 }, { name: "SUGAR", price: 21.45 }
+            { name: "WTI CRUDE", price: 78.40 }, { name: "FOODSTUFF", price: 21.45 }
         ];
 
         function updateTicker() {
@@ -261,46 +261,4 @@
             let content = "";
             commodities.forEach(com => {
                 const change = (Math.random() * 2 - 1).toFixed(2);
-                const color = change >= 0 ? 'var(--pos)' : 'var(--neg)';
-                content += `<span class="ticker-item">${com.name}: $${com.price.toLocaleString()} <span style="color:${color}">${change >= 0 ? '▲' : '▼'} ${Math.abs(change)}%</span></span>`;
-            });
-            ticker.innerHTML = content + content;
-        }
-
-        let lastGold = 164222;
-        let lastOil = 78.40;
-        let lastCopper = 8432;
-
-        async function fetchPrices() {
-            try {
-                const goldResp = await fetch('https://api.gold-api.com/price/XAU');
-                const goldData = await goldResp.json();
-                if (goldData.price) {
-                    const currentKG = goldData.price * 32.1507;
-                    const el = document.getElementById('gold-price-card');
-                    el.style.color = currentKG > lastGold ? "var(--pos)" : "var(--neg)";
-                    el.innerText = currentKG.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
-                    lastGold = currentKG;
-                }
-
-                const oilEl = document.getElementById('oil-price-card');
-                const currentOil = lastOil + (Math.random() * 0.4 - 0.2);
-                oilEl.style.color = currentOil > lastOil ? "var(--pos)" : "var(--neg)";
-                oilEl.innerText = `$${currentOil.toFixed(2)}`;
-                lastOil = currentOil;
-
-                const copperEl = document.getElementById('metal-price-card');
-                const currentCopper = lastCopper + (Math.random() * 10 - 5);
-                copperEl.style.color = currentCopper > lastCopper ? "var(--pos)" : "var(--neg)";
-                copperEl.innerText = `$${currentCopper.toLocaleString(undefined, {maximumFractionDigits: 0})}`;
-                lastCopper = currentCopper;
-
-            } catch (e) { }
-        }
-
-        updateTicker(); fetchPrices();
-        setInterval(updateTicker, 10000);
-        setInterval(fetchPrices, 30000);
-    </script>
-</body>
-</html>
+                const color = change
