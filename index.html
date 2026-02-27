@@ -28,7 +28,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* LIVE TICKER TAPE ANIMATION AREA */
+        /* TICKER TAPE CONTAINER */
         .ticker-wrap {
             background: #1D1D1F;
             border-bottom: 1px solid #333;
@@ -71,7 +71,7 @@
         .gold-accent { color: var(--gold-light); }
         .hero p { font-size: 1.2rem; max-width: 700px; margin: 0 auto 3rem auto; color: var(--text-muted); }
 
-        /* THE ORIGINAL 3-CARD GRID */
+        /* THE 3-CARD GRID */
         .infra-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 1200px; margin: 0 auto 80px; padding: 0 5%; }
         .infra-card { background: var(--panel-bg); border: 1px solid var(--glass-border); border-radius: 18px; padding: 1.5rem; height: 160px; backdrop-filter: blur(20px); overflow: hidden; }
 
@@ -118,15 +118,15 @@
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
             {
             "symbols": [
-                { "proName": "OANDA:XAU_USD", "title": "Gold Spot" },
-                { "proName": "OANDA:XAG_USD", "title": "Silver Spot" },
-                { "proName": "OANDA:WTICO_USD", "title": "WTI Crude" },
-                { "proName": "OANDA:BCO_USD", "title": "Brent Crude" },
-                { "proName": "OANDA:NATGAS_USD", "title": "Natural Gas" },
-                { "proName": "OANDA:XCU_USD", "title": "Copper" },
-                { "proName": "OANDA:XAL_USD", "title": "Aluminum" },
-                { "proName": "OANDA:XNI_USD", "title": "Nickel" },
-                { "proName": "OANDA:SUGAR_USD", "title": "Sugar" }
+                { "proName": "TVC:GOLD", "title": "Gold Spot" },
+                { "proName": "TVC:SILVER", "title": "Silver Spot" },
+                { "proName": "TVC:USOIL", "title": "WTI Crude" },
+                { "proName": "TVC:UKOIL", "title": "Brent Crude" },
+                { "proName": "EIGHTCAP:NATGAS", "title": "Natural Gas" },
+                { "proName": "EIGHTCAP:COPPER", "title": "Copper" },
+                { "proName": "EIGHTCAP:ALUMINIUM", "title": "Aluminum" },
+                { "proName": "EIGHTCAP:NICKEL", "title": "Nickel" },
+                { "proName": "EIGHTCAP:SUGAR", "title": "Sugar" }
             ],
             "showSymbolLogo": true,
             "colorTheme": "dark",
@@ -158,7 +158,7 @@
                 <div class="tradingview-widget-container__widget"></div>
                 <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
                 {
-                "symbol": "OANDA:XAU_USD",
+                "symbol": "TVC:GOLD",
                 "width": "100%", "colorTheme": "dark", "isTransparent": true, "locale": "en"
                 }
                 </script>
@@ -169,7 +169,7 @@
                 <div class="tradingview-widget-container__widget"></div>
                 <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
                 {
-                "symbol": "OANDA:WTICO_USD",
+                "symbol": "TVC:USOIL",
                 "width": "100%", "colorTheme": "dark", "isTransparent": true, "locale": "en"
                 }
                 </script>
@@ -180,7 +180,7 @@
                 <div class="tradingview-widget-container__widget"></div>
                 <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
                 {
-                "symbol": "OANDA:XCU_USD",
+                "symbol": "EIGHTCAP:COPPER",
                 "width": "100%", "colorTheme": "dark", "isTransparent": true, "locale": "en"
                 }
                 </script>
