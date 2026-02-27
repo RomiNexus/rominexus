@@ -255,12 +255,10 @@
     <script>
         function updateMarketStatus() {
             const now = new Date();
-            const day = now.getUTCDay(); // 0 = Sun, 6 = Sat
+            const day = now.getUTCDay();
             const hour = now.getUTCHours();
             const dot = document.getElementById('market-dot');
             const text = document.getElementById('market-text');
-
-            // Markets generally closed Fri 22:00 UTC to Sun 22:00 UTC
             const isWeekend = (day === 6) || (day === 5 && hour >= 22) || (day === 0 && hour < 22);
 
             if (isWeekend) {
