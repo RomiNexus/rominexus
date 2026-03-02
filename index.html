@@ -549,7 +549,7 @@
 
     // INITIATE TRADE
     function initiateTrade() {
-      const phoneNumber = "971XXXXXXXXX"; // ← YOUR REAL NUMBER HERE
+      const phoneNumber = "18023167296"; // ← YOUR REAL NUMBER HERE
       const entity      = document.getElementById('entityName').innerText.trim();
       const message     = encodeURIComponent(`[Romi Nexus Desk] Authorized Representative of ${entity} (${currentUserRole}) requesting trade initiation.`);
       window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
