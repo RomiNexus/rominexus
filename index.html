@@ -3,403 +3,865 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Romi Nexus | Client Portal</title>
+  <title>ROMI NEXUS | INSTITUTIONAL TERMINAL</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --gold: #D4AF37;
+      --gold-dim: #a8892a;
       --gold-hover: #b5952f;
-      --bg-black: #050505;
-      --card-gray: #121212;
-      --border-color: #2a2a2a;
-      --text-light: #f4f4f4;
-      --text-muted: #888888;
-      --success: #00c853;
+      --bg: #020202;
+      --bg-panel: #080808;
+      --bg-card: #0d0d0d;
+      --border: #1a1a1a;
+      --border-bright: #2a2a2a;
+      --text: #e8e8e8;
+      --text-muted: #555;
+      --text-dim: #333;
+      --success: #00e676;
       --warning: #ffab00;
-      --danger: #ff4d4d;
+      --danger: #ff1744;
+      --up: #00e676;
+      --down: #ff1744;
+      --mono: 'IBM Plex Mono', monospace;
     }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background-color: var(--bg-black);
-      color: var(--text-light);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      margin: 0; padding: 0; min-height: 100vh;
-      display: flex; justify-content: center; align-items: center;
-      padding: 40px 20px; box-sizing: border-box;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 12px;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
-    .portal-box {
-      width: 100%; max-width: 1150px; background: var(--card-gray);
-      border: 1px solid var(--border-color); border-top: 3px solid var(--gold);
-      border-radius: 6px; padding: 40px; padding-bottom: 25px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.9);
+    /* ── TICKER BAR ── */
+    .ticker-bar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: #000; border-bottom: 1px solid var(--gold);
+      height: 28px; overflow: hidden; display: flex; align-items: center;
+    }
+    .ticker-label {
+      background: var(--gold); color: #000; padding: 0 10px;
+      font-size: 10px; font-weight: 700; letter-spacing: 2px;
+      height: 100%; display: flex; align-items: center; flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .ticker-track { flex: 1; overflow: hidden; }
+    .ticker-inner {
+      display: flex; gap: 0;
+      animation: ticker-scroll 40s linear infinite;
+      white-space: nowrap;
+    }
+    .ticker-inner:hover { animation-play-state: paused; }
+    @keyframes ticker-scroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .ticker-item {
+      padding: 0 20px; font-size: 10px; letter-spacing: 0.5px;
+      border-right: 1px solid #1a1a1a; display: inline-flex;
+      align-items: center; gap: 8px; height: 28px;
+    }
+    .ticker-item .t-name { color: var(--gold); font-weight: 600; }
+    .ticker-item .t-price { color: var(--text); }
+    .ticker-item .t-up   { color: var(--up); }
+    .ticker-item .t-down { color: var(--down); }
+
+    /* ── STATUS BAR ── */
+    .status-bar {
+      position: fixed; top: 28px; left: 0; right: 0; z-index: 999;
+      background: #050505; border-bottom: 1px solid var(--border-bright);
+      height: 26px; display: flex; align-items: center;
+      justify-content: space-between; padding: 0 16px;
+    }
+    .status-bar-left, .status-bar-right {
+      display: flex; align-items: center; gap: 16px;
+      font-size: 10px; color: var(--text-muted); letter-spacing: 1px;
+    }
+    .status-indicator { display: flex; align-items: center; gap: 5px; }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .dot-live    { background: var(--success); box-shadow: 0 0 6px var(--success); animation: pulse-dot 2s infinite; }
+    .dot-offline { background: var(--danger); }
+    @keyframes pulse-dot { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+    .status-tag { color: var(--gold); font-weight: 600; }
+    #clock { color: var(--text-muted); font-size: 10px; }
+
+    /* ── MAIN LAYOUT ── */
+    .terminal-wrap {
+      margin-top: 54px;
+      padding: 12px;
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
-    .header-section { text-align: center; margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; }
-    .logo-text { font-size: 1.8em; letter-spacing: 2px; font-weight: 700; color: var(--gold); margin-bottom: 5px; text-transform: uppercase; }
-    .subtitle { font-size: 0.8em; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; }
-
-    #gate-view { max-width: 400px; margin: 60px auto; text-align: center; }
-    #gate-view label { display: block; margin-bottom: 25px; font-size: 0.85em; letter-spacing: 1.5px; color: var(--text-muted); text-transform: uppercase; }
-    input[type="text"], select, input[type="number"] {
-      width: 100%; background: var(--bg-black); border: 1px solid var(--border-color);
-      color: var(--text-light); padding: 14px; font-size: 1em; border-radius: 4px;
-      box-sizing: border-box; outline: none; margin-bottom: 12px;
+    /* ── GATE SCREEN ── */
+    #gate-view {
+      min-height: calc(100vh - 54px);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 40px 20px;
     }
-    select option { background: #111; }
-
-    .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: flex-start; }
-
-    @media (max-width: 900px) {
-      .dashboard-grid { grid-template-columns: 1fr; gap: 20px; }
-      .portal-box { padding: 20px; }
-      .logo-text { font-size: 1.4em; }
-      .tv-widget-box { height: 72px !important; min-height: 72px !important; margin-bottom: 10px !important; }
+    .gate-box {
+      width: 100%; max-width: 480px;
+      border: 1px solid var(--border-bright);
+      border-top: 2px solid var(--gold);
+      background: var(--bg-panel);
+      padding: 40px;
+    }
+    .gate-logo {
+      text-align: center; margin-bottom: 30px;
+      border-bottom: 1px solid var(--border); padding-bottom: 20px;
+    }
+    .gate-logo-text {
+      font-size: 22px; font-weight: 700; letter-spacing: 6px;
+      color: var(--gold); text-transform: uppercase;
+    }
+    .gate-logo-sub {
+      font-size: 9px; color: var(--text-muted); letter-spacing: 3px;
+      margin-top: 4px; text-transform: uppercase;
+    }
+    .terminal-prompt {
+      font-size: 10px; color: var(--text-muted); letter-spacing: 1px;
+      margin-bottom: 6px; text-transform: uppercase;
+    }
+    .terminal-input-wrap {
+      display: flex; align-items: center; gap: 0;
+      border: 1px solid var(--border-bright); background: #000;
+      margin-bottom: 16px;
+    }
+    .terminal-prompt-symbol {
+      color: var(--gold); padding: 12px 10px; font-size: 13px;
+      font-weight: 700; flex-shrink: 0; border-right: 1px solid var(--border);
+    }
+    .terminal-input {
+      flex: 1; background: transparent; border: none; outline: none;
+      color: var(--text); font-family: var(--mono); font-size: 12px;
+      padding: 12px 10px; letter-spacing: 1px;
+    }
+    .cursor-blink {
+      display: inline-block; width: 8px; height: 14px;
+      background: var(--gold); animation: blink 1s step-end infinite;
+      vertical-align: middle; margin-left: 2px;
+    }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+    .gate-btn {
+      width: 100%; background: var(--gold); color: #000;
+      border: none; padding: 13px; font-family: var(--mono);
+      font-size: 11px; font-weight: 700; letter-spacing: 3px;
+      cursor: pointer; transition: 0.2s; text-transform: uppercase;
+    }
+    .gate-btn:hover { background: var(--gold-hover); }
+    .gate-sys-lines {
+      margin-top: 20px; border-top: 1px solid var(--border);
+      padding-top: 15px;
+    }
+    .sys-line {
+      font-size: 9px; color: var(--text-dim); letter-spacing: 0.5px;
+      margin-bottom: 3px; display: flex; align-items: center; gap: 6px;
+    }
+    .sys-line::before { content: '>'; color: var(--gold); }
+    #gate-error {
+      color: var(--danger); font-size: 10px; letter-spacing: 0.5px;
+      margin-top: 10px; display: none; padding: 8px;
+      border: 1px solid rgba(255,23,68,0.3); background: rgba(255,23,68,0.05);
+    }
+    #gate-loader {
+      text-align: center; margin-top: 12px; display: none;
+      font-size: 10px; color: var(--text-muted); letter-spacing: 2px;
+    }
+    .loading-dots::after {
+      content: '...'; animation: dots 1.5s steps(4, end) infinite;
+    }
+    @keyframes dots {
+      0%,20% { content: '.'; } 40% { content: '..'; }
+      60%,100% { content: '...'; }
     }
 
-    .data-card { background: var(--bg-black); border: 1px solid var(--border-color); padding: 25px; border-radius: 4px; margin-bottom: 20px; }
-    .data-card h3 { margin: 0 0 15px 0; font-size: 1.2em; color: var(--text-light); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
-
-    .market-column h4 {
-      font-size: 0.8em; color: var(--text-muted); text-transform: uppercase;
-      letter-spacing: 1.5px; margin-top: 25px; margin-bottom: 15px;
-      text-align: center; width: 100%; display: block;
+    /* ── DASHBOARD ── */
+    #dashboard-view { display: none; }
+    .dash-grid {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      gap: 10px;
+      align-items: start;
     }
 
-    .status-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border-color); font-size: 0.9em; }
-    .badge { padding: 4px 8px; border-radius: 3px; font-size: 0.75em; font-weight: bold; letter-spacing: 1px; }
-    .badge-green { background: rgba(0, 200, 83, 0.1); color: var(--success); border: 1px solid rgba(0, 200, 83, 0.3); }
-    .badge-yellow { background: rgba(255, 171, 0, 0.1); color: var(--warning); border: 1px solid rgba(255, 171, 0, 0.3); }
-    .badge-red { background: rgba(255, 77, 77, 0.1); color: var(--danger); border: 1px solid rgba(255, 77, 77, 0.3); }
+    /* ── PANEL ── */
+    .panel {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      margin-bottom: 10px;
+    }
+    .panel-header {
+      background: #0a0a0a;
+      border-bottom: 1px solid var(--border);
+      padding: 7px 12px;
+      display: flex; align-items: center;
+      justify-content: space-between;
+    }
+    .panel-tag {
+      font-size: 10px; font-weight: 700; letter-spacing: 2px;
+      color: var(--gold); text-transform: uppercase;
+    }
+    .panel-tag::before { content: '['; color: var(--text-muted); }
+    .panel-tag::after  { content: ']'; color: var(--text-muted); }
+    .panel-meta {
+      font-size: 9px; color: var(--text-muted); letter-spacing: 1px;
+    }
+    .panel-body { padding: 12px; }
 
-    .live-dot { height: 8px; width: 8px; background-color: var(--danger); border-radius: 50%; display: inline-block; margin-left: 8px; margin-bottom: 2px; animation: pulse 1.5s infinite; }
-    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.7); } 70% { box-shadow: 0 0 0 6px rgba(255, 77, 77, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0); } }
-
-    .flow-item { background: #0a0a0a; border: 1px solid var(--border-color); padding: 15px; border-radius: 4px; font-size: 0.9em; border-left: 3px solid var(--border-color); margin-bottom: 10px; transition: 0.3s; }
-    .flow-item:hover { border-left: 3px solid var(--gold); background: #111; }
-    .flow-item .flow-meta { font-size: 0.75em; color: var(--text-muted); margin-top: 6px; }
-    .flow-type { font-size: 0.7em; padding: 3px 6px; border-radius: 2px; margin-right: 8px; font-weight: bold; }
-    .flow-type.buy  { background: rgba(0, 200, 83, 0.15); color: var(--success); }
-    .flow-type.sell { background: rgba(255, 77, 77, 0.15); color: var(--danger); }
-
-    .legal-card, .intel-card { background: #080808; border: 1px solid var(--border-color); border-radius: 4px; margin-bottom: 15px; padding: 15px; overflow: hidden; }
-    .intel-card { padding: 0; }
-    .legal-card h4, .intel-card h4 { margin: 0 0 10px 0; padding: 12px 15px; font-size: 0.75em; color: var(--gold); text-transform: uppercase; letter-spacing: 1.5px; text-align: center; border-bottom: 1px solid var(--border-color); background: #0d0d0d; }
-
-    .legal-scroll, .widget-viewport { overflow-y: auto; background: #050505; }
-    .legal-scroll { height: 380px; font-size: 0.75em; color: #666; line-height: 1.8; padding: 15px; text-align: justify; }
-    .widget-viewport { height: 320px; }
-
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: #050505; }
-    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
-
-    .mandate-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
-    .mandate-card { background: #0a0a0a; border: 1px solid var(--border-color); padding: 15px; border-radius: 4px; }
-    .m-label { font-size: 0.65em; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; display: block; }
-    .m-value { font-size: 1.2em; color: var(--gold); font-weight: 600; margin-top: 4px; display: block; }
-
-    .tv-widget-box { border: 1px solid var(--border-color); border-radius: 4px; overflow: hidden; margin-bottom: 10px; background: #0a0a0a; min-height: 72px; }
-
-    .btn { width: 100%; background: var(--gold); color: #000; border: none; padding: 15px; font-size: 1em; font-weight: bold; letter-spacing: 1px; border-radius: 4px; cursor: pointer; transition: 0.3s; margin-top: 8px; }
-    .btn:hover { background: var(--gold-hover); }
-    .btn:disabled { background: #333; color: #666; cursor: not-allowed; }
-    .btn-outline { background: transparent; color: var(--gold); border: 1px solid var(--gold); }
-    .btn-outline:hover { background: rgba(212,175,55,0.1); }
-
-    .checkbox-container { display: flex; align-items: flex-start; text-align: left; margin: 20px 0; background: rgba(212, 175, 55, 0.05); border: 1px solid rgba(212, 175, 55, 0.2); padding: 15px; border-radius: 4px; }
-    .checkbox-container input { margin-top: 3px; margin-right: 12px; accent-color: var(--gold); width: 18px; height: 18px; cursor: pointer; flex-shrink: 0; }
-
-    /* REPUTATION SCORE DISPLAY */
-    .rep-bar-wrap { background: #0a0a0a; border: 1px solid var(--border-color); border-radius: 4px; padding: 15px; margin-bottom: 20px; }
-    .rep-bar-label { display: flex; justify-content: space-between; font-size: 0.75em; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
-    .rep-bar-label span:last-child { color: var(--gold); font-weight: bold; font-size: 1.1em; }
-    .rep-bar-track { background: #1a1a1a; border-radius: 3px; height: 6px; width: 100%; }
-    .rep-bar-fill { height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--warning), var(--gold)); transition: width 1s ease; }
-
-    /* MANDATE SUBMISSION FORM */
-    .mandate-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .form-success { background: rgba(0,200,83,0.08); border: 1px solid rgba(0,200,83,0.3); color: var(--success); padding: 12px; border-radius: 4px; font-size: 0.85em; text-align: center; margin-top: 10px; display: none; }
-    .form-error { background: rgba(255,77,77,0.08); border: 1px solid rgba(255,77,77,0.3); color: var(--danger); padding: 12px; border-radius: 4px; font-size: 0.85em; text-align: center; margin-top: 10px; display: none; }
-
-    .trademark-footer { grid-column: 1 / -1; text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border-color); font-size: 0.65em; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; line-height: 1.6; }
-
-    .hidden { display: none; }
-    .loader { border: 3px solid var(--border-color); border-top: 3px solid var(--gold); border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; margin: 10px auto; display: none; }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-    .logout-btn { background: none; border: 1px solid #444; color: #888; font-size: 10px; padding: 2px 8px; cursor: pointer; vertical-align: middle; border-radius: 3px; transition: 0.3s; }
+    /* ── ENTITY HEADER ── */
+    .entity-bar {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      background: #0a0a0a;
+    }
+    .entity-name {
+      font-size: 13px; font-weight: 700; color: var(--gold);
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .entity-role {
+      font-size: 9px; padding: 3px 8px; letter-spacing: 2px;
+      border: 1px solid var(--gold); color: var(--gold);
+      background: rgba(212,175,55,0.05);
+    }
+    .logout-btn {
+      background: none; border: 1px solid var(--border-bright);
+      color: var(--text-muted); font-family: var(--mono);
+      font-size: 9px; padding: 3px 8px; cursor: pointer;
+      letter-spacing: 1px; transition: 0.2s;
+    }
     .logout-btn:hover { border-color: var(--danger); color: var(--danger); }
 
-    /* TAB SYSTEM for Mandates */
-    .tab-bar { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 15px; }
-    .tab-btn { background: none; border: none; color: var(--text-muted); padding: 8px 16px; font-size: 0.8em; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; border-bottom: 2px solid transparent; transition: 0.2s; }
-    .tab-btn.active { color: var(--gold); border-bottom: 2px solid var(--gold); }
-    .tab-pane { display: none; }
+    /* ── NRS SCORE ── */
+    .nrs-display {
+      padding: 10px 12px;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-panel);
+    }
+    .nrs-label { font-size: 9px; color: var(--text-muted); letter-spacing: 2px; }
+    .nrs-value { font-size: 18px; font-weight: 700; color: var(--gold); letter-spacing: 2px; }
+    .nrs-bar-wrap { padding: 6px 12px 10px; background: var(--bg-panel); border-bottom: 1px solid var(--border); }
+    .nrs-bar-track { background: #111; height: 3px; width: 100%; }
+    .nrs-bar-fill {
+      height: 3px; background: linear-gradient(90deg, var(--warning), var(--gold));
+      transition: width 1s ease;
+    }
+    .nrs-hint { font-size: 8px; color: var(--text-dim); letter-spacing: 0.5px; margin-top: 4px; }
+
+    /* ── CLEARANCE TABLE ── */
+    .clearance-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 8px 12px; border-bottom: 1px solid var(--border);
+      font-size: 10px; letter-spacing: 0.5px;
+    }
+    .clearance-row:last-child { border-bottom: none; }
+    .c-label { color: var(--text-muted); }
+    .badge {
+      font-size: 9px; padding: 2px 6px; letter-spacing: 1px;
+      font-weight: 700; font-family: var(--mono);
+    }
+    .badge-green { color: var(--success); border: 1px solid rgba(0,230,118,0.3); background: rgba(0,230,118,0.05); }
+    .badge-yellow{ color: var(--warning); border: 1px solid rgba(255,171,0,0.3);  background: rgba(255,171,0,0.05); }
+    .badge-red   { color: var(--danger);  border: 1px solid rgba(255,23,68,0.3);  background: rgba(255,23,68,0.05); }
+
+    /* ── BLOTTER TABLE ── */
+    .blotter-table { width: 100%; border-collapse: collapse; font-size: 10px; }
+    .blotter-table th {
+      font-size: 8px; color: var(--text-muted); letter-spacing: 1.5px;
+      text-transform: uppercase; padding: 6px 8px; text-align: left;
+      border-bottom: 1px solid var(--border); background: #050505;
+    }
+    .blotter-table td {
+      padding: 8px 8px; border-bottom: 1px solid var(--border);
+      color: var(--text); vertical-align: middle;
+      transition: background 0.2s;
+    }
+    .blotter-table tr:hover td { background: #0f0f0f; }
+    .blotter-table tr:last-child td { border-bottom: none; }
+    .b-type-buy  { color: var(--success); font-weight: 700; font-size: 9px; letter-spacing: 1px; }
+    .b-type-sell { color: var(--danger);  font-weight: 700; font-size: 9px; letter-spacing: 1px; }
+    .b-commodity { color: var(--gold); font-weight: 600; }
+    .b-entity { color: var(--text-muted); font-size: 9px; }
+
+    /* ── MANDATE FORM ── */
+    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+    .t-select, .t-input {
+      width: 100%; background: #000; border: 1px solid var(--border-bright);
+      color: var(--text); font-family: var(--mono); font-size: 11px;
+      padding: 9px 10px; outline: none; appearance: none;
+    }
+    .t-select:focus, .t-input:focus { border-color: var(--gold); }
+    .t-select option { background: #111; }
+    .t-btn {
+      width: 100%; background: var(--gold); color: #000;
+      border: none; padding: 10px; font-family: var(--mono);
+      font-size: 10px; font-weight: 700; letter-spacing: 2px;
+      cursor: pointer; transition: 0.2s; margin-top: 8px;
+    }
+    .t-btn:hover { background: var(--gold-hover); }
+    .t-btn:disabled { background: #1a1a1a; color: var(--text-dim); cursor: not-allowed; }
+    .t-btn-outline {
+      background: transparent; color: var(--gold);
+      border: 1px solid var(--gold);
+    }
+    .t-btn-outline:hover { background: rgba(212,175,55,0.08); }
+    .form-msg {
+      font-size: 10px; padding: 8px 10px; margin-top: 8px;
+      letter-spacing: 0.5px; display: none;
+    }
+    .form-msg.success { color: var(--success); border: 1px solid rgba(0,230,118,0.3); background: rgba(0,230,118,0.04); }
+    .form-msg.error   { color: var(--danger);  border: 1px solid rgba(255,23,68,0.3);  background: rgba(255,23,68,0.04); }
+
+    /* ── PRICE TILES ── */
+    .price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 10px; }
+    .price-tile {
+      background: #050505; border: 1px solid var(--border);
+      padding: 10px 12px; transition: border-color 0.3s;
+    }
+    .price-tile.flash-up   { border-color: var(--up);   animation: flash-up-anim 0.8s ease; }
+    .price-tile.flash-down { border-color: var(--down); animation: flash-down-anim 0.8s ease; }
+    @keyframes flash-up-anim {
+      0%   { background: rgba(0,230,118,0.15); }
+      100% { background: #050505; }
+    }
+    @keyframes flash-down-anim {
+      0%   { background: rgba(255,23,68,0.15); }
+      100% { background: #050505; }
+    }
+    .pt-name  { font-size: 8px; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
+    .pt-price { font-size: 14px; color: var(--gold); font-weight: 600; margin: 3px 0; }
+    .pt-change { font-size: 9px; letter-spacing: 0.5px; }
+    .pt-change.up   { color: var(--up); }
+    .pt-change.down { color: var(--down); }
+    .pt-change.flat { color: var(--text-muted); }
+
+    /* ── TV WIDGET BOXES ── */
+    .tv-section-label {
+      font-size: 9px; color: var(--text-muted); letter-spacing: 2px;
+      text-transform: uppercase; padding: 8px 10px 4px;
+      border-top: 1px solid var(--border);
+    }
+    .tv-wrap { border: 1px solid var(--border); margin: 0 10px 8px; overflow: hidden; background: #050505; }
+
+    /* ── LEGAL PANELS ── */
+    .legal-scroll {
+      height: 200px; overflow-y: auto; padding: 12px;
+      font-size: 9px; color: var(--text-dim); line-height: 1.9;
+      letter-spacing: 0.3px; text-align: justify;
+    }
+    .legal-scroll b { color: var(--text-muted); }
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dim); }
+
+    /* ── NCNDA CERT ── */
+    .cert-box {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 12px; background: rgba(212,175,55,0.03);
+      border: 1px solid rgba(212,175,55,0.15); margin: 8px 0;
+    }
+    .cert-box input[type="checkbox"] {
+      margin-top: 2px; accent-color: var(--gold);
+      width: 14px; height: 14px; flex-shrink: 0; cursor: pointer;
+    }
+    .cert-box label { font-size: 10px; color: var(--text-muted); letter-spacing: 0.3px; cursor: pointer; }
+
+    /* ── MISSING DOCS ── */
+    .alert-panel {
+      border: 1px solid var(--warning); background: rgba(255,171,0,0.03);
+      padding: 14px; margin-bottom: 10px; display: none;
+    }
+    .alert-title { color: var(--warning); font-size: 10px; font-weight: 700; letter-spacing: 1px; margin-bottom: 8px; }
+    .alert-body  { color: var(--text-muted); font-size: 10px; margin-bottom: 12px; line-height: 1.7; }
+    .alert-btn {
+      display: block; text-align: center; background: var(--warning);
+      color: #000; padding: 10px; text-decoration: none;
+      font-family: var(--mono); font-size: 10px; font-weight: 700;
+      letter-spacing: 2px;
+    }
+
+    /* ── TAB SYSTEM ── */
+    .tab-bar {
+      display: flex; border-bottom: 1px solid var(--border);
+    }
+    .tab-btn {
+      background: none; border: none; border-bottom: 2px solid transparent;
+      color: var(--text-muted); font-family: var(--mono); font-size: 9px;
+      padding: 8px 14px; cursor: pointer; letter-spacing: 1.5px;
+      text-transform: uppercase; transition: 0.2s;
+    }
+    .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+    .tab-pane { display: none; padding: 12px; }
     .tab-pane.active { display: block; }
+
+    /* ── FOOTER ── */
+    .terminal-footer {
+      text-align: center; padding: 20px; margin-top: 10px;
+      border-top: 1px solid var(--border);
+      font-size: 8px; color: var(--text-dim); letter-spacing: 2px;
+      text-transform: uppercase; line-height: 2;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      .dash-grid { grid-template-columns: 1fr; }
+      .terminal-wrap { padding: 8px; }
+      .price-grid { grid-template-columns: 1fr 1fr; }
+      .form-grid-2 { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
 
-  <div class="portal-box" id="mainPortal">
-    <div class="header-section">
-      <div class="logo-text">ROMI NEXUS</div>
-      <div class="subtitle">Institutional Client Portal</div>
+  <!-- TICKER BAR -->
+  <div class="ticker-bar">
+    <div class="ticker-label">ROMI NEXUS ▶</div>
+    <div class="ticker-track">
+      <div class="ticker-inner" id="tickerInner">
+        <div class="ticker-item"><span class="t-name">XAU/USD</span><span class="t-price" id="tk-gold">--</span><span class="t-up" id="tk-gold-chg"></span></div>
+        <div class="ticker-item"><span class="t-name">XAG/USD</span><span class="t-price" id="tk-silver">--</span></div>
+        <div class="ticker-item"><span class="t-name">WTI</span><span class="t-price" id="tk-wti">--</span></div>
+        <div class="ticker-item"><span class="t-name">BRENT</span><span class="t-price" id="tk-brent">--</span></div>
+        <div class="ticker-item"><span class="t-name">CU</span><span class="t-price" id="tk-copper">--</span></div>
+        <div class="ticker-item"><span class="t-name">AL</span><span class="t-price" id="tk-alum">--</span></div>
+        <div class="ticker-item"><span class="t-name">NI</span><span class="t-price" id="tk-nickel">--</span></div>
+        <div class="ticker-item"><span class="t-name">ZN</span><span class="t-price" id="tk-zinc">--</span></div>
+        <div class="ticker-item"><span class="t-name">CACAO</span><span class="t-price" id="tk-cocoa">--</span></div>
+        <div class="ticker-item"><span class="t-name">COFFEE</span><span class="t-price" id="tk-coffee">--</span></div>
+        <div class="ticker-item"><span class="t-name">SUGAR</span><span class="t-price" id="tk-sugar">--</span></div>
+        <div class="ticker-item"><span class="t-name">SOY</span><span class="t-price" id="tk-soy">--</span></div>
+        <!-- duplicate for seamless loop -->
+        <div class="ticker-item"><span class="t-name">XAU/USD</span><span class="t-price" id="tk-gold2">--</span></div>
+        <div class="ticker-item"><span class="t-name">XAG/USD</span><span class="t-price" id="tk-silver2">--</span></div>
+        <div class="ticker-item"><span class="t-name">WTI</span><span class="t-price" id="tk-wti2">--</span></div>
+        <div class="ticker-item"><span class="t-name">BRENT</span><span class="t-price" id="tk-brent2">--</span></div>
+        <div class="ticker-item"><span class="t-name">CU</span><span class="t-price" id="tk-copper2">--</span></div>
+        <div class="ticker-item"><span class="t-name">AL</span><span class="t-price" id="tk-alum2">--</span></div>
+        <div class="ticker-item"><span class="t-name">NI</span><span class="t-price" id="tk-nickel2">--</span></div>
+        <div class="ticker-item"><span class="t-name">ZN</span><span class="t-price" id="tk-zinc2">--</span></div>
+        <div class="ticker-item"><span class="t-name">CACAO</span><span class="t-price" id="tk-cocoa2">--</span></div>
+        <div class="ticker-item"><span class="t-name">COFFEE</span><span class="t-price" id="tk-coffee2">--</span></div>
+        <div class="ticker-item"><span class="t-name">SUGAR</span><span class="t-price" id="tk-sugar2">--</span></div>
+        <div class="ticker-item"><span class="t-name">SOY</span><span class="t-price" id="tk-soy2">--</span></div>
+      </div>
     </div>
+  </div>
+
+  <!-- STATUS BAR -->
+  <div class="status-bar">
+    <div class="status-bar-left">
+      <div class="status-indicator">
+        <div class="status-dot dot-live"></div>
+        <span class="status-tag">ROMI NEXUS</span>
+      </div>
+      <span>INSTITUTIONAL TRADE TERMINAL</span>
+      <span>AFZ LIC: 40601</span>
+    </div>
+    <div class="status-bar-right">
+      <span id="sessionTag" style="display:none; color:var(--gold)"></span>
+      <span id="clock"></span>
+      <span>GST UTC+4</span>
+    </div>
+  </div>
+
+  <div class="terminal-wrap">
 
     <!-- GATE VIEW -->
     <div id="gate-view">
-      <div class="input-group">
-        <label for="emailInput">Authorized Entity Access</label>
-        <input type="text" id="emailInput" placeholder="Enter corporate credentials">
+      <div class="gate-box">
+        <div class="gate-logo">
+          <div class="gate-logo-text">ROMI NEXUS</div>
+          <div class="gate-logo-sub">Institutional Commodity Terminal v3.0</div>
+        </div>
+        <div class="terminal-prompt">AUTHORIZATION REQUIRED</div>
+        <div class="terminal-input-wrap">
+          <span class="terminal-prompt-symbol">$</span>
+          <input class="terminal-input" type="text" id="emailInput"
+                 placeholder="enter_corporate_credentials" autocomplete="off"
+                 onkeydown="if(event.key==='Enter') validateLead()">
+          <span class="cursor-blink"></span>
+        </div>
+        <button class="gate-btn" id="verifyBtn" onclick="validateLead()">
+          AUTHENTICATE →
+        </button>
+        <div id="gate-loader">
+          <span class="loading-dots">AUTHENTICATING</span>
+        </div>
+        <div id="gate-error"></div>
+        <div class="gate-sys-lines">
+          <div class="sys-line">ROMI GROUP FZC — AJMAN FREE ZONE, UAE</div>
+          <div class="sys-line">AI-POWERED KYC / AML SCREENING ACTIVE</div>
+          <div class="sys-line">DIFC COURTS JURISDICTION — ALL SESSIONS LOGGED</div>
+          <div class="sys-line">UNAUTHORIZED ACCESS SUBJECT TO LEGAL ACTION</div>
+        </div>
       </div>
-      <button class="btn" id="verifyBtn" onclick="validateLead()">OPEN DOSSIER</button>
-      <div class="loader" id="loading"></div>
-      <div id="errorMsg" style="color:var(--danger); font-size:0.85em; margin-top:15px; display:none;"></div>
     </div>
 
     <!-- DASHBOARD VIEW -->
-    <div id="dashboard-view" class="hidden">
-      <div class="dashboard-grid">
+    <div id="dashboard-view">
+      <div class="dash-grid">
 
-        <!-- LEFT COLUMN: DOSSIER -->
-        <div class="dossier-column">
+        <!-- ══ LEFT COLUMN ══ -->
+        <div class="left-col">
 
-          <!-- ENTITY CARD -->
-          <div class="data-card" style="padding-bottom: 15px;">
-            <span style="font-size:0.75em; color:var(--text-muted); letter-spacing:1px;">VERIFIED COUNTERPARTY</span>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
-              <h3 id="entityName" style="color: var(--gold); border: none; padding-bottom: 0; margin: 0; font-size: 1.4em;">---</h3>
-              <button id="logoutBtn" class="logout-btn" onclick="logoutPortal()">LOGOUT</button>
+          <!-- ENTITY HEADER PANEL -->
+          <div class="panel">
+            <div class="entity-bar">
+              <div>
+                <div class="entity-name" id="entityName">---</div>
+                <span class="entity-role" id="roleBadge">---</span>
+              </div>
+              <button class="logout-btn" onclick="logoutPortal()">[ LOGOUT ]</button>
             </div>
-            <span id="roleBadge" style="font-size: 0.65em; color: var(--gold); border: 1px solid var(--gold); padding: 2px 6px; border-radius: 3px; text-transform: uppercase; margin-top: 5px; display: inline-block;">---</span>
-          </div>
-
-          <!-- REPUTATION SCORE -->
-          <div class="rep-bar-wrap">
-            <div class="rep-bar-label">
-              <span>Network Reputation Score</span>
-              <span id="repScoreText">--.--</span>
+            <div class="nrs-display">
+              <div>
+                <div class="nrs-label">NETWORK REPUTATION SCORE</div>
+                <div class="nrs-value" id="repScoreText">--.-- <span style="font-size:11px; color:var(--text-muted)">/ 10.0</span></div>
+              </div>
+              <div style="text-align:right; font-size:9px; color:var(--text-muted); line-height:1.8;">
+                NRS PROTOCOL<br>ACTIVE
+              </div>
             </div>
-            <div class="rep-bar-track">
-              <div class="rep-bar-fill" id="repBarFill" style="width: 0%"></div>
-            </div>
-            <div style="font-size:0.65em; color:var(--text-muted); margin-top:6px;">Score increases with each reported closed deal. Max: 10.0</div>
-          </div>
-
-          <!-- CLEARANCE MATRIX -->
-          <div class="data-card">
-            <h3>Clearance Matrix</h3>
-            <div class="status-list">
-              <div class="status-row"><span>Corporate KYC / AML</span> <span class="badge badge-green">VERIFIED</span></div>
-              <div class="status-row"><span>Legal (NCNDA / IMFPA)</span> <span class="badge badge-green">ON FILE</span></div>
-              <div class="status-row"><span>Financial & Operational</span> <span id="badge-fin" class="badge">---</span></div>
-              <div class="status-row" style="border:none;"><span>Trade Desk Access</span> <span id="badge-access" class="badge">---</span></div>
+            <div class="nrs-bar-wrap">
+              <div class="nrs-bar-track">
+                <div class="nrs-bar-fill" id="repBarFill" style="width:0%"></div>
+              </div>
+              <div class="nrs-hint">NRS INCREASES +0.5 PER REPORTED CLOSED DEAL — MAX 10.0</div>
             </div>
           </div>
 
-          <!-- MISSING DOCS GATE -->
-          <div id="missingDocsGate" style="display:none; background: rgba(255, 171, 0, 0.05); border: 1px solid var(--warning); padding: 20px; border-radius: 4px; margin-bottom: 20px;">
-            <div style="color:var(--warning); font-weight:bold; margin-bottom:10px; font-size:0.9em;">⚠️ ACTION REQUIRED</div>
-            <div id="missingDocsText" style="font-size:0.85em; margin-bottom:15px; color:#ddd;"></div>
-            <a href="https://tally.so/r/NpAALO" target="_blank" style="background:var(--warning); color:#000; padding:12px; display:block; text-align:center; text-decoration:none; border-radius:4px; font-weight:bold;">OPEN SECURE UPLOAD</a>
+          <!-- CLEARANCE MATRIX PANEL -->
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-tag">CLEARANCE MATRIX</span>
+              <span class="panel-meta">LIVE STATUS</span>
+            </div>
+            <div class="clearance-row"><span class="c-label">CORPORATE KYC / AML</span><span class="badge badge-green">VERIFIED</span></div>
+            <div class="clearance-row"><span class="c-label">LEGAL — NCNDA / IMFPA</span><span class="badge badge-green">ON FILE</span></div>
+            <div class="clearance-row"><span class="c-label">FINANCIAL & OPERATIONAL</span><span id="badge-fin" class="badge">---</span></div>
+            <div class="clearance-row"><span class="c-label">TRADE DESK ACCESS</span><span id="badge-access" class="badge">---</span></div>
           </div>
 
-          <!-- LIVE MANDATES + SUBMIT MANDATE (TABBED) -->
-          <div class="data-card" id="mandateSection">
-            <h3>Trade Mandates <span class="live-dot"></span></h3>
+          <!-- MISSING DOCS ALERT -->
+          <div class="alert-panel" id="missingDocsGate">
+            <div class="alert-title">⚠ ACTION REQUIRED — RESTRICTED ACCESS</div>
+            <div class="alert-body" id="missingDocsText"></div>
+            <a href="https://tally.so/r/NpAALO" target="_blank" class="alert-btn">
+              OPEN SECURE COMPLIANCE UPLOAD →
+            </a>
+          </div>
+
+          <!-- TRADE MANDATES PANEL -->
+          <div class="panel" id="mandateSection">
+            <div class="panel-header">
+              <span class="panel-tag">LIVE MANDATES</span>
+              <span class="panel-meta" style="display:flex;align-items:center;gap:5px;">
+                <span class="status-dot dot-live"></span> LIVE
+              </span>
+            </div>
             <div class="tab-bar">
-              <button class="tab-btn active" onclick="switchTab('browse')">BROWSE</button>
-              <button class="tab-btn" onclick="switchTab('post')">POST MANDATE</button>
+              <button class="tab-btn active" onclick="switchTab('browse',event)">BLOTTER</button>
+              <button class="tab-btn" onclick="switchTab('post',event)">POST MANDATE</button>
             </div>
 
             <!-- BROWSE TAB -->
-            <div id="tab-browse" class="tab-pane active">
-              <div id="mandateFlow"></div>
+            <div id="tab-browse" class="tab-pane active" style="padding:0;">
+              <table class="blotter-table" id="mandateBlotter">
+                <thead>
+                  <tr>
+                    <th>TYPE</th>
+                    <th>COMMODITY</th>
+                    <th>VOLUME</th>
+                    <th>PRICE</th>
+                  </tr>
+                </thead>
+                <tbody id="mandateFlow">
+                  <tr><td colspan="4" style="color:var(--text-dim); font-size:9px; padding:16px; text-align:center;">SYNCING MANDATE FEED...</td></tr>
+                </tbody>
+              </table>
             </div>
 
-            <!-- POST MANDATE TAB -->
+            <!-- POST TAB -->
             <div id="tab-post" class="tab-pane">
-              <div class="mandate-form-grid">
-                <select id="mandateCommodity">
-                  <option value="">Select Commodity</option>
-                  <option value="Gold">Gold</option>
-                  <option value="Silver">Silver</option>
-                  <option value="Copper">Copper</option>
-                  <option value="Aluminum">Aluminum</option>
-                  <option value="Nickel">Nickel</option>
-                  <option value="Zinc">Zinc</option>
-                  <option value="WTI Crude Oil">WTI Crude Oil</option>
-                  <option value="Brent Crude Oil">Brent Crude Oil</option>
-                  <option value="Wheat">Wheat</option>
-                  <option value="Corn">Corn</option>
-                  <option value="Soybeans">Soybeans</option>
-                  <option value="Sugar">Sugar</option>
-                  <option value="Coffee">Coffee</option>
-                  <option value="Cocoa">Cocoa</option>
+              <div class="form-grid-2">
+                <select class="t-select" id="mandateCommodity">
+                  <option value="">-- COMMODITY --</option>
+                  <option>Gold</option><option>Silver</option>
+                  <option>Copper</option><option>Aluminum</option>
+                  <option>Nickel</option><option>Zinc</option>
+                  <option>WTI Crude Oil</option><option>Brent Crude Oil</option>
+                  <option>Wheat</option><option>Corn</option>
+                  <option>Soybeans</option><option>Sugar</option>
+                  <option>Coffee</option><option>Cocoa</option>
                 </select>
-                <select id="mandateType">
-                  <option value="BUY">BUY Mandate</option>
-                  <option value="SELL">SELL Mandate</option>
+                <select class="t-select" id="mandateType">
+                  <option value="BUY">BUY</option>
+                  <option value="SELL">SELL</option>
                 </select>
               </div>
-              <input type="text" id="mandateVolume" placeholder="Volume (e.g. 500 MT, 10,000 BBL)">
-              <input type="text" id="mandatePrice" placeholder="Target Price (e.g. $1,950/oz) — optional">
-              <button class="btn" onclick="postMandate()">POST TO LIVE BOARD</button>
-              <div id="mandateSuccess" class="form-success">✓ Mandate posted. Visible to verified counterparties.</div>
-              <div id="mandateError" class="form-error"></div>
+              <input class="t-input" type="text" id="mandateVolume" placeholder="VOLUME (e.g. 500 MT)">
+              <input class="t-input" type="text" id="mandatePrice" placeholder="TARGET PRICE — OPTIONAL" style="margin-top:8px;">
+              <button class="t-btn" onclick="postMandate()">POST TO LIVE BLOTTER →</button>
+              <div id="mandateSuccess" class="form-msg success">✓ MANDATE POSTED — VISIBLE TO VERIFIED COUNTERPARTIES</div>
+              <div id="mandateError" class="form-err form-msg error"></div>
             </div>
           </div>
 
           <!-- DATA GOVERNANCE -->
-          <div class="legal-card">
-            <h4>Data Governance & Encryption</h4>
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-tag">DATA GOVERNANCE</span>
+              <span class="panel-meta">AES-256 // DIFC</span>
+            </div>
             <div class="legal-scroll">
-              Romi Nexus and Romi Group FZC ("The Group") operate under the strict Data Protection Laws of the Dubai International Financial Centre (DIFC). All counterparty data, including corporate dossiers, financial instruments (POF/BCL), and biometric identity documents (Passports), are processed through AES-256 bit end-to-end encryption silos. <b>1. Purpose Limitation:</b> Data is processed strictly for mandatory KYC/AML/CTF compliance and proprietary algorithmic matching of trade mandates. <b>2. Sub-Processor Shield:</b> By using this portal, you acknowledge that data is processed via secure sub-processors including Google Cloud and Tally.so; Romi Nexus is not liable for infrastructure-level breaches, zero-day exploits, or unauthorized access originating from these third-party environments. <b>3. Accuracy Responsibility:</b> Counterparties are solely responsible for the authenticity of uploaded documents; the submission of forged SGS reports or fraudulent financials will result in immediate permanent blacklisting. <b>4. Intent Confidentiality:</b> Procurement volumes and target pricing are classified as "Confidential Trade Secrets" and are never disclosed to other portal users without explicit written consent. <b>5. Retention:</b> Records are maintained for a period of 7 years in accordance with UAE Federal Law.
+              Romi Nexus and Romi Group FZC ("The Group") operate under UAE Federal Law and opt-in DIFC Courts jurisdiction per Article 5(A)(2) of the DIFC Judicial Authority Law. All counterparty data, including corporate dossiers, financial instruments (POF/BCL), and identity documents, are processed through AES-256 end-to-end encryption silos. <b>1. PURPOSE LIMITATION:</b> Data processed strictly for KYC/AML/CTF compliance and proprietary algorithmic mandate matching. <b>2. SUB-PROCESSOR SHIELD:</b> Data processed via Google Cloud and Tally.so; Romi Nexus is not liable for third-party infrastructure breaches. <b>3. ACCURACY RESPONSIBILITY:</b> Submission of forged documents results in permanent blacklisting. <b>4. INTENT CONFIDENTIALITY:</b> Procurement volumes and pricing are Confidential Trade Secrets. <b>5. RETENTION:</b> Records maintained 7 years per UAE Federal Law.
             </div>
           </div>
 
           <!-- TERMS OF USE -->
-          <div class="legal-card">
-            <h4>Institutional Terms of Use</h4>
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-tag">TERMS OF USE</span>
+              <span class="panel-meta">ICC 600 // DIFC</span>
+            </div>
             <div class="legal-scroll">
-              Romi Nexus acts as a technology-driven facilitator. We are not a broker-dealer, registered investment advisor, or a principal in the transactions initiated here. <b>Article I: Algorithmic Disclaimer.</b> The "Clearance Matrix" and "Risk Scores" are generated via automated AI analysis; The Group is not liable for machine errors, data hallucinations, or misinterpreted filings. <b>Article II: Mandatory Independent Due Diligence.</b> Access to this portal does not waive the counterparty's absolute obligation to conduct their own exhaustive Independent Due Diligence (IDD). Romi Nexus is not liable for failed transactions, fraudulent performance, or "highly sophisticated" deceptive practices that bypass initial screening. <b>Article III: Non-Circumvention Penalty.</b> Counterparties agree to abide by the standard ICC 600 rules. Any attempt to bypass Romi Group FZC to contact disclosed sources, suppliers, or end-buyers will result in an immediate penalty fee of <b>2.0% of the total contract value</b>, enforceable via DIFC law. <b>Article IV: Mandatory Transaction Reporting.</b> All closed transactions must be reported within 5 business days of SPA execution via this portal. Non-reporting constitutes a material breach of the signed NCNDA. <b>Article V: Initiation Only.</b> Trade desk initiation via WhatsApp is for facilitation only; no trade is binding until a final SPA is executed by all principals. <b>Article VI: Jurisdiction.</b> All disputes are subject to the exclusive jurisdiction of the DIFC Courts, Dubai, UAE.
+              Romi Nexus acts as a technology-driven trade facilitator. Not a broker-dealer, registered investment advisor, or principal. <b>ARTICLE I — ALGORITHMIC DISCLAIMER:</b> Clearance Matrix and Risk Scores are AI-generated; The Group is not liable for machine errors or data hallucinations. <b>ARTICLE II — INDEPENDENT DUE DILIGENCE:</b> Portal access does not waive the counterparty's obligation to conduct exhaustive IDD. <b>ARTICLE III — NON-CIRCUMVENTION PENALTY:</b> Bypass of Romi Group FZC to contact disclosed sources triggers a 2.0% penalty of total contract value, enforceable under UAE Federal Law / DIFC Courts. <b>ARTICLE IV — MANDATORY REPORTING:</b> Closed transactions must be reported within 5 business days of SPA execution. Non-reporting constitutes material NCNDA breach. <b>ARTICLE V — INITIATION ONLY:</b> WhatsApp facilitation is for coordination only; no trade is binding until SPA execution by all principals. <b>ARTICLE VI — JURISDICTION:</b> Governed by UAE Federal Law. Disputes subject to DIFC Courts per Article 5(A)(2) DIFC Judicial Authority Law.
             </div>
           </div>
 
           <!-- NCNDA CERT + INITIATE TRADE -->
-          <div id="matchmakingGate">
-            <div class="checkbox-container">
-              <input type="checkbox" id="certifyBox">
-              <label for="certifyBox" style="font-size:0.85em;">I legally certify that the <b>NCNDA</b> and <b>IMFPA</b> are on file with Romi Group FZC.</label>
+          <div class="panel" id="matchmakingGate">
+            <div class="panel-header">
+              <span class="panel-tag">TRADE INITIATION</span>
+              <span class="panel-meta">WHATSAPP DESK</span>
             </div>
-            <button class="btn" id="matchBtn" onclick="initiateTrade()" disabled>INITIATE TRADE</button>
+            <div style="padding:12px;">
+              <div class="cert-box">
+                <input type="checkbox" id="certifyBox">
+                <label for="certifyBox">I legally certify that the <b>NCNDA</b> and <b>IMFPA</b> are on file with Romi Group FZC. I understand all communications are subject to DIFC jurisdiction.</label>
+              </div>
+              <button class="t-btn" id="matchBtn" onclick="initiateTrade()" disabled>
+                INITIATE TRADE — CONNECT TO DESK →
+              </button>
+            </div>
           </div>
 
           <!-- DEAL CLOSURE REPORT -->
-          <div id="dealReportSection" class="data-card" style="display:none; margin-top: 20px;">
-            <h3>Report Closed Deal</h3>
-            <select id="dealCommodity">
-              <option value="">Select Commodity</option>
-              <option value="Gold">Gold</option>
-              <option value="Silver">Silver</option>
-              <option value="Copper">Copper</option>
-              <option value="Aluminum">Aluminum</option>
-              <option value="Nickel">Nickel</option>
-              <option value="Zinc">Zinc</option>
-              <option value="WTI Crude Oil">WTI Crude Oil</option>
-              <option value="Brent Crude Oil">Brent Crude Oil</option>
-              <option value="Wheat">Wheat</option>
-              <option value="Corn">Corn</option>
-              <option value="Soybeans">Soybeans</option>
-              <option value="Sugar">Sugar</option>
-              <option value="Coffee">Coffee</option>
-              <option value="Cocoa">Cocoa</option>
-            </select>
-            <input type="text" id="dealVolume" placeholder="Volume (e.g. 500 MT)">
-            <input type="number" id="dealValue" placeholder="Total Deal Value (USD)" min="0">
-            <button class="btn" onclick="submitDealReport()">SUBMIT DEAL REPORT</button>
-            <div id="dealSuccess" class="form-success"></div>
-            <div id="dealError" class="form-error"></div>
-          </div>
-
-        </div>
-
-        <!-- RIGHT COLUMN: MARKET -->
-        <div class="market-column">
-          <h3 style="font-size: 1.1em; color: var(--gold); letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">Live Market Feed</h3>
-
-          <h4>Precious Metals</h4>
-          <div class="tv-widget-box">
-            <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>{ "symbols": [ { "proName": "TVC:GOLD", "title": "Gold Spot" } ], "colorTheme": "dark", "isTransparent": true, "showSymbolLogo": true, "locale": "en" }</script></div>
-          </div>
-          <div class="tv-widget-box">
-            <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>{ "symbols": [ { "proName": "TVC:SILVER", "title": "Silver Spot" } ], "colorTheme": "dark", "isTransparent": true, "showSymbolLogo": true, "locale": "en" }</script></div>
-          </div>
-
-          <h4>Global Energy</h4>
-          <div class="tv-widget-box">
-            <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>{ "symbols": [ { "proName": "TVC:USOIL", "title": "WTI Crude" } ], "colorTheme": "dark", "isTransparent": true, "showSymbolLogo": true, "locale": "en" }</script></div>
-          </div>
-          <div class="tv-widget-box">
-            <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>{ "symbols": [ { "proName": "TVC:UKOIL", "title": "Brent Crude" } ], "colorTheme": "dark", "isTransparent": true, "showSymbolLogo": true, "locale": "en" }</script></div>
-          </div>
-
-          <h4>Global Grains</h4>
-          <div class="tv-widget-box">
-            <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>{ "symbols": [ { "proName": "CAPITALCOM:WHEAT", "title": "Wheat" } ], "colorTheme": "dark", "isTransparent": true, "showSymbolLogo": true, "locale": "en" }</script></div>
-          </div>
-          <div class="tv-widget-box">
-            <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>{ "symbols": [ { "proName": "CAPITALCOM:CORN", "title": "Corn" } ], "colorTheme": "dark", "isTransparent": true, "showSymbolLogo": true, "locale": "en" }</script></div>
-          </div>
-
-          <h4>Industrial Base Metals</h4>
-          <div class="mandate-grid" style="margin-bottom: 35px;">
-            <div class="mandate-card"><span class="m-label">Copper (LME)</span><span class="m-value" id="price-copper">$ --.--</span></div>
-            <div class="mandate-card"><span class="m-label">Aluminum</span><span class="m-value" id="price-aluminum">$ --.--</span></div>
-            <div class="mandate-card"><span class="m-label">Nickel</span><span class="m-value" id="price-nickel">$ --.--</span></div>
-            <div class="mandate-card"><span class="m-label">Zinc</span><span class="m-value" id="price-zinc">$ --.--</span></div>
-          </div>
-
-          <h4>Agri-Commodities (Softs)</h4>
-          <div class="mandate-grid">
-            <div class="mandate-card"><span class="m-label">Soybeans</span><span class="m-value" id="price-soy">$ --.--</span></div>
-            <div class="mandate-card"><span class="m-label">Sugar</span><span class="m-value" id="price-sugar">$ --.--</span></div>
-            <div class="mandate-card"><span class="m-label">Coffee</span><span class="m-value" id="price-coffee">$ --.--</span></div>
-            <div class="mandate-card"><span class="m-label">Cocoa</span><span class="m-value" id="price-cocoa">$ --.--</span></div>
-          </div>
-
-          <h3 style="font-size: 1.1em; color: var(--gold); letter-spacing: 1px; margin-top: 30px; margin-bottom: 20px; text-transform: uppercase; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">Market Intelligence</h3>
-
-          <div class="intel-card">
-            <h4>Global Commodities News</h4>
-            <div class="widget-viewport">
-              <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>{ "feedMode": "market", "market": "commodity", "isTransparent": true, "displayMode": "regular", "width": "100%", "height": "600", "colorTheme": "dark", "locale": "en" }</script></div>
+          <div class="panel" id="dealReportSection" style="display:none;">
+            <div class="panel-header">
+              <span class="panel-tag">DEAL CLOSURE REPORT</span>
+              <span class="panel-meta">NCNDA OBLIGATION</span>
+            </div>
+            <div style="padding:12px;">
+              <select class="t-select" id="dealCommodity" style="margin-bottom:8px;">
+                <option value="">-- SELECT COMMODITY --</option>
+                <option>Gold</option><option>Silver</option>
+                <option>Copper</option><option>Aluminum</option>
+                <option>Nickel</option><option>Zinc</option>
+                <option>WTI Crude Oil</option><option>Brent Crude Oil</option>
+                <option>Wheat</option><option>Corn</option>
+                <option>Soybeans</option><option>Sugar</option>
+                <option>Coffee</option><option>Cocoa</option>
+              </select>
+              <input class="t-input" type="text" id="dealVolume" placeholder="VOLUME (e.g. 500 MT)" style="margin-bottom:8px;">
+              <input class="t-input" type="number" id="dealValue" placeholder="TOTAL DEAL VALUE (USD)" min="0">
+              <button class="t-btn" onclick="submitDealReport()" style="margin-top:8px;">
+                SUBMIT DEAL REPORT →
+              </button>
+              <div id="dealSuccess" class="form-msg success"></div>
+              <div id="dealError" class="form-msg error"></div>
             </div>
           </div>
-          <div class="intel-card" style="margin-bottom: 0;">
-            <h4>Upcoming Economic Calendar</h4>
-            <div class="widget-viewport">
-              <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>{ "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "600", "locale": "en", "importanceFilter": "0,1" }</script></div>
-            </div>
-          </div>
+
         </div>
 
-        <div class="trademark-footer">
-          Romi Nexus™ by Romi Group FZC 2026.<br>
-          &copy; All Rights Reserved.
+        <!-- ══ RIGHT COLUMN ══ -->
+        <div class="right-col">
+
+          <!-- MARKET PANEL -->
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-tag">LIVE MARKET FEED</span>
+              <span class="panel-meta" style="display:flex;align-items:center;gap:5px;">
+                <span class="status-dot dot-live"></span> TRADINGVIEW
+              </span>
+            </div>
+
+            <!-- PRECIOUS METALS TICKERS -->
+            <div class="tv-section-label">PRECIOUS METALS</div>
+            <div style="margin: 0 10px 6px;">
+              <div class="tv-wrap">
+                <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>{"symbols":[{"proName":"TVC:GOLD","title":"Gold Spot"}],"colorTheme":"dark","isTransparent":true,"showSymbolLogo":true,"locale":"en"}</script></div>
+              </div>
+              <div class="tv-wrap">
+                <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>{"symbols":[{"proName":"TVC:SILVER","title":"Silver Spot"}],"colorTheme":"dark","isTransparent":true,"showSymbolLogo":true,"locale":"en"}</script></div>
+              </div>
+            </div>
+
+            <!-- ENERGY TICKERS -->
+            <div class="tv-section-label">GLOBAL ENERGY</div>
+            <div style="margin: 0 10px 6px;">
+              <div class="tv-wrap">
+                <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>{"symbols":[{"proName":"TVC:USOIL","title":"WTI Crude"}],"colorTheme":"dark","isTransparent":true,"showSymbolLogo":true,"locale":"en"}</script></div>
+              </div>
+              <div class="tv-wrap">
+                <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>{"symbols":[{"proName":"TVC:UKOIL","title":"Brent Crude"}],"colorTheme":"dark","isTransparent":true,"showSymbolLogo":true,"locale":"en"}</script></div>
+              </div>
+            </div>
+
+            <!-- GRAINS -->
+            <div class="tv-section-label">GLOBAL GRAINS</div>
+            <div style="margin: 0 10px 6px;">
+              <div class="tv-wrap">
+                <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>{"symbols":[{"proName":"CAPITALCOM:WHEAT","title":"Wheat"}],"colorTheme":"dark","isTransparent":true,"showSymbolLogo":true,"locale":"en"}</script></div>
+              </div>
+              <div class="tv-wrap">
+                <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>{"symbols":[{"proName":"CAPITALCOM:CORN","title":"Corn"}],"colorTheme":"dark","isTransparent":true,"showSymbolLogo":true,"locale":"en"}</script></div>
+              </div>
+            </div>
+
+            <!-- BASE METALS PRICE TILES -->
+            <div class="tv-section-label">INDUSTRIAL BASE METALS</div>
+            <div class="price-grid">
+              <div class="price-tile" id="tile-copper">
+                <div class="pt-name">COPPER LME</div>
+                <div class="pt-price" id="price-copper">$--.--</div>
+                <div class="pt-change flat" id="chg-copper">-- $/MT</div>
+              </div>
+              <div class="price-tile" id="tile-aluminum">
+                <div class="pt-name">ALUMINUM</div>
+                <div class="pt-price" id="price-aluminum">$--.--</div>
+                <div class="pt-change flat" id="chg-aluminum">-- $/MT</div>
+              </div>
+              <div class="price-tile" id="tile-nickel">
+                <div class="pt-name">NICKEL</div>
+                <div class="pt-price" id="price-nickel">$--.--</div>
+                <div class="pt-change flat" id="chg-nickel">-- $/MT</div>
+              </div>
+              <div class="price-tile" id="tile-zinc">
+                <div class="pt-name">ZINC</div>
+                <div class="pt-price" id="price-zinc">$--.--</div>
+                <div class="pt-change flat" id="chg-zinc">-- $/MT</div>
+              </div>
+            </div>
+
+            <!-- AGRI PRICE TILES -->
+            <div class="tv-section-label">AGRI-COMMODITIES</div>
+            <div class="price-grid" style="padding-bottom:10px;">
+              <div class="price-tile" id="tile-soy">
+                <div class="pt-name">SOYBEANS</div>
+                <div class="pt-price" id="price-soy">$--.--</div>
+                <div class="pt-change flat" id="chg-soy">-- $/bu</div>
+              </div>
+              <div class="price-tile" id="tile-sugar">
+                <div class="pt-name">SUGAR</div>
+                <div class="pt-price" id="price-sugar">$--.--</div>
+                <div class="pt-change flat" id="chg-sugar">-- $/lb</div>
+              </div>
+              <div class="price-tile" id="tile-coffee">
+                <div class="pt-name">COFFEE</div>
+                <div class="pt-price" id="price-coffee">$--.--</div>
+                <div class="pt-change flat" id="chg-coffee">-- $/lb</div>
+              </div>
+              <div class="price-tile" id="tile-cocoa">
+                <div class="pt-name">COCOA</div>
+                <div class="pt-price" id="price-cocoa">$--.--</div>
+                <div class="pt-change flat" id="chg-cocoa">-- $/MT</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- MARKET INTELLIGENCE PANEL -->
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-tag">MARKET INTELLIGENCE</span>
+              <span class="panel-meta">REAL-TIME</span>
+            </div>
+            <div class="tv-section-label">GLOBAL COMMODITIES NEWS</div>
+            <div style="margin: 0 10px 8px; height: 320px; overflow:hidden; border:1px solid var(--border);">
+              <div class="tradingview-widget-container" style="height:100%"><div class="tradingview-widget-container__widget"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>{"feedMode":"market","market":"commodity","isTransparent":true,"displayMode":"regular","width":"100%","height":"320","colorTheme":"dark","locale":"en"}</script></div>
+            </div>
+            <div class="tv-section-label">ECONOMIC CALENDAR</div>
+            <div style="margin: 0 10px 10px; height: 300px; overflow:hidden; border:1px solid var(--border);">
+              <div class="tradingview-widget-container" style="height:100%"><div class="tradingview-widget-container__widget"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>{"colorTheme":"dark","isTransparent":true,"width":"100%","height":"300","locale":"en","importanceFilter":"0,1"}</script></div>
+            </div>
+          </div>
+
         </div>
+
+        <!-- FOOTER -->
+        <div class="terminal-footer" style="grid-column:1/-1;">
+          ROMI NEXUS™ INSTITUTIONAL TERMINAL — ROMI GROUP FZC © 2026<br>
+          AFZ LICENSE NO. 40601 — AJMAN FREE ZONE, UAE<br>
+          GOVERNED BY UAE FEDERAL LAW — DISPUTES: DIFC COURTS PER ART. 5(A)(2) DIFC JAL
+        </div>
+
       </div>
     </div>
-  </div>
+
+  </div><!-- end terminal-wrap -->
 
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbxnW9nY1jIQ6xktgxlNYJU6JmTGiJVgMC219SLz4J-lxtpII_obq6GrE_cHqLVfRZi5/exec";
     let currentUserRole  = "BUYER";
     let currentUserEmail = "";
+    const prevPrices     = {};
 
-    // AUTO-RESTORE SESSION
+    // ── CLOCK ──
+    function updateClock() {
+      const now = new Date();
+      const gst = new Date(now.getTime() + (4 * 60 * 60 * 1000));
+      const h = String(gst.getUTCHours()).padStart(2,'0');
+      const m = String(gst.getUTCMinutes()).padStart(2,'0');
+      const s = String(gst.getUTCSeconds()).padStart(2,'0');
+      document.getElementById('clock').innerText = `${h}:${m}:${s}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // ── SESSION RESTORE ──
     window.onload = function() {
-      const savedSession = localStorage.getItem('romi_nexus_session');
-      if (savedSession) renderDashboard(JSON.parse(savedSession));
+      const saved = localStorage.getItem('romi_nexus_session');
+      if (saved) renderDashboard(JSON.parse(saved));
     };
 
+    // ── AUTH ──
     async function validateLead() {
       const email = document.getElementById('emailInput').value.trim();
       if (!email) return;
       document.getElementById('verifyBtn').style.display = "none";
-      document.getElementById('loading').style.display = "block";
+      document.getElementById('gate-loader').style.display = "block";
+      document.getElementById('gate-error').style.display  = "none";
       try {
-        const response = await fetch(`${API_URL}?email=${encodeURIComponent(email)}`);
-        const data     = await response.json();
+        const res  = await fetch(`${API_URL}?email=${encodeURIComponent(email)}`);
+        const data = await res.json();
         if (!data.error) {
           data.email = email;
           localStorage.setItem('romi_nexus_session', JSON.stringify(data));
         }
         renderDashboard(data);
-      } catch (err) {
-        document.getElementById('loading').style.display = "none";
-        document.getElementById('verifyBtn').style.display = "block";
-        alert("Institutional Sync Failed.");
+      } catch(e) {
+        document.getElementById('gate-loader').style.display  = "none";
+        document.getElementById('verifyBtn').style.display    = "block";
+        document.getElementById('gate-error').innerText       = "> TERMINAL SYNC FAILURE — RETRY";
+        document.getElementById('gate-error').style.display   = "block";
       }
     }
 
@@ -408,26 +870,29 @@
       window.location.reload();
     }
 
+    // ── RENDER DASHBOARD ──
     function renderDashboard(data) {
       if (data.error) {
-        document.getElementById('loading').style.display = "none";
-        document.getElementById('verifyBtn').style.display = "block";
-        document.getElementById('errorMsg').innerText = data.error;
-        document.getElementById('errorMsg').style.display = "block";
+        document.getElementById('gate-loader').style.display  = "none";
+        document.getElementById('verifyBtn').style.display    = "block";
+        document.getElementById('gate-error').innerText       = "> " + data.error.toUpperCase();
+        document.getElementById('gate-error').style.display   = "block";
         return;
       }
 
-      document.getElementById('gate-view').classList.add('hidden');
-      document.getElementById('dashboard-view').classList.remove('hidden');
+      document.getElementById('gate-view').style.display      = "none";
+      document.getElementById('dashboard-view').style.display = "block";
 
-      document.getElementById('entityName').innerText = data.name;
+      document.getElementById('entityName').innerText  = data.name;
+      document.getElementById('sessionTag').innerText  = data.name;
+      document.getElementById('sessionTag').style.display = "block";
       currentUserEmail = data.email || "";
       currentUserRole  = (data.role || "BUYER").toUpperCase();
       document.getElementById('roleBadge').innerText = currentUserRole;
 
-      // Reputation score bar
       const repScore = parseFloat(data.reputationScore || "5.0");
-      document.getElementById('repScoreText').innerText = repScore.toFixed(1) + " / 10.0";
+      document.getElementById('repScoreText').innerHTML =
+        repScore.toFixed(1) + ' <span style="font-size:11px;color:var(--text-muted)">/ 10.0</span>';
       document.getElementById('repBarFill').style.width = (repScore * 10) + "%";
 
       const badgeFin    = document.getElementById('badge-fin');
@@ -436,18 +901,18 @@
       if (data.missingDocs && data.missingDocs.trim() !== "") {
         badgeFin.className    = "badge badge-yellow"; badgeFin.innerText    = "ACTION REQ";
         badgeAccess.className = "badge badge-red";    badgeAccess.innerText = "RESTRICTED";
-        document.getElementById('missingDocsGate').style.display    = "block";
-        document.getElementById('missingDocsText').innerText         = data.missingDocs;
-        document.getElementById('matchmakingGate').style.display     = "none";
-        document.getElementById('dealReportSection').style.display   = "none";
-        document.getElementById('mandateSection').style.display      = "none";
+        document.getElementById('missingDocsGate').style.display   = "block";
+        document.getElementById('missingDocsText').innerText        = data.missingDocs;
+        document.getElementById('matchmakingGate').style.display   = "none";
+        document.getElementById('dealReportSection').style.display = "none";
+        document.getElementById('mandateSection').style.display    = "none";
       } else {
         badgeFin.className    = "badge badge-green"; badgeFin.innerText    = "VERIFIED";
         badgeAccess.className = "badge badge-green"; badgeAccess.innerText = "GRANTED";
-        document.getElementById('missingDocsGate').style.display    = "none";
-        document.getElementById('matchmakingGate').style.display    = "block";
-        document.getElementById('dealReportSection').style.display  = "block";
-        document.getElementById('mandateSection').style.display     = "block";
+        document.getElementById('missingDocsGate').style.display   = "none";
+        document.getElementById('matchmakingGate').style.display   = "block";
+        document.getElementById('dealReportSection').style.display = "block";
+        document.getElementById('mandateSection').style.display    = "block";
       }
 
       document.getElementById('certifyBox').addEventListener('change', function() {
@@ -457,159 +922,186 @@
       fetchPortalPrices();
       fetchLiveMandates();
       setInterval(fetchPortalPrices, 300000);
-      setInterval(fetchLiveMandates, 60000); // refresh mandates every 60s
+      setInterval(fetchLiveMandates, 60000);
       loadTawkChat();
     }
 
-    // PRICES
+    // ── PRICE UPDATE WITH FLASH ──
+    function setPrice(id, tileId, chgId, newVal, unit) {
+      const el   = document.getElementById(id);
+      const tile = document.getElementById(tileId);
+      const chgEl = document.getElementById(chgId);
+      if (!el || !tile) return;
+
+      const prev = prevPrices[id];
+      const cur  = parseFloat(String(newVal).replace(/,/g,''));
+
+      if (prev !== undefined) {
+        tile.classList.remove('flash-up','flash-down');
+        void tile.offsetWidth;
+        if (cur > prev) {
+          tile.classList.add('flash-up');
+          if(chgEl){ chgEl.className="pt-change up"; chgEl.innerText="▲ "+unit; }
+        } else if (cur < prev) {
+          tile.classList.add('flash-down');
+          if(chgEl){ chgEl.className="pt-change down"; chgEl.innerText="▼ "+unit; }
+        }
+      }
+      prevPrices[id] = cur;
+      el.innerText   = `$${newVal}`;
+    }
+
+    function updateTicker(id, val) {
+      const el  = document.getElementById(id);
+      const el2 = document.getElementById(id + '2');
+      if (el)  el.innerText  = `$${val}`;
+      if (el2) el2.innerText = `$${val}`;
+    }
+
     async function fetchPortalPrices() {
       try {
-        const response = await fetch(`${API_URL}?action=getPrices`);
-        const data     = await response.json();
-        const p        = data.prices;
-        document.getElementById('price-copper').innerText   = `$${p.copper}`;
-        document.getElementById('price-aluminum').innerText = `$${p.aluminum}`;
-        document.getElementById('price-nickel').innerText   = `$${p.nickel}`;
-        document.getElementById('price-zinc').innerText     = `$${p.zinc}`;
-        document.getElementById('price-soy').innerText      = `$${p.soybeans}`;
-        document.getElementById('price-sugar').innerText    = `$${p.sugar}`;
-        document.getElementById('price-coffee').innerText   = `$${p.coffee}`;
-        document.getElementById('price-cocoa').innerText    = `$${p.cocoa}`;
-      } catch(e) { console.log("Price feed syncing..."); }
+        const res  = await fetch(`${API_URL}?action=getPrices`);
+        const data = await res.json();
+        const p    = data.prices;
+
+        setPrice('price-copper',   'tile-copper',   'chg-copper',   p.copper,   '$/MT');
+        setPrice('price-aluminum', 'tile-aluminum', 'chg-aluminum', p.aluminum, '$/MT');
+        setPrice('price-nickel',   'tile-nickel',   'chg-nickel',   p.nickel,   '$/MT');
+        setPrice('price-zinc',     'tile-zinc',     'chg-zinc',     p.zinc,     '$/MT');
+        setPrice('price-soy',      'tile-soy',      'chg-soy',      p.soybeans, '$/bu');
+        setPrice('price-sugar',    'tile-sugar',    'chg-sugar',    p.sugar,    '$/lb');
+        setPrice('price-coffee',   'tile-coffee',   'chg-coffee',   p.coffee,   '$/lb');
+        setPrice('price-cocoa',    'tile-cocoa',    'chg-cocoa',    p.cocoa,    '$/MT');
+
+        updateTicker('tk-copper', p.copper);
+        updateTicker('tk-alum',   p.aluminum);
+        updateTicker('tk-nickel', p.nickel);
+        updateTicker('tk-zinc',   p.zinc);
+        updateTicker('tk-cocoa',  p.cocoa);
+        updateTicker('tk-coffee', p.coffee);
+        updateTicker('tk-sugar',  p.sugar);
+        updateTicker('tk-soy',    p.soybeans);
+      } catch(e) { console.log("Price sync..."); }
     }
 
-    // LIVE MANDATE BOARD — now client-submitted
+    // ── MANDATE BLOTTER ──
     async function fetchLiveMandates() {
       try {
-        const response = await fetch(`${API_URL}?action=getMandates&email=${encodeURIComponent(currentUserEmail)}&role=${currentUserRole}`);
-        const data     = await response.json();
-        const container = document.getElementById('mandateFlow');
+        const res  = await fetch(`${API_URL}?action=getMandates&email=${encodeURIComponent(currentUserEmail)}&role=${currentUserRole}`);
+        const data = await res.json();
+        const tbody = document.getElementById('mandateFlow');
 
         if (!data.mandates || data.mandates.length === 0) {
-          container.innerHTML = '<div style="font-size:0.8em; color:var(--text-muted); text-align:center; padding:15px 0;">No active mandates matching your profile.<br>Check back soon or post your own above.</div>';
+          tbody.innerHTML = `<tr><td colspan="4" style="color:var(--text-dim);font-size:9px;padding:16px;text-align:center;">NO ACTIVE MANDATES — POST YOURS ABOVE</td></tr>`;
           return;
         }
-
-        container.innerHTML = data.mandates.map(m => `
-          <div class="flow-item">
-            <span class="flow-type ${m.type.toLowerCase()}">${m.type}</span>
-            <strong>${m.commodity}</strong>
-            <div class="flow-meta">
-              Volume: ${m.volume} &nbsp;|&nbsp; Target: ${m.price}
-              <br>Posted by verified ${m.type === "BUY" ? "BUYER" : "SUPPLIER"}
-            </div>
-          </div>`).join('');
-      } catch(e) { console.log("Mandate feed syncing..."); }
+        tbody.innerHTML = data.mandates.map(m => `
+          <tr>
+            <td class="b-type-${m.type.toLowerCase()}">${m.type}</td>
+            <td class="b-commodity">${m.commodity}</td>
+            <td>${m.volume}</td>
+            <td>${m.price}</td>
+          </tr>`).join('');
+      } catch(e) { console.log("Mandate sync..."); }
     }
 
-    // POST MANDATE
+    // ── POST MANDATE ──
     async function postMandate() {
       const commodity = document.getElementById('mandateCommodity').value;
       const type      = document.getElementById('mandateType').value;
       const volume    = document.getElementById('mandateVolume').value.trim();
       const price     = document.getElementById('mandatePrice').value.trim();
 
-      document.getElementById('mandateSuccess').style.display = "none";
-      document.getElementById('mandateError').style.display   = "none";
-
+      hideMsg('mandateSuccess'); hideMsg('mandateError');
       if (!commodity || !volume) {
-        document.getElementById('mandateError').innerText     = "Commodity and volume are required.";
-        document.getElementById('mandateError').style.display = "block";
-        return;
+        showMsg('mandateError','COMMODITY AND VOLUME ARE REQUIRED'); return;
       }
-
       try {
-        const url      = `${API_URL}?action=submitMandate&email=${encodeURIComponent(currentUserEmail)}&commodity=${encodeURIComponent(commodity)}&type=${type}&volume=${encodeURIComponent(volume)}&price=${encodeURIComponent(price)}`;
-        const response = await fetch(url);
-        const data     = await response.json();
-
+        const url  = `${API_URL}?action=submitMandate&email=${encodeURIComponent(currentUserEmail)}&commodity=${encodeURIComponent(commodity)}&type=${type}&volume=${encodeURIComponent(volume)}&price=${encodeURIComponent(price)}`;
+        const res  = await fetch(url);
+        const data = await res.json();
         if (data.success) {
-          document.getElementById('mandateSuccess').style.display = "block";
-          document.getElementById('mandateCommodity').value = "";
-          document.getElementById('mandateVolume').value    = "";
-          document.getElementById('mandatePrice').value     = "";
-          fetchLiveMandates(); // refresh board immediately
-        } else {
-          document.getElementById('mandateError').innerText     = data.error || "Submission failed.";
-          document.getElementById('mandateError').style.display = "block";
-        }
-      } catch(e) {
-        document.getElementById('mandateError').innerText     = "Network error. Please retry.";
-        document.getElementById('mandateError').style.display = "block";
-      }
+          showMsg('mandateSuccess','');
+          document.getElementById('mandateCommodity').value = '';
+          document.getElementById('mandateVolume').value    = '';
+          document.getElementById('mandatePrice').value     = '';
+          fetchLiveMandates();
+        } else { showMsg('mandateError', data.error || 'SUBMISSION FAILED'); }
+      } catch(e) { showMsg('mandateError','NETWORK ERROR — RETRY'); }
     }
 
-    // TAB SWITCHER
-    function switchTab(tab) {
+    // ── TAB SWITCHER ──
+    function switchTab(tab, e) {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
       document.getElementById('tab-' + tab).classList.add('active');
-      event.target.classList.add('active');
+      if (e && e.target) e.target.classList.add('active');
     }
 
-    // INITIATE TRADE
+    // ── INITIATE TRADE ──
     function initiateTrade() {
-      const phoneNumber = "18023167296"; // ← YOUR REAL NUMBER HERE
-      const entity      = document.getElementById('entityName').innerText.trim();
-      const message     = encodeURIComponent(`[Romi Nexus Desk] Authorized Representative of ${entity} (${currentUserRole}) requesting trade initiation.`);
+      const phoneNumber = "18023167296";
+      const entity  = document.getElementById('entityName').innerText.trim();
+      const message = encodeURIComponent(`[Romi Nexus Desk] Authorized Representative of ${entity} (${currentUserRole}) requesting trade initiation.`);
       window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
     }
 
-    // DEAL REPORT
+    // ── DEAL REPORT ──
     async function submitDealReport() {
       const commodity = document.getElementById('dealCommodity').value;
       const volume    = document.getElementById('dealVolume').value.trim();
       const value     = document.getElementById('dealValue').value.trim();
 
-      document.getElementById('dealSuccess').style.display = "none";
-      document.getElementById('dealError').style.display   = "none";
-
+      hideMsg('dealSuccess'); hideMsg('dealError');
       if (!commodity || !volume || !value || parseFloat(value) <= 0) {
-        document.getElementById('dealError').innerText     = "All fields are required.";
-        document.getElementById('dealError').style.display = "block";
-        return;
+        showMsg('dealError','ALL FIELDS ARE REQUIRED'); return;
       }
-
       try {
-        const url      = `${API_URL}?action=reportDeal&email=${encodeURIComponent(currentUserEmail)}&commodity=${encodeURIComponent(commodity)}&volume=${encodeURIComponent(volume)}&value=${encodeURIComponent(value)}`;
-        const response = await fetch(url);
-        const data     = await response.json();
-
+        const url  = `${API_URL}?action=reportDeal&email=${encodeURIComponent(currentUserEmail)}&commodity=${encodeURIComponent(commodity)}&volume=${encodeURIComponent(volume)}&value=${encodeURIComponent(value)}`;
+        const res  = await fetch(url);
+        const data = await res.json();
         if (data.success) {
-          const commission = parseFloat(data.commission).toLocaleString('en-US', { minimumFractionDigits: 2 });
-          document.getElementById('dealSuccess').innerText     = `✓ Reported. Commission due: $${commission}. Our team will be in touch.`;
-          document.getElementById('dealSuccess').style.display = "block";
-          document.getElementById('dealCommodity').value = "";
-          document.getElementById('dealVolume').value    = "";
-          document.getElementById('dealValue').value     = "";
-
-          // Refresh reputation score after deal report
+          const commission = parseFloat(data.commission).toLocaleString('en-US',{minimumFractionDigits:2});
+          showMsg('dealSuccess', `✓ REPORTED — COMMISSION DUE: $${commission}`);
+          document.getElementById('dealCommodity').value = '';
+          document.getElementById('dealVolume').value    = '';
+          document.getElementById('dealValue').value     = '';
           const session = JSON.parse(localStorage.getItem('romi_nexus_session') || '{}');
-          const current = parseFloat(session.reputationScore || "5.0");
-          const updated = Math.min(10.0, current + 0.5).toFixed(1);
+          const updated = Math.min(10.0, parseFloat(session.reputationScore||'5.0') + 0.5).toFixed(1);
           session.reputationScore = updated;
           localStorage.setItem('romi_nexus_session', JSON.stringify(session));
-          document.getElementById('repScoreText').innerText     = updated + " / 10.0";
-          document.getElementById('repBarFill').style.width     = (parseFloat(updated) * 10) + "%";
-        } else {
-          document.getElementById('dealError').innerText     = data.error || "Submission failed.";
-          document.getElementById('dealError').style.display = "block";
-        }
-      } catch(e) {
-        document.getElementById('dealError').innerText     = "Network error. Please retry.";
-        document.getElementById('dealError').style.display = "block";
-      }
+          document.getElementById('repScoreText').innerHTML =
+            updated + ' <span style="font-size:11px;color:var(--text-muted)">/ 10.0</span>';
+          document.getElementById('repBarFill').style.width = (parseFloat(updated)*10) + "%";
+        } else { showMsg('dealError', data.error || 'SUBMISSION FAILED'); }
+      } catch(e) { showMsg('dealError','NETWORK ERROR — RETRY'); }
     }
 
+    // ── HELPERS ──
+    function showMsg(id, text) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (text) el.innerText = text;
+      el.style.display = "block";
+    }
+    function hideMsg(id) {
+      const el = document.getElementById(id);
+      if (el) el.style.display = "none";
+    }
+
+    // ── TAWK CHAT ──
     function loadTawkChat() {
       if (window.Tawk_API) return;
-      window.Tawk_API    = window.Tawk_API || {};
+      window.Tawk_API = window.Tawk_API || {};
       window.Tawk_LoadStart = new Date();
       var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-      s1.async = true; s1.src = 'https://embed.tawk.to/69a0c9a64afa321c34c791b5/1jie17d06';
-      s1.charset = 'UTF-8'; s1.setAttribute('crossorigin', '*');
+      s1.async = true;
+      s1.src = 'https://embed.tawk.to/69a0c9a64afa321c34c791b5/1jie17d06';
+      s1.charset = 'UTF-8';
+      s1.setAttribute('crossorigin','*');
       s0.parentNode.insertBefore(s1, s0);
     }
   </script>
+
 </body>
 </html>
