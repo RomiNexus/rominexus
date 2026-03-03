@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ROMI NEXUS | INSTITUTIONAL TERMINAL</title>
+  <title>Romi Nexus | Institutional Commodity Trade Terminal</title>
+  <meta name="description" content="Romi Nexus is an AI-powered institutional commodity trade facilitation platform for verified buyers and suppliers. UAE registered. License No. 40601 — Ajman Free Zone.">
+  <meta name="keywords" content="commodity trade desk UAE, physical gold buyer, commodity broker UAE, institutional commodity trading, Ajman Free Zone">
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -21,8 +23,6 @@
       --success: #00e676;
       --warning: #ffab00;
       --danger: #ff1744;
-      --up: #00e676;
-      --down: #ff1744;
       --mono: 'IBM Plex Mono', monospace;
     }
 
@@ -38,792 +38,700 @@
     }
 
     /* ── TICKER BAR ── */
-    .ticker-bar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      background: #000; border-bottom: 1px solid var(--gold);
-      height: 28px; overflow: hidden; display: flex; align-items: center;
-    }
-    .ticker-label {
-      background: var(--gold); color: #000; padding: 0 10px;
-      font-size: 10px; font-weight: 700; letter-spacing: 2px;
-      height: 100%; display: flex; align-items: center; flex-shrink: 0;
-      white-space: nowrap;
-    }
-    .ticker-track { flex: 1; overflow: hidden; }
-    .ticker-inner {
-      display: flex; gap: 0;
-      animation: ticker-scroll 40s linear infinite;
-      white-space: nowrap;
-    }
-    .ticker-inner:hover { animation-play-state: paused; }
-    @keyframes ticker-scroll {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-    .ticker-item {
-      padding: 0 20px; font-size: 10px; letter-spacing: 0.5px;
-      border-right: 1px solid #1a1a1a; display: inline-flex;
-      align-items: center; gap: 8px; height: 28px;
-    }
-    .ticker-item .t-name { color: var(--gold); font-weight: 600; }
-    .ticker-item .t-price { color: var(--text); }
-    .ticker-item .t-up   { color: var(--up); }
-    .ticker-item .t-down { color: var(--down); }
-
-    /* ── STATUS BAR ── */
-    .status-bar {
-      position: fixed; top: 28px; left: 0; right: 0; z-index: 999;
-      background: #050505; border-bottom: 1px solid var(--border-bright);
-      height: 26px; display: flex; align-items: center;
-      justify-content: space-between; padding: 0 16px;
-    }
-    .status-bar-left, .status-bar-right {
-      display: flex; align-items: center; gap: 16px;
-      font-size: 10px; color: var(--text-muted); letter-spacing: 1px;
-    }
-    .status-indicator { display: flex; align-items: center; gap: 5px; }
-    .status-dot { width: 6px; height: 6px; border-radius: 50%; }
-    .dot-live    { background: var(--success); box-shadow: 0 0 6px var(--success); animation: pulse-dot 2s infinite; }
-    .dot-offline { background: var(--danger); }
-    @keyframes pulse-dot { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
-    .status-tag { color: var(--gold); font-weight: 600; }
-    #clock { color: var(--text-muted); font-size: 10px; }
-
-    /* ── MAIN LAYOUT ── */
-    .terminal-wrap {
-      margin-top: 54px;
-      padding: 12px;
-      max-width: 1400px;
-      margin-left: auto;
-      margin-right: auto;
+    .ticker-wrap {
+      background: #000;
+      border-bottom: 1px solid var(--gold);
+      height: 46px; overflow: hidden;
     }
 
-    /* ── GATE SCREEN ── */
-    #gate-view {
-      min-height: calc(100vh - 54px);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      padding: 40px 20px;
+    /* ── MARKET STATUS BAR ── */
+    .market-status-bar {
+      background: #050505;
+      border-bottom: 1px solid var(--border-bright);
+      height: 26px;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      font-size: 10px; letter-spacing: 1px;
+      text-transform: uppercase;
+      position: sticky; top: 0; z-index: 1000;
     }
-    .gate-box {
-      width: 100%; max-width: 480px;
+    .msb-left { display: flex; align-items: center; gap: 14px; }
+    .msb-right { display: flex; align-items: center; gap: 14px; color: var(--text-muted); }
+    .status-indicator { display: flex; align-items: center; gap: 6px; }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .status-online  { background: var(--success); box-shadow: 0 0 6px var(--success); animation: pulse-dot 2s infinite; }
+    .status-offline { background: var(--text-muted); }
+    @keyframes pulse-dot { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+    .status-tag { color: var(--gold); font-weight: 700; }
+    #clock { color: var(--text-muted); }
+    .lic-tag { color: var(--text-muted); }
+
+    /* ── HEADER ── */
+    header {
+      background: #000;
+      border-bottom: 1px solid var(--border);
+      padding: 0 20px;
+      height: 52px;
+      display: flex; align-items: center;
+      justify-content: space-between;
+    }
+    .header-logo img {
+      height: 36px; width: auto;
+      opacity: 0.9; filter: brightness(1.1);
+    }
+    .header-nav {
+      display: flex; align-items: center; gap: 6px;
+    }
+    .nav-portal-btn {
+      background: transparent;
       border: 1px solid var(--border-bright);
-      border-top: 2px solid var(--gold);
-      background: var(--bg-panel);
-      padding: 40px;
+      color: var(--text-muted);
+      font-family: var(--mono);
+      font-size: 9px; padding: 6px 14px;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      cursor: pointer; transition: 0.2s;
+      text-decoration: none; display: inline-block;
     }
-    .gate-logo {
-      text-align: center; margin-bottom: 30px;
-      border-bottom: 1px solid var(--border); padding-bottom: 20px;
+    .nav-portal-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .nav-apply-btn {
+      background: var(--gold); color: #000;
+      border: none; font-family: var(--mono);
+      font-size: 9px; padding: 6px 14px;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      cursor: pointer; transition: 0.2s;
+      text-decoration: none; display: inline-block;
+      font-weight: 700;
     }
-    .gate-logo-text {
-      font-size: 22px; font-weight: 700; letter-spacing: 6px;
-      color: var(--gold); text-transform: uppercase;
-    }
-    .gate-logo-sub {
-      font-size: 9px; color: var(--text-muted); letter-spacing: 3px;
-      margin-top: 4px; text-transform: uppercase;
-    }
-    .terminal-prompt {
-      font-size: 10px; color: var(--text-muted); letter-spacing: 1px;
-      margin-bottom: 6px; text-transform: uppercase;
-    }
-    .terminal-input-wrap {
-      display: flex; align-items: center; gap: 0;
-      border: 1px solid var(--border-bright); background: #000;
-      margin-bottom: 16px;
-    }
-    .terminal-prompt-symbol {
-      color: var(--gold); padding: 12px 10px; font-size: 13px;
-      font-weight: 700; flex-shrink: 0; border-right: 1px solid var(--border);
-    }
-    .terminal-input {
-      flex: 1; background: transparent; border: none; outline: none;
-      color: var(--text); font-family: var(--mono); font-size: 12px;
-      padding: 12px 10px; letter-spacing: 1px;
-    }
-    .cursor-blink {
-      display: inline-block; width: 8px; height: 14px;
-      background: var(--gold); animation: blink 1s step-end infinite;
-      vertical-align: middle; margin-left: 2px;
-    }
-    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
-    .gate-btn {
-      width: 100%; background: var(--gold); color: #000;
-      border: none; padding: 13px; font-family: var(--mono);
-      font-size: 11px; font-weight: 700; letter-spacing: 3px;
-      cursor: pointer; transition: 0.2s; text-transform: uppercase;
-    }
-    .gate-btn:hover { background: var(--gold-hover); }
-    .gate-sys-lines {
-      margin-top: 20px; border-top: 1px solid var(--border);
-      padding-top: 15px;
-    }
-    .sys-line {
-      font-size: 9px; color: var(--text-dim); letter-spacing: 0.5px;
-      margin-bottom: 3px; display: flex; align-items: center; gap: 6px;
-    }
-    .sys-line::before { content: '>'; color: var(--gold); }
-    #gate-error {
-      color: var(--danger); font-size: 10px; letter-spacing: 0.5px;
-      margin-top: 10px; display: none; padding: 8px;
-      border: 1px solid rgba(255,23,68,0.3); background: rgba(255,23,68,0.05);
-    }
-    #gate-loader {
-      text-align: center; margin-top: 12px; display: none;
-      font-size: 10px; color: var(--text-muted); letter-spacing: 2px;
-    }
-    .loading-dots::after {
-      content: '...'; animation: dots 1.5s steps(4, end) infinite;
-    }
-    @keyframes dots {
-      0%,20% { content: '.'; } 40% { content: '..'; }
-      60%,100% { content: '...'; }
+    .nav-apply-btn:hover { background: var(--gold-hover); }
+
+    /* ── PAGE WRAP ── */
+    .page-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px;
     }
 
-    /* ── DASHBOARD ── */
-    #dashboard-view { display: none; }
-    .dash-grid {
+    /* ── HERO ── */
+    .hero {
+      padding: 70px 0 60px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-eyebrow {
+      font-size: 9px; color: var(--text-muted);
+      letter-spacing: 3px; text-transform: uppercase;
+      margin-bottom: 20px; display: flex;
+      align-items: center; gap: 10px;
+    }
+    .hero-eyebrow::before {
+      content: ''; width: 30px; height: 1px;
+      background: var(--gold); display: block;
+    }
+    .hero-grid {
       display: grid;
-      grid-template-columns: 420px 1fr;
-      gap: 10px;
-      align-items: start;
+      grid-template-columns: 1fr 380px;
+      gap: 40px; align-items: center;
+    }
+    .hero-title {
+      font-size: clamp(26px, 4.5vw, 50px);
+      font-weight: 700; line-height: 1.1;
+      color: var(--text); margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+    .hero-title span { color: var(--gold); }
+    .hero-sub {
+      font-size: 11px; color: var(--text-muted);
+      line-height: 1.9; max-width: 560px;
+      margin-bottom: 32px; letter-spacing: 0.3px;
+    }
+    .hero-cta-group {
+      display: flex; gap: 10px; flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .btn-primary {
+      background: var(--gold); color: #000;
+      border: none; padding: 13px 26px;
+      font-family: var(--mono); font-size: 10px;
+      font-weight: 700; letter-spacing: 2px;
+      cursor: pointer; transition: 0.2s;
+      text-decoration: none; display: inline-block;
+      text-transform: uppercase;
+    }
+    .btn-primary:hover { background: var(--gold-hover); }
+    .btn-secondary {
+      background: transparent; color: var(--text-muted);
+      border: 1px solid var(--border-bright);
+      padding: 13px 26px; font-family: var(--mono);
+      font-size: 10px; letter-spacing: 2px;
+      cursor: pointer; transition: 0.2s;
+      text-decoration: none; display: inline-block;
+      text-transform: uppercase;
+    }
+    .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+    .hero-stats {
+      display: flex; gap: 30px; flex-wrap: wrap;
+      border-top: 1px solid var(--border); padding-top: 24px;
+    }
+    .hs-value {
+      font-size: 20px; font-weight: 700;
+      color: var(--gold); letter-spacing: 1px;
+    }
+    .hs-label {
+      font-size: 8px; color: var(--text-muted);
+      letter-spacing: 1.5px; text-transform: uppercase;
+      margin-top: 4px;
     }
 
-    /* ── PANEL ── */
-    .panel {
-      background: var(--bg-panel);
-      border: 1px solid var(--border);
+    /* ── PRICE CARDS (TradingView single-quote) ── */
+    .price-section {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .price-section-label {
+      font-size: 9px; color: var(--text-muted);
+      letter-spacing: 2px; text-transform: uppercase;
       margin-bottom: 10px;
     }
-    .panel-header {
-      background: #0a0a0a;
+    .price-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .price-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      height: 110px; overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .price-card:hover { border-color: var(--gold); }
+
+    /* ── SECTION WRAPPER ── */
+    .section {
+      padding: 60px 0;
       border-bottom: 1px solid var(--border);
-      padding: 7px 12px;
+    }
+    .section-label {
+      font-size: 9px; color: var(--gold);
+      letter-spacing: 3px; text-transform: uppercase;
+      margin-bottom: 10px; display: flex;
+      align-items: center; gap: 10px;
+    }
+    .section-label::after {
+      content:''; width:40px; height:1px;
+      background: var(--border);
+    }
+    .section-title {
+      font-size: clamp(16px, 2.5vw, 26px);
+      font-weight: 700; color: var(--text);
+      margin-bottom: 8px;
+    }
+    .section-sub {
+      font-size: 10px; color: var(--text-muted);
+      line-height: 1.9; max-width: 560px;
+      margin-bottom: 36px;
+    }
+
+    /* ── PIPELINE ── */
+    .pipeline-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .pipeline-step {
+      background: var(--bg-panel);
+      padding: 24px 20px;
+    }
+    .ps-num {
+      font-size: 28px; font-weight: 700;
+      color: var(--border-bright); letter-spacing: -1px;
+      margin-bottom: 14px; line-height: 1;
+    }
+    .ps-tag {
+      font-size: 8px; color: var(--gold);
+      letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 8px; display: block;
+    }
+    .ps-title {
+      font-size: 12px; font-weight: 700;
+      color: var(--text); margin-bottom: 8px;
+      letter-spacing: 0.3px;
+    }
+    .ps-desc {
+      font-size: 10px; color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    /* ── CREDENTIALS ── */
+    .cred-panel {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+    }
+    .cred-header {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      background: #0a0a0a;
       display: flex; align-items: center;
       justify-content: space-between;
     }
     .panel-tag {
-      font-size: 10px; font-weight: 700; letter-spacing: 2px;
-      color: var(--gold); text-transform: uppercase;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 2px; color: var(--gold);
+      text-transform: uppercase;
     }
-    .panel-tag::before { content: '['; color: var(--text-muted); }
-    .panel-tag::after  { content: ']'; color: var(--text-muted); }
-    .panel-meta {
-      font-size: 9px; color: var(--text-muted); letter-spacing: 1px;
+    .panel-tag::before { content:'['; color:var(--text-muted); }
+    .panel-tag::after  { content:']'; color:var(--text-muted); }
+    .panel-meta { font-size: 9px; color: var(--text-muted); letter-spacing: 1px; }
+    .registry-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px; background: var(--border);
     }
-    .panel-body { padding: 12px; }
-
-    /* ── ENTITY HEADER ── */
-    .entity-bar {
-      display: flex; align-items: center;
-      justify-content: space-between;
-      padding: 10px 12px;
-      border-bottom: 1px solid var(--border);
-      background: #0a0a0a;
-    }
-    .entity-name {
-      font-size: 13px; font-weight: 700; color: var(--gold);
-      letter-spacing: 1px; text-transform: uppercase;
-    }
-    .entity-role {
-      font-size: 9px; padding: 3px 8px; letter-spacing: 2px;
-      border: 1px solid var(--gold); color: var(--gold);
-      background: rgba(212,175,55,0.05);
-    }
-    .logout-btn {
-      background: none; border: 1px solid var(--border-bright);
-      color: var(--text-muted); font-family: var(--mono);
-      font-size: 9px; padding: 3px 8px; cursor: pointer;
-      letter-spacing: 1px; transition: 0.2s;
-    }
-    .logout-btn:hover { border-color: var(--danger); color: var(--danger); }
-
-    /* ── NRS SCORE ── */
-    .nrs-display {
-      padding: 10px 12px;
-      display: flex; align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--border);
+    .reg-block {
       background: var(--bg-panel);
+      padding: 20px 18px;
     }
-    .nrs-label { font-size: 9px; color: var(--text-muted); letter-spacing: 2px; }
-    .nrs-value { font-size: 18px; font-weight: 700; color: var(--gold); letter-spacing: 2px; }
-    .nrs-bar-wrap { padding: 6px 12px 10px; background: var(--bg-panel); border-bottom: 1px solid var(--border); }
-    .nrs-bar-track { background: #111; height: 3px; width: 100%; }
-    .nrs-bar-fill {
-      height: 3px; background: linear-gradient(90deg, var(--warning), var(--gold));
-      transition: width 1s ease;
+    .reg-label {
+      font-size: 8px; color: var(--text-muted);
+      letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 8px;
     }
-    .nrs-hint { font-size: 8px; color: var(--text-dim); letter-spacing: 0.5px; margin-top: 4px; }
-
-    /* ── CLEARANCE TABLE ── */
-    .clearance-row {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 8px 12px; border-bottom: 1px solid var(--border);
-      font-size: 10px; letter-spacing: 0.5px;
+    .reg-value {
+      font-size: 11px; color: var(--gold);
+      font-weight: 600; letter-spacing: 0.3px;
+      line-height: 1.6;
     }
-    .clearance-row:last-child { border-bottom: none; }
-    .c-label { color: var(--text-muted); }
-    .badge {
-      font-size: 9px; padding: 2px 6px; letter-spacing: 1px;
-      font-weight: 700; font-family: var(--mono);
-    }
-    .badge-green { color: var(--success); border: 1px solid rgba(0,230,118,0.3); background: rgba(0,230,118,0.05); }
-    .badge-yellow{ color: var(--warning); border: 1px solid rgba(255,171,0,0.3);  background: rgba(255,171,0,0.05); }
-    .badge-red   { color: var(--danger);  border: 1px solid rgba(255,23,68,0.3);  background: rgba(255,23,68,0.05); }
-
-    /* ── BLOTTER TABLE ── */
-    .blotter-table { width: 100%; border-collapse: collapse; font-size: 10px; }
-    .blotter-table th {
-      font-size: 8px; color: var(--text-muted); letter-spacing: 1.5px;
-      text-transform: uppercase; padding: 6px 8px; text-align: left;
-      border-bottom: 1px solid var(--border); background: #050505;
-    }
-    .blotter-table td {
-      padding: 8px 8px; border-bottom: 1px solid var(--border);
-      color: var(--text); vertical-align: middle;
-      transition: background 0.2s;
-    }
-    .blotter-table tr:hover td { background: #0f0f0f; }
-    .blotter-table tr:last-child td { border-bottom: none; }
-    .b-type-buy  { color: var(--success); font-weight: 700; font-size: 9px; letter-spacing: 1px; }
-    .b-type-sell { color: var(--danger);  font-weight: 700; font-size: 9px; letter-spacing: 1px; }
-    .b-commodity { color: var(--gold); font-weight: 600; }
-    .b-entity { color: var(--text-muted); font-size: 9px; }
-
-    /* ── MANDATE FORM ── */
-    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
-    .t-select, .t-input {
-      width: 100%; background: #000; border: 1px solid var(--border-bright);
-      color: var(--text); font-family: var(--mono); font-size: 11px;
-      padding: 9px 10px; outline: none; appearance: none;
-    }
-    .t-select:focus, .t-input:focus { border-color: var(--gold); }
-    .t-select option { background: #111; }
-    .t-btn {
-      width: 100%; background: var(--gold); color: #000;
-      border: none; padding: 10px; font-family: var(--mono);
-      font-size: 10px; font-weight: 700; letter-spacing: 2px;
-      cursor: pointer; transition: 0.2s; margin-top: 8px;
-    }
-    .t-btn:hover { background: var(--gold-hover); }
-    .t-btn:disabled { background: #1a1a1a; color: var(--text-dim); cursor: not-allowed; }
-    .t-btn-outline {
-      background: transparent; color: var(--gold);
-      border: 1px solid var(--gold);
-    }
-    .t-btn-outline:hover { background: rgba(212,175,55,0.08); }
-    .form-msg {
-      font-size: 10px; padding: 8px 10px; margin-top: 8px;
-      letter-spacing: 0.5px; display: none;
-    }
-    .form-msg.success { color: var(--success); border: 1px solid rgba(0,230,118,0.3); background: rgba(0,230,118,0.04); }
-    .form-msg.error   { color: var(--danger);  border: 1px solid rgba(255,23,68,0.3);  background: rgba(255,23,68,0.04); }
-
-    /* ── PRICE TILES ── */
-    .price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 10px; }
-    .price-tile {
-      background: #050505; border: 1px solid var(--border);
-      padding: 10px 12px; transition: border-color 0.3s;
-    }
-    .price-tile.flash-up   { border-color: var(--up);   animation: flash-up-anim 0.8s ease; }
-    .price-tile.flash-down { border-color: var(--down); animation: flash-down-anim 0.8s ease; }
-    @keyframes flash-up-anim {
-      0%   { background: rgba(0,230,118,0.15); }
-      100% { background: #050505; }
-    }
-    @keyframes flash-down-anim {
-      0%   { background: rgba(255,23,68,0.15); }
-      100% { background: #050505; }
-    }
-    .pt-name  { font-size: 8px; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
-    .pt-price { font-size: 14px; color: var(--gold); font-weight: 600; margin: 3px 0; }
-    .pt-change { font-size: 9px; letter-spacing: 0.5px; }
-    .pt-change.up   { color: var(--up); }
-    .pt-change.down { color: var(--down); }
-    .pt-change.flat { color: var(--text-muted); }
-
-    /* ── TV WIDGET BOXES ── */
-    .tv-section-label {
-      font-size: 9px; color: var(--text-muted); letter-spacing: 2px;
-      text-transform: uppercase; padding: 8px 10px 4px;
+    .sys-lines {
+      display: flex; flex-wrap: wrap;
       border-top: 1px solid var(--border);
     }
-    .tv-wrap { border: 1px solid var(--border); margin: 0 10px 8px; overflow: hidden; background: #050505; }
+    .sys-line-item {
+      padding: 8px 14px; font-size: 9px;
+      color: var(--text-dim); letter-spacing: 0.5px;
+      border-right: 1px solid var(--border);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .sys-line-item::before { content:'>'; color:var(--gold); }
+    .sys-line-item:last-child { border-right: none; }
 
-    /* ── LEGAL PANELS ── */
-    .legal-scroll {
-      height: 200px; overflow-y: auto; padding: 12px;
-      font-size: 9px; color: var(--text-dim); line-height: 1.9;
-      letter-spacing: 0.3px; text-align: justify;
+    /* ── INTAKE FORM ── */
+    .intake-section { padding: 60px 0; border-bottom: 1px solid var(--border); }
+    .intake-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px; align-items: start;
     }
-    .legal-scroll b { color: var(--text-muted); }
-    ::-webkit-scrollbar { width: 3px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: var(--gold-dim); }
-
-    /* ── NCNDA CERT ── */
-    .cert-box {
-      display: flex; align-items: flex-start; gap: 10px;
-      padding: 12px; background: rgba(212,175,55,0.03);
-      border: 1px solid rgba(212,175,55,0.15); margin: 8px 0;
+    .form-panel {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
     }
-    .cert-box input[type="checkbox"] {
-      margin-top: 2px; accent-color: var(--gold);
-      width: 14px; height: 14px; flex-shrink: 0; cursor: pointer;
+    .form-panel-body { padding: 20px; }
+    .form-panel-desc {
+      font-size: 10px; color: var(--text-muted);
+      line-height: 1.8; margin-bottom: 16px;
     }
-    .cert-box label { font-size: 10px; color: var(--text-muted); letter-spacing: 0.3px; cursor: pointer; }
-
-    /* ── MISSING DOCS ── */
-    .alert-panel {
-      border: 1px solid var(--warning); background: rgba(255,171,0,0.03);
-      padding: 14px; margin-bottom: 10px; display: none;
+    .tally-wrap iframe {
+      display: block; background: transparent;
     }
-    .alert-title { color: var(--warning); font-size: 10px; font-weight: 700; letter-spacing: 1px; margin-bottom: 8px; }
-    .alert-body  { color: var(--text-muted); font-size: 10px; margin-bottom: 12px; line-height: 1.7; }
-    .alert-btn {
-      display: block; text-align: center; background: var(--warning);
-      color: #000; padding: 10px; text-decoration: none;
-      font-family: var(--mono); font-size: 10px; font-weight: 700;
-      letter-spacing: 2px;
+    .email-btn {
+      display: block; text-align: center;
+      background: transparent;
+      border: 1px solid var(--border-bright);
+      color: var(--text-muted);
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 2px; padding: 14px;
+      text-decoration: none; text-transform: uppercase;
+      transition: 0.2s; margin-top: 12px;
     }
-
-    /* ── TAB SYSTEM ── */
-    .tab-bar {
-      display: flex; border-bottom: 1px solid var(--border);
+    .email-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .portal-access-panel {
+      background: rgba(212,175,55,0.03);
+      border: 1px solid rgba(212,175,55,0.2);
+      padding: 24px;
+      display: flex; flex-direction: column;
+      align-items: flex-start; gap: 14px;
     }
-    .tab-btn {
-      background: none; border: none; border-bottom: 2px solid transparent;
-      color: var(--text-muted); font-family: var(--mono); font-size: 9px;
-      padding: 8px 14px; cursor: pointer; letter-spacing: 1.5px;
-      text-transform: uppercase; transition: 0.2s;
+    .pap-label {
+      font-size: 8px; color: var(--text-muted);
+      letter-spacing: 2px; text-transform: uppercase;
     }
-    .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
-    .tab-pane { display: none; padding: 12px; }
-    .tab-pane.active { display: block; }
+    .pap-title {
+      font-size: 14px; font-weight: 700;
+      color: var(--gold); letter-spacing: 0.5px;
+    }
+    .pap-desc {
+      font-size: 10px; color: var(--text-muted);
+      line-height: 1.9;
+    }
+    .pap-checklist { list-style: none; width: 100%; }
+    .pap-checklist li {
+      font-size: 10px; color: var(--text-muted);
+      padding: 7px 0; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .pap-checklist li:last-child { border-bottom: none; }
+    .pap-checklist li::before { content:'✓'; color:var(--success); font-size:9px; }
+    .btn-portal {
+      width: 100%; background: var(--gold); color: #000;
+      border: none; padding: 13px;
+      font-family: var(--mono); font-size: 10px;
+      font-weight: 700; letter-spacing: 2px;
+      cursor: pointer; transition: 0.2s;
+      text-decoration: none; display: block;
+      text-align: center; text-transform: uppercase;
+      margin-top: 6px;
+    }
+    .btn-portal:hover { background: var(--gold-hover); }
 
     /* ── FOOTER ── */
-    .terminal-footer {
-      text-align: center; padding: 20px; margin-top: 10px;
+    site-footer { }
+    .footer-wrap {
       border-top: 1px solid var(--border);
-      font-size: 8px; color: var(--text-dim); letter-spacing: 2px;
-      text-transform: uppercase; line-height: 2;
+      padding: 24px 0;
+      display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap;
+      gap: 12px;
     }
+    .footer-left {
+      font-size: 8px; color: var(--text-dim);
+      letter-spacing: 1.5px; line-height: 2;
+    }
+    .footer-right {
+      display: flex; gap: 20px; align-items: center;
+      flex-wrap: wrap;
+    }
+    .footer-link {
+      font-size: 9px; color: var(--text-muted);
+      text-decoration: none; letter-spacing: 1px;
+      transition: color 0.2s;
+    }
+    .footer-link:hover { color: var(--gold); }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 960px) {
-      .dash-grid { grid-template-columns: 1fr; }
-      .terminal-wrap { padding: 8px; }
-      .price-grid { grid-template-columns: 1fr 1fr; }
-      .form-grid-2 { grid-template-columns: 1fr; }
+      .hero-grid    { grid-template-columns: 1fr; }
+      .pipeline-grid{ grid-template-columns: 1fr 1fr; }
+      .registry-grid{ grid-template-columns: 1fr 1fr; }
+      .intake-grid  { grid-template-columns: 1fr; }
+      .price-cards-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .pipeline-grid { grid-template-columns: 1fr; }
+      .registry-grid { grid-template-columns: 1fr; }
+      .hero-stats    { gap: 20px; }
+      .hero-cta-group{ flex-direction: column; }
+      .sys-lines     { flex-direction: column; }
+      .sys-line-item { border-right: none; border-bottom: 1px solid var(--border); }
     }
   </style>
 </head>
 <body>
 
-  <!-- TICKER BAR -->
-  <div class="ticker-bar">
-    <div class="ticker-label">ROMI NEXUS ▶</div>
-    <div class="ticker-track">
-      <div class="ticker-inner" id="tickerInner">
-        <div class="ticker-item"><span class="t-name">XAU/USD</span><span class="t-price" id="tk-gold">--</span><span class="t-up" id="tk-gold-chg"></span></div>
-        <div class="ticker-item"><span class="t-name">XAG/USD</span><span class="t-price" id="tk-silver">--</span></div>
-        <div class="ticker-item"><span class="t-name">WTI</span><span class="t-price" id="tk-wti">--</span></div>
-        <div class="ticker-item"><span class="t-name">BRENT</span><span class="t-price" id="tk-brent">--</span></div>
-        <div class="ticker-item"><span class="t-name">CU</span><span class="t-price" id="tk-copper">--</span></div>
-        <div class="ticker-item"><span class="t-name">AL</span><span class="t-price" id="tk-alum">--</span></div>
-        <div class="ticker-item"><span class="t-name">NI</span><span class="t-price" id="tk-nickel">--</span></div>
-        <div class="ticker-item"><span class="t-name">ZN</span><span class="t-price" id="tk-zinc">--</span></div>
-        <div class="ticker-item"><span class="t-name">CACAO</span><span class="t-price" id="tk-cocoa">--</span></div>
-        <div class="ticker-item"><span class="t-name">COFFEE</span><span class="t-price" id="tk-coffee">--</span></div>
-        <div class="ticker-item"><span class="t-name">SUGAR</span><span class="t-price" id="tk-sugar">--</span></div>
-        <div class="ticker-item"><span class="t-name">SOY</span><span class="t-price" id="tk-soy">--</span></div>
-        <!-- duplicate for seamless loop -->
-        <div class="ticker-item"><span class="t-name">XAU/USD</span><span class="t-price" id="tk-gold2">--</span></div>
-        <div class="ticker-item"><span class="t-name">XAG/USD</span><span class="t-price" id="tk-silver2">--</span></div>
-        <div class="ticker-item"><span class="t-name">WTI</span><span class="t-price" id="tk-wti2">--</span></div>
-        <div class="ticker-item"><span class="t-name">BRENT</span><span class="t-price" id="tk-brent2">--</span></div>
-        <div class="ticker-item"><span class="t-name">CU</span><span class="t-price" id="tk-copper2">--</span></div>
-        <div class="ticker-item"><span class="t-name">AL</span><span class="t-price" id="tk-alum2">--</span></div>
-        <div class="ticker-item"><span class="t-name">NI</span><span class="t-price" id="tk-nickel2">--</span></div>
-        <div class="ticker-item"><span class="t-name">ZN</span><span class="t-price" id="tk-zinc2">--</span></div>
-        <div class="ticker-item"><span class="t-name">CACAO</span><span class="t-price" id="tk-cocoa2">--</span></div>
-        <div class="ticker-item"><span class="t-name">COFFEE</span><span class="t-price" id="tk-coffee2">--</span></div>
-        <div class="ticker-item"><span class="t-name">SUGAR</span><span class="t-price" id="tk-sugar2">--</span></div>
-        <div class="ticker-item"><span class="t-name">SOY</span><span class="t-price" id="tk-soy2">--</span></div>
-      </div>
+  <!-- ── TICKER TAPE (TradingView — original preserved) ── -->
+  <div class="ticker-wrap">
+    <div class="tradingview-widget-container">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+      {
+        "symbols": [
+          { "proName": "TVC:GOLD",        "title": "Gold Spot" },
+          { "proName": "TVC:SILVER",      "title": "Silver Spot" },
+          { "proName": "TVC:PLATINUM",    "title": "Platinum" },
+          { "proName": "TVC:USOIL",       "title": "WTI Crude" },
+          { "proName": "TVC:UKOIL",       "title": "Brent Crude" },
+          { "proName": "CAPITALCOM:DXY",  "title": "US Dollar Index" },
+          { "proName": "FX:EURUSD",       "title": "EUR / USD" },
+          { "proName": "CAPITALCOM:WHEAT","title": "Wheat" },
+          { "proName": "CAPITALCOM:CORN", "title": "Corn" }
+        ],
+        "showSymbolLogo": true,
+        "colorTheme": "dark",
+        "isTransparent": true,
+        "displayMode": "adaptive",
+        "locale": "en"
+      }
+      </script>
     </div>
   </div>
 
-  <!-- STATUS BAR -->
-  <div class="status-bar">
-    <div class="status-bar-left">
+  <!-- ── MARKET STATUS BAR ── -->
+  <div class="market-status-bar">
+    <div class="msb-left">
       <div class="status-indicator">
-        <div class="status-dot dot-live"></div>
+        <div class="status-dot" id="market-dot"></div>
         <span class="status-tag">ROMI NEXUS</span>
       </div>
-      <span>INSTITUTIONAL TRADE TERMINAL</span>
-      <span>AFZ LIC: 40601</span>
+      <span id="market-text" style="color:var(--text-muted);">Global Markets: Checking...</span>
+      <span class="lic-tag">AFZ LIC: 40601</span>
     </div>
-    <div class="status-bar-right">
-      <span id="sessionTag" style="display:none; color:var(--gold)"></span>
+    <div class="msb-right">
       <span id="clock"></span>
       <span>GST UTC+4</span>
     </div>
   </div>
 
-  <div class="terminal-wrap">
+  <!-- ── HEADER ── -->
+  <header>
+    <div class="header-logo">
+      <img src="logo.jpg" alt="Romi Nexus">
+    </div>
+    <nav class="header-nav">
+      <a href="[YOUR PORTAL URL]" class="nav-portal-btn">CLIENT PORTAL →</a>
+      <a href="https://tally.so/r/VL0dYN" target="_blank" class="nav-apply-btn">APPLY FOR ACCESS →</a>
+    </nav>
+  </header>
 
-    <!-- GATE VIEW -->
-    <div id="gate-view">
-      <div class="gate-box">
-        <div class="gate-logo">
-          <div class="gate-logo-text">ROMI NEXUS</div>
-          <div class="gate-logo-sub">Institutional Commodity Terminal v3.0</div>
+  <div class="page-wrap">
+
+    <!-- ═══════════════════════
+         HERO
+    ════════════════════════ -->
+    <section class="hero">
+      <div class="hero-eyebrow">INSTITUTIONAL ACCESS ONLY — UAE REGISTERED</div>
+      <div class="hero-grid">
+        <div class="hero-content">
+          <h1 class="hero-title">
+            The Trade Desk for<br>
+            Physical <span>Commodity</span><br>
+            Buyers &amp; Suppliers.
+          </h1>
+          <p class="hero-sub">
+            Romi Nexus is an AI-powered institutional commodity trade facilitation platform. We connect verified buyers and suppliers across gold, metals, energy, and agricultural commodities — with full KYC/AML screening, live mandate matching, and UAE legal infrastructure.
+          </p>
+          <div class="hero-cta-group">
+            <a href="https://tally.so/r/VL0dYN" target="_blank" class="btn-primary">
+              REQUEST VERIFIED ACCESS →
+            </a>
+            <a href="[YOUR PORTAL URL]" class="btn-secondary">
+              EXISTING CLIENT — LOGIN →
+            </a>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <div class="hs-value">14+</div>
+              <div class="hs-label">Commodity Classes</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hs-value">2.0%</div>
+              <div class="hs-label">Commission on Closed Deals</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hs-value">UAE</div>
+              <div class="hs-label">AFZ Lic. 40601</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hs-value">DIFC</div>
+              <div class="hs-label">Courts Jurisdiction</div>
+            </div>
+          </div>
         </div>
-        <div class="terminal-prompt">AUTHORIZATION REQUIRED</div>
-        <div class="terminal-input-wrap">
-          <span class="terminal-prompt-symbol">$</span>
-          <input class="terminal-input" type="text" id="emailInput"
-                 placeholder="enter_corporate_credentials" autocomplete="off"
-                 onkeydown="if(event.key==='Enter') validateLead()">
-          <span class="cursor-blink"></span>
+
+        <!-- LIVE PRICE CARDS -->
+        <div class="hero-right">
+          <div class="price-section-label">LIVE SPOT PRICES</div>
+          <div class="price-cards-grid">
+            <div class="price-card">
+              <div class="tradingview-widget-container">
+                <div class="tradingview-widget-container__widget"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+                { "symbol": "TVC:GOLD",  "width": "100%", "colorTheme": "dark", "isTransparent": true, "locale": "en" }
+                </script>
+              </div>
+            </div>
+            <div class="price-card">
+              <div class="tradingview-widget-container">
+                <div class="tradingview-widget-container__widget"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+                { "symbol": "TVC:USOIL", "width": "100%", "colorTheme": "dark", "isTransparent": true, "locale": "en" }
+                </script>
+              </div>
+            </div>
+            <div class="price-card">
+              <div class="tradingview-widget-container">
+                <div class="tradingview-widget-container__widget"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+                { "symbol": "TVC:SILVER","width": "100%", "colorTheme": "dark", "isTransparent": true, "locale": "en" }
+                </script>
+              </div>
+            </div>
+          </div>
         </div>
-        <button class="gate-btn" id="verifyBtn" onclick="validateLead()">
-          AUTHENTICATE →
-        </button>
-        <div id="gate-loader">
-          <span class="loading-dots">AUTHENTICATING</span>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════
+         PIPELINE
+    ════════════════════════ -->
+    <section class="section">
+      <div class="section-label">STANDARD OPERATING PROCEDURE</div>
+      <h2 class="section-title">The Trade Protocol.</h2>
+      <p class="section-sub">
+        Every transaction follows a structured, legally protected four-stage process. No informal introductions. No unverified counterparties.
+      </p>
+      <div class="pipeline-grid">
+        <div class="pipeline-step">
+          <div class="ps-num">01</div>
+          <span class="ps-tag">ONBOARDING</span>
+          <div class="ps-title">Digital Intake</div>
+          <div class="ps-desc">Submit your institutional KYC/AML dossier. Goods remain in your local storage. AI-assisted screening completes within 24–48 hours.</div>
         </div>
-        <div id="gate-error"></div>
-        <div class="gate-sys-lines">
-          <div class="sys-line">ROMI GROUP FZC — AJMAN FREE ZONE, UAE</div>
-          <div class="sys-line">AI-POWERED KYC / AML SCREENING ACTIVE</div>
-          <div class="sys-line">DIFC COURTS JURISDICTION — ALL SESSIONS LOGGED</div>
-          <div class="sys-line">UNAUTHORIZED ACCESS SUBJECT TO LEGAL ACTION</div>
+        <div class="pipeline-step">
+          <div class="ps-num">02</div>
+          <span class="ps-tag">MATCHING</span>
+          <div class="ps-title">Market Matching</div>
+          <div class="ps-desc">Verified mandates are presented to our active network. Buyers see SELL mandates. Suppliers see BUY mandates. Role-filtered and compliance-screened.</div>
+        </div>
+        <div class="pipeline-step">
+          <div class="ps-num">03</div>
+          <span class="ps-tag">VERIFICATION</span>
+          <div class="ps-title">Trade Settlement</div>
+          <div class="ps-desc">BCL/POF verification. SCO issuance. POP disclosure. SPA execution by all principals under UAE Federal Law and DIFC Courts jurisdiction.</div>
+        </div>
+        <div class="pipeline-step">
+          <div class="ps-num">04</div>
+          <span class="ps-tag">EXECUTION</span>
+          <div class="ps-title">Direct Transfer</div>
+          <div class="ps-desc">Verified funding triggers direct shipment from producer to buyer. Romi Group FZC earns 2.0% commission on total contract value. No upfront fees.</div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- DASHBOARD VIEW -->
-    <div id="dashboard-view">
-      <div class="dash-grid">
-
-        <!-- ══ LEFT COLUMN ══ -->
-        <div class="left-col">
-
-          <!-- ENTITY HEADER PANEL -->
-          <div class="panel">
-            <div class="entity-bar">
-              <div>
-                <div class="entity-name" id="entityName">---</div>
-                <span class="entity-role" id="roleBadge">---</span>
-              </div>
-              <button class="logout-btn" onclick="logoutPortal()">[ LOGOUT ]</button>
-            </div>
-            <div class="nrs-display">
-              <div>
-                <div class="nrs-label">NETWORK REPUTATION SCORE</div>
-                <div class="nrs-value" id="repScoreText">--.-- <span style="font-size:11px; color:var(--text-muted)">/ 10.0</span></div>
-              </div>
-              <div style="text-align:right; font-size:9px; color:var(--text-muted); line-height:1.8;">
-                NRS PROTOCOL<br>ACTIVE
-              </div>
-            </div>
-            <div class="nrs-bar-wrap">
-              <div class="nrs-bar-track">
-                <div class="nrs-bar-fill" id="repBarFill" style="width:0%"></div>
-              </div>
-              <div class="nrs-hint">NRS INCREASES +0.5 PER REPORTED CLOSED DEAL — MAX 10.0</div>
-            </div>
+    <!-- ═══════════════════════
+         CREDENTIALS
+    ════════════════════════ -->
+    <section class="section">
+      <div class="section-label">COMPLIANCE FRAMEWORK</div>
+      <h2 class="section-title">Corporate Registry &amp; Credentials.</h2>
+      <p class="section-sub">
+        Official corporate documents are exclusively distributed to verified partners. All counterparty agreements are subject to UAE Federal Law.
+      </p>
+      <div class="cred-panel">
+        <div class="cred-header">
+          <span class="panel-tag">CORPORATE REGISTRY</span>
+          <span class="panel-meta">AFZ — UAE FEDERAL LAW</span>
+        </div>
+        <div class="registry-grid">
+          <div class="reg-block">
+            <div class="reg-label">Legal Entity</div>
+            <div class="reg-value">Romi Group FZC</div>
           </div>
-
-          <!-- CLEARANCE MATRIX PANEL -->
-          <div class="panel">
-            <div class="panel-header">
-              <span class="panel-tag">CLEARANCE MATRIX</span>
-              <span class="panel-meta">LIVE STATUS</span>
-            </div>
-            <div class="clearance-row"><span class="c-label">CORPORATE KYC / AML</span><span class="badge badge-green">VERIFIED</span></div>
-            <div class="clearance-row"><span class="c-label">LEGAL — NCNDA / IMFPA</span><span class="badge badge-green">ON FILE</span></div>
-            <div class="clearance-row"><span class="c-label">FINANCIAL & OPERATIONAL</span><span id="badge-fin" class="badge">---</span></div>
-            <div class="clearance-row"><span class="c-label">TRADE DESK ACCESS</span><span id="badge-access" class="badge">---</span></div>
+          <div class="reg-block">
+            <div class="reg-label">Jurisdiction</div>
+            <div class="reg-value">Ajman Free Zone (AFZ), UAE</div>
           </div>
+          <div class="reg-block">
+            <div class="reg-label">License Number</div>
+            <div class="reg-value">40601</div>
+          </div>
+          <div class="reg-block">
+            <div class="reg-label">Authorized Scopes</div>
+            <div class="reg-value">Wholesale Precious Metals, Foodstuff Trading, Commercial Brokerage</div>
+          </div>
+        </div>
+        <div class="sys-lines">
+          <div class="sys-line-item">NCNDA ENFORCED ON ALL PARTIES</div>
+          <div class="sys-line-item">2.0% NON-CIRCUMVENTION PENALTY</div>
+          <div class="sys-line-item">ICC 600 STANDARD TRADE RULES</div>
+          <div class="sys-line-item">AES-256 ENCRYPTED DOSSIERS</div>
+          <div class="sys-line-item">DIFC COURTS JURISDICTION</div>
+        </div>
+      </div>
+    </section>
 
-          <!-- MISSING DOCS ALERT -->
-          <div class="alert-panel" id="missingDocsGate">
-            <div class="alert-title">⚠ ACTION REQUIRED — RESTRICTED ACCESS</div>
-            <div class="alert-body" id="missingDocsText"></div>
-            <a href="https://tally.so/r/NpAALO" target="_blank" class="alert-btn">
-              OPEN SECURE COMPLIANCE UPLOAD →
+    <!-- ═══════════════════════
+         INTAKE FORM
+    ════════════════════════ -->
+    <section class="intake-section">
+      <div class="section-label">COUNTERPARTY ONBOARDING</div>
+      <h2 class="section-title">Global Due Diligence Portal.</h2>
+      <p class="section-sub">
+        Complete the intake form to begin the KYC/AML assessment process. Alternatively, verified counterparties may access the institutional terminal directly.
+      </p>
+      <div class="intake-grid">
+
+        <!-- LEFT: TALLY FORM (original preserved) -->
+        <div class="form-panel">
+          <div class="cred-header">
+            <span class="panel-tag">KYC INTAKE FORM</span>
+            <span class="panel-meta">ENCRYPTED // TALLY.SO</span>
+          </div>
+          <div class="form-panel-body">
+            <div class="form-panel-desc">
+              Submit your institutional dossier for AI-assisted KYC/AML screening. Access is granted within 24–48 business hours to verified counterparties only.
+            </div>
+            <div class="tally-wrap">
+              <iframe data-tally-src="https://tally.so/embed/VL0dYN?transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="200" frameborder="0" marginheight="0" marginwidth="0" title="Global Due Diligence Portal"></iframe>
+            </div>
+            <script>
+              var d=document,w="https://tally.so/widgets/embed.js",
+              v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};
+              if("undefined"!=typeof Tally)v();
+              else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}
+            </script>
+          </div>
+        </div>
+
+        <!-- RIGHT: PORTAL ACCESS + INQUIRY -->
+        <div style="display:flex; flex-direction:column; gap:12px;">
+
+          <div class="portal-access-panel">
+            <div class="pap-label">VERIFIED COUNTERPARTIES</div>
+            <div class="pap-title">Access the Institutional Terminal</div>
+            <div class="pap-desc">
+              If your KYC/AML dossier has been approved, access the Romi Nexus Institutional Terminal — live mandate blotter, commodity prices, clearance matrix, and direct trade desk connection.
+            </div>
+            <ul class="pap-checklist">
+              <li>Live mandate blotter — BUY &amp; SELL</li>
+              <li>Real-time prices across 14+ commodity classes</li>
+              <li>AI Clearance Matrix &amp; NRS score</li>
+              <li>Direct WhatsApp trade desk connection</li>
+              <li>Deal closure reporting &amp; commission tracking</li>
+            </ul>
+            <a href="[YOUR PORTAL URL]" class="btn-portal">
+              ACCESS INSTITUTIONAL TERMINAL →
             </a>
           </div>
 
-          <!-- TRADE MANDATES PANEL -->
-          <div class="panel" id="mandateSection">
-            <div class="panel-header">
-              <span class="panel-tag">LIVE MANDATES</span>
-              <span class="panel-meta" style="display:flex;align-items:center;gap:5px;">
-                <span class="status-dot dot-live"></span> LIVE
-              </span>
+          <div class="form-panel">
+            <div class="cred-header">
+              <span class="panel-tag">GENERAL INQUIRY</span>
+              <span class="panel-meta">CORRESPONDENCE ONLY</span>
             </div>
-            <div class="tab-bar">
-              <button class="tab-btn active" onclick="switchTab('browse',event)">BLOTTER</button>
-              <button class="tab-btn" onclick="switchTab('post',event)">POST MANDATE</button>
-            </div>
-
-            <!-- BROWSE TAB -->
-            <div id="tab-browse" class="tab-pane active" style="padding:0;">
-              <table class="blotter-table" id="mandateBlotter">
-                <thead>
-                  <tr>
-                    <th>TYPE</th>
-                    <th>COMMODITY</th>
-                    <th>VOLUME</th>
-                    <th>PRICE</th>
-                  </tr>
-                </thead>
-                <tbody id="mandateFlow">
-                  <tr><td colspan="4" style="color:var(--text-dim); font-size:9px; padding:16px; text-align:center;">SYNCING MANDATE FEED...</td></tr>
-                </tbody>
-              </table>
-            </div>
-
-            <!-- POST TAB -->
-            <div id="tab-post" class="tab-pane">
-              <div class="form-grid-2">
-                <select class="t-select" id="mandateCommodity">
-                  <option value="">-- COMMODITY --</option>
-                  <option>Gold</option><option>Silver</option>
-                  <option>Copper</option><option>Aluminum</option>
-                  <option>Nickel</option><option>Zinc</option>
-                  <option>WTI Crude Oil</option><option>Brent Crude Oil</option>
-                  <option>Wheat</option><option>Corn</option>
-                  <option>Soybeans</option><option>Sugar</option>
-                  <option>Coffee</option><option>Cocoa</option>
-                </select>
-                <select class="t-select" id="mandateType">
-                  <option value="BUY">BUY</option>
-                  <option value="SELL">SELL</option>
-                </select>
+            <div class="form-panel-body">
+              <div class="form-panel-desc">
+                For partnership requests or general correspondence. This channel is for correspondence only — not trade initiation.
               </div>
-              <input class="t-input" type="text" id="mandateVolume" placeholder="VOLUME (e.g. 500 MT)">
-              <input class="t-input" type="text" id="mandatePrice" placeholder="TARGET PRICE — OPTIONAL" style="margin-top:8px;">
-              <button class="t-btn" onclick="postMandate()">POST TO LIVE BLOTTER →</button>
-              <div id="mandateSuccess" class="form-msg success">✓ MANDATE POSTED — VISIBLE TO VERIFIED COUNTERPARTIES</div>
-              <div id="mandateError" class="form-err form-msg error"></div>
-            </div>
-          </div>
-
-          <!-- DATA GOVERNANCE -->
-          <div class="panel">
-            <div class="panel-header">
-              <span class="panel-tag">DATA GOVERNANCE</span>
-              <span class="panel-meta">AES-256 // DIFC</span>
-            </div>
-            <div class="legal-scroll">
-              Romi Nexus and Romi Group FZC ("The Group") operate under UAE Federal Law and opt-in DIFC Courts jurisdiction per Article 5(A)(2) of the DIFC Judicial Authority Law. All counterparty data, including corporate dossiers, financial instruments (POF/BCL), and identity documents, are processed through AES-256 end-to-end encryption silos. <b>1. PURPOSE LIMITATION:</b> Data processed strictly for KYC/AML/CTF compliance and proprietary algorithmic mandate matching. <b>2. SUB-PROCESSOR SHIELD:</b> Data processed via Google Cloud and Tally.so; Romi Nexus is not liable for third-party infrastructure breaches. <b>3. ACCURACY RESPONSIBILITY:</b> Submission of forged documents results in permanent blacklisting. <b>4. INTENT CONFIDENTIALITY:</b> Procurement volumes and pricing are Confidential Trade Secrets. <b>5. RETENTION:</b> Records maintained 7 years per UAE Federal Law.
-            </div>
-          </div>
-
-          <!-- TERMS OF USE -->
-          <div class="panel">
-            <div class="panel-header">
-              <span class="panel-tag">TERMS OF USE</span>
-              <span class="panel-meta">ICC 600 // DIFC</span>
-            </div>
-            <div class="legal-scroll">
-              Romi Nexus acts as a technology-driven trade facilitator. Not a broker-dealer, registered investment advisor, or principal. <b>ARTICLE I — ALGORITHMIC DISCLAIMER:</b> Clearance Matrix and Risk Scores are AI-generated; The Group is not liable for machine errors or data hallucinations. <b>ARTICLE II — INDEPENDENT DUE DILIGENCE:</b> Portal access does not waive the counterparty's obligation to conduct exhaustive IDD. <b>ARTICLE III — NON-CIRCUMVENTION PENALTY:</b> Bypass of Romi Group FZC to contact disclosed sources triggers a 2.0% penalty of total contract value, enforceable under UAE Federal Law / DIFC Courts. <b>ARTICLE IV — MANDATORY REPORTING:</b> Closed transactions must be reported within 5 business days of SPA execution. Non-reporting constitutes material NCNDA breach. <b>ARTICLE V — INITIATION ONLY:</b> WhatsApp facilitation is for coordination only; no trade is binding until SPA execution by all principals. <b>ARTICLE VI — JURISDICTION:</b> Governed by UAE Federal Law. Disputes subject to DIFC Courts per Article 5(A)(2) DIFC Judicial Authority Law.
-            </div>
-          </div>
-
-          <!-- NCNDA CERT + INITIATE TRADE -->
-          <div class="panel" id="matchmakingGate">
-            <div class="panel-header">
-              <span class="panel-tag">TRADE INITIATION</span>
-              <span class="panel-meta">WHATSAPP DESK</span>
-            </div>
-            <div style="padding:12px;">
-              <div class="cert-box">
-                <input type="checkbox" id="certifyBox">
-                <label for="certifyBox">I legally certify that the <b>NCNDA</b> and <b>IMFPA</b> are on file with Romi Group FZC. I understand all communications are subject to DIFC jurisdiction.</label>
-              </div>
-              <button class="t-btn" id="matchBtn" onclick="initiateTrade()" disabled>
-                INITIATE TRADE — CONNECT TO DESK →
-              </button>
-            </div>
-          </div>
-
-          <!-- DEAL CLOSURE REPORT -->
-          <div class="panel" id="dealReportSection" style="display:none;">
-            <div class="panel-header">
-              <span class="panel-tag">DEAL CLOSURE REPORT</span>
-              <span class="panel-meta">NCNDA OBLIGATION</span>
-            </div>
-            <div style="padding:12px;">
-              <select class="t-select" id="dealCommodity" style="margin-bottom:8px;">
-                <option value="">-- SELECT COMMODITY --</option>
-                <option>Gold</option><option>Silver</option>
-                <option>Copper</option><option>Aluminum</option>
-                <option>Nickel</option><option>Zinc</option>
-                <option>WTI Crude Oil</option><option>Brent Crude Oil</option>
-                <option>Wheat</option><option>Corn</option>
-                <option>Soybeans</option><option>Sugar</option>
-                <option>Coffee</option><option>Cocoa</option>
-              </select>
-              <input class="t-input" type="text" id="dealVolume" placeholder="VOLUME (e.g. 500 MT)" style="margin-bottom:8px;">
-              <input class="t-input" type="number" id="dealValue" placeholder="TOTAL DEAL VALUE (USD)" min="0">
-              <button class="t-btn" onclick="submitDealReport()" style="margin-top:8px;">
-                SUBMIT DEAL REPORT →
-              </button>
-              <div id="dealSuccess" class="form-msg success"></div>
-              <div id="dealError" class="form-msg error"></div>
+              <a href="mailto:ops@rominexus.com?subject=Inquiry%20-%20Romi%20Group%20FZC" class="email-btn">
+                SEND EMAIL TO DESK →
+              </a>
             </div>
           </div>
 
         </div>
+      </div>
+    </section>
 
-        <!-- ══ RIGHT COLUMN ══ -->
-        <div class="right-col">
-
-          <!-- MARKET PANEL -->
-          <div class="panel">
-            <div class="panel-header">
-              <span class="panel-tag">LIVE MARKET FEED</span>
-              <span class="panel-meta" style="display:flex;align-items:center;gap:5px;">
-                <span class="status-dot dot-live"></span> TRADINGVIEW
-              </span>
-            </div>
-
-            <!-- PRECIOUS METALS TICKERS -->
-            <div class="tv-section-label">PRECIOUS METALS</div>
-            <div style="margin: 0 10px 6px;">
-              <div class="tv-wrap">
-                <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>{"symbols":[{"proName":"TVC:GOLD","title":"Gold Spot"}],"colorTheme":"dark","isTransparent":true,"showSymbolLogo":true,"locale":"en"}</script></div>
-              </div>
-              <div class="tv-wrap">
-                <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>{"symbols":[{"proName":"TVC:SILVER","title":"Silver Spot"}],"colorTheme":"dark","isTransparent":true,"showSymbolLogo":true,"locale":"en"}</script></div>
-              </div>
-            </div>
-
-            <!-- ENERGY TICKERS -->
-            <div class="tv-section-label">GLOBAL ENERGY</div>
-            <div style="margin: 0 10px 6px;">
-              <div class="tv-wrap">
-                <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>{"symbols":[{"proName":"TVC:USOIL","title":"WTI Crude"}],"colorTheme":"dark","isTransparent":true,"showSymbolLogo":true,"locale":"en"}</script></div>
-              </div>
-              <div class="tv-wrap">
-                <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>{"symbols":[{"proName":"TVC:UKOIL","title":"Brent Crude"}],"colorTheme":"dark","isTransparent":true,"showSymbolLogo":true,"locale":"en"}</script></div>
-              </div>
-            </div>
-
-            <!-- GRAINS -->
-            <div class="tv-section-label">GLOBAL GRAINS</div>
-            <div style="margin: 0 10px 6px;">
-              <div class="tv-wrap">
-                <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>{"symbols":[{"proName":"CAPITALCOM:WHEAT","title":"Wheat"}],"colorTheme":"dark","isTransparent":true,"showSymbolLogo":true,"locale":"en"}</script></div>
-              </div>
-              <div class="tv-wrap">
-                <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>{"symbols":[{"proName":"CAPITALCOM:CORN","title":"Corn"}],"colorTheme":"dark","isTransparent":true,"showSymbolLogo":true,"locale":"en"}</script></div>
-              </div>
-            </div>
-
-            <!-- BASE METALS PRICE TILES -->
-            <div class="tv-section-label">INDUSTRIAL BASE METALS</div>
-            <div class="price-grid">
-              <div class="price-tile" id="tile-copper">
-                <div class="pt-name">COPPER LME</div>
-                <div class="pt-price" id="price-copper">$--.--</div>
-                <div class="pt-change flat" id="chg-copper">-- $/MT</div>
-              </div>
-              <div class="price-tile" id="tile-aluminum">
-                <div class="pt-name">ALUMINUM</div>
-                <div class="pt-price" id="price-aluminum">$--.--</div>
-                <div class="pt-change flat" id="chg-aluminum">-- $/MT</div>
-              </div>
-              <div class="price-tile" id="tile-nickel">
-                <div class="pt-name">NICKEL</div>
-                <div class="pt-price" id="price-nickel">$--.--</div>
-                <div class="pt-change flat" id="chg-nickel">-- $/MT</div>
-              </div>
-              <div class="price-tile" id="tile-zinc">
-                <div class="pt-name">ZINC</div>
-                <div class="pt-price" id="price-zinc">$--.--</div>
-                <div class="pt-change flat" id="chg-zinc">-- $/MT</div>
-              </div>
-            </div>
-
-            <!-- AGRI PRICE TILES -->
-            <div class="tv-section-label">AGRI-COMMODITIES</div>
-            <div class="price-grid" style="padding-bottom:10px;">
-              <div class="price-tile" id="tile-soy">
-                <div class="pt-name">SOYBEANS</div>
-                <div class="pt-price" id="price-soy">$--.--</div>
-                <div class="pt-change flat" id="chg-soy">-- $/bu</div>
-              </div>
-              <div class="price-tile" id="tile-sugar">
-                <div class="pt-name">SUGAR</div>
-                <div class="pt-price" id="price-sugar">$--.--</div>
-                <div class="pt-change flat" id="chg-sugar">-- $/lb</div>
-              </div>
-              <div class="price-tile" id="tile-coffee">
-                <div class="pt-name">COFFEE</div>
-                <div class="pt-price" id="price-coffee">$--.--</div>
-                <div class="pt-change flat" id="chg-coffee">-- $/lb</div>
-              </div>
-              <div class="price-tile" id="tile-cocoa">
-                <div class="pt-name">COCOA</div>
-                <div class="pt-price" id="price-cocoa">$--.--</div>
-                <div class="pt-change flat" id="chg-cocoa">-- $/MT</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- MARKET INTELLIGENCE PANEL -->
-          <div class="panel">
-            <div class="panel-header">
-              <span class="panel-tag">MARKET INTELLIGENCE</span>
-              <span class="panel-meta">REAL-TIME</span>
-            </div>
-            <div class="tv-section-label">GLOBAL COMMODITIES NEWS</div>
-            <div style="margin: 0 10px 8px; height: 320px; overflow:hidden; border:1px solid var(--border);">
-              <div class="tradingview-widget-container" style="height:100%"><div class="tradingview-widget-container__widget"></div>
-              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>{"feedMode":"market","market":"commodity","isTransparent":true,"displayMode":"regular","width":"100%","height":"320","colorTheme":"dark","locale":"en"}</script></div>
-            </div>
-            <div class="tv-section-label">ECONOMIC CALENDAR</div>
-            <div style="margin: 0 10px 10px; height: 300px; overflow:hidden; border:1px solid var(--border);">
-              <div class="tradingview-widget-container" style="height:100%"><div class="tradingview-widget-container__widget"></div>
-              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>{"colorTheme":"dark","isTransparent":true,"width":"100%","height":"300","locale":"en","importanceFilter":"0,1"}</script></div>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- FOOTER -->
-        <div class="terminal-footer" style="grid-column:1/-1;">
-          ROMI NEXUS™ INSTITUTIONAL TERMINAL — ROMI GROUP FZC © 2026<br>
+    <!-- ── FOOTER ── -->
+    <footer>
+      <div class="footer-wrap">
+        <div class="footer-left">
+          ROMI NEXUS™ — ROMI GROUP FZC © 2026. ALL RIGHTS RESERVED.<br>
           AFZ LICENSE NO. 40601 — AJMAN FREE ZONE, UAE<br>
           GOVERNED BY UAE FEDERAL LAW — DISPUTES: DIFC COURTS PER ART. 5(A)(2) DIFC JAL
         </div>
-
+        <div class="footer-right">
+          <a href="https://tally.so/r/VL0dYN" target="_blank" class="footer-link">APPLY FOR ACCESS</a>
+          <a href="[YOUR PORTAL URL]" class="footer-link">CLIENT PORTAL</a>
+          <a href="mailto:ops@rominexus.com" class="footer-link">ops@rominexus.com</a>
+        </div>
       </div>
-    </div>
+    </footer>
 
-  </div><!-- end terminal-wrap -->
+  </div><!-- end page-wrap -->
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbxnW9nY1jIQ6xktgxlNYJU6JmTGiJVgMC219SLz4J-lxtpII_obq6GrE_cHqLVfRZi5/exec";
-    let currentUserRole  = "BUYER";
-    let currentUserEmail = "";
-    const prevPrices     = {};
-
     // ── CLOCK ──
     function updateClock() {
       const now = new Date();
@@ -836,271 +744,24 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // ── SESSION RESTORE ──
-    window.onload = function() {
-      const saved = localStorage.getItem('romi_nexus_session');
-      if (saved) renderDashboard(JSON.parse(saved));
-    };
-
-    // ── AUTH ──
-    async function validateLead() {
-      const email = document.getElementById('emailInput').value.trim();
-      if (!email) return;
-      document.getElementById('verifyBtn').style.display = "none";
-      document.getElementById('gate-loader').style.display = "block";
-      document.getElementById('gate-error').style.display  = "none";
-      try {
-        const res  = await fetch(`${API_URL}?email=${encodeURIComponent(email)}`);
-        const data = await res.json();
-        if (!data.error) {
-          data.email = email;
-          localStorage.setItem('romi_nexus_session', JSON.stringify(data));
-        }
-        renderDashboard(data);
-      } catch(e) {
-        document.getElementById('gate-loader').style.display  = "none";
-        document.getElementById('verifyBtn').style.display    = "block";
-        document.getElementById('gate-error').innerText       = "> TERMINAL SYNC FAILURE — RETRY";
-        document.getElementById('gate-error').style.display   = "block";
-      }
-    }
-
-    function logoutPortal() {
-      localStorage.removeItem('romi_nexus_session');
-      window.location.reload();
-    }
-
-    // ── RENDER DASHBOARD ──
-    function renderDashboard(data) {
-      if (data.error) {
-        document.getElementById('gate-loader').style.display  = "none";
-        document.getElementById('verifyBtn').style.display    = "block";
-        document.getElementById('gate-error').innerText       = "> " + data.error.toUpperCase();
-        document.getElementById('gate-error').style.display   = "block";
-        return;
-      }
-
-      document.getElementById('gate-view').style.display      = "none";
-      document.getElementById('dashboard-view').style.display = "block";
-
-      document.getElementById('entityName').innerText  = data.name;
-      document.getElementById('sessionTag').innerText  = data.name;
-      document.getElementById('sessionTag').style.display = "block";
-      currentUserEmail = data.email || "";
-      currentUserRole  = (data.role || "BUYER").toUpperCase();
-      document.getElementById('roleBadge').innerText = currentUserRole;
-
-      const repScore = parseFloat(data.reputationScore || "5.0");
-      document.getElementById('repScoreText').innerHTML =
-        repScore.toFixed(1) + ' <span style="font-size:11px;color:var(--text-muted)">/ 10.0</span>';
-      document.getElementById('repBarFill').style.width = (repScore * 10) + "%";
-
-      const badgeFin    = document.getElementById('badge-fin');
-      const badgeAccess = document.getElementById('badge-access');
-
-      if (data.missingDocs && data.missingDocs.trim() !== "") {
-        badgeFin.className    = "badge badge-yellow"; badgeFin.innerText    = "ACTION REQ";
-        badgeAccess.className = "badge badge-red";    badgeAccess.innerText = "RESTRICTED";
-        document.getElementById('missingDocsGate').style.display   = "block";
-        document.getElementById('missingDocsText').innerText        = data.missingDocs;
-        document.getElementById('matchmakingGate').style.display   = "none";
-        document.getElementById('dealReportSection').style.display = "none";
-        document.getElementById('mandateSection').style.display    = "none";
+    // ── MARKET STATUS (original logic preserved) ──
+    function updateMarketStatus() {
+      const now   = new Date();
+      const day   = now.getUTCDay();
+      const hour  = now.getUTCHours();
+      const dot   = document.getElementById('market-dot');
+      const text  = document.getElementById('market-text');
+      const isWeekend = (day === 6) || (day === 5 && hour >= 22) || (day === 0 && hour < 22);
+      if (isWeekend) {
+        dot.className  = "status-dot status-offline";
+        text.innerText = "Global Markets: Weekend Static";
       } else {
-        badgeFin.className    = "badge badge-green"; badgeFin.innerText    = "VERIFIED";
-        badgeAccess.className = "badge badge-green"; badgeAccess.innerText = "GRANTED";
-        document.getElementById('missingDocsGate').style.display   = "none";
-        document.getElementById('matchmakingGate').style.display   = "block";
-        document.getElementById('dealReportSection').style.display = "block";
-        document.getElementById('mandateSection').style.display    = "block";
+        dot.className  = "status-dot status-online";
+        text.innerText = "Global Markets: Live / Active";
       }
-
-      document.getElementById('certifyBox').addEventListener('change', function() {
-        document.getElementById('matchBtn').disabled = !this.checked;
-      });
-
-      fetchPortalPrices();
-      fetchLiveMandates();
-      setInterval(fetchPortalPrices, 300000);
-      setInterval(fetchLiveMandates, 60000);
-      loadTawkChat();
     }
-
-    // ── PRICE UPDATE WITH FLASH ──
-    function setPrice(id, tileId, chgId, newVal, unit) {
-      const el   = document.getElementById(id);
-      const tile = document.getElementById(tileId);
-      const chgEl = document.getElementById(chgId);
-      if (!el || !tile) return;
-
-      const prev = prevPrices[id];
-      const cur  = parseFloat(String(newVal).replace(/,/g,''));
-
-      if (prev !== undefined) {
-        tile.classList.remove('flash-up','flash-down');
-        void tile.offsetWidth;
-        if (cur > prev) {
-          tile.classList.add('flash-up');
-          if(chgEl){ chgEl.className="pt-change up"; chgEl.innerText="▲ "+unit; }
-        } else if (cur < prev) {
-          tile.classList.add('flash-down');
-          if(chgEl){ chgEl.className="pt-change down"; chgEl.innerText="▼ "+unit; }
-        }
-      }
-      prevPrices[id] = cur;
-      el.innerText   = `$${newVal}`;
-    }
-
-    function updateTicker(id, val) {
-      const el  = document.getElementById(id);
-      const el2 = document.getElementById(id + '2');
-      if (el)  el.innerText  = `$${val}`;
-      if (el2) el2.innerText = `$${val}`;
-    }
-
-    async function fetchPortalPrices() {
-      try {
-        const res  = await fetch(`${API_URL}?action=getPrices`);
-        const data = await res.json();
-        const p    = data.prices;
-
-        setPrice('price-copper',   'tile-copper',   'chg-copper',   p.copper,   '$/MT');
-        setPrice('price-aluminum', 'tile-aluminum', 'chg-aluminum', p.aluminum, '$/MT');
-        setPrice('price-nickel',   'tile-nickel',   'chg-nickel',   p.nickel,   '$/MT');
-        setPrice('price-zinc',     'tile-zinc',     'chg-zinc',     p.zinc,     '$/MT');
-        setPrice('price-soy',      'tile-soy',      'chg-soy',      p.soybeans, '$/bu');
-        setPrice('price-sugar',    'tile-sugar',    'chg-sugar',    p.sugar,    '$/lb');
-        setPrice('price-coffee',   'tile-coffee',   'chg-coffee',   p.coffee,   '$/lb');
-        setPrice('price-cocoa',    'tile-cocoa',    'chg-cocoa',    p.cocoa,    '$/MT');
-
-        updateTicker('tk-copper', p.copper);
-        updateTicker('tk-alum',   p.aluminum);
-        updateTicker('tk-nickel', p.nickel);
-        updateTicker('tk-zinc',   p.zinc);
-        updateTicker('tk-cocoa',  p.cocoa);
-        updateTicker('tk-coffee', p.coffee);
-        updateTicker('tk-sugar',  p.sugar);
-        updateTicker('tk-soy',    p.soybeans);
-      } catch(e) { console.log("Price sync..."); }
-    }
-
-    // ── MANDATE BLOTTER ──
-    async function fetchLiveMandates() {
-      try {
-        const res  = await fetch(`${API_URL}?action=getMandates&email=${encodeURIComponent(currentUserEmail)}&role=${currentUserRole}`);
-        const data = await res.json();
-        const tbody = document.getElementById('mandateFlow');
-
-        if (!data.mandates || data.mandates.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="4" style="color:var(--text-dim);font-size:9px;padding:16px;text-align:center;">NO ACTIVE MANDATES — POST YOURS ABOVE</td></tr>`;
-          return;
-        }
-        tbody.innerHTML = data.mandates.map(m => `
-          <tr>
-            <td class="b-type-${m.type.toLowerCase()}">${m.type}</td>
-            <td class="b-commodity">${m.commodity}</td>
-            <td>${m.volume}</td>
-            <td>${m.price}</td>
-          </tr>`).join('');
-      } catch(e) { console.log("Mandate sync..."); }
-    }
-
-    // ── POST MANDATE ──
-    async function postMandate() {
-      const commodity = document.getElementById('mandateCommodity').value;
-      const type      = document.getElementById('mandateType').value;
-      const volume    = document.getElementById('mandateVolume').value.trim();
-      const price     = document.getElementById('mandatePrice').value.trim();
-
-      hideMsg('mandateSuccess'); hideMsg('mandateError');
-      if (!commodity || !volume) {
-        showMsg('mandateError','COMMODITY AND VOLUME ARE REQUIRED'); return;
-      }
-      try {
-        const url  = `${API_URL}?action=submitMandate&email=${encodeURIComponent(currentUserEmail)}&commodity=${encodeURIComponent(commodity)}&type=${type}&volume=${encodeURIComponent(volume)}&price=${encodeURIComponent(price)}`;
-        const res  = await fetch(url);
-        const data = await res.json();
-        if (data.success) {
-          showMsg('mandateSuccess','');
-          document.getElementById('mandateCommodity').value = '';
-          document.getElementById('mandateVolume').value    = '';
-          document.getElementById('mandatePrice').value     = '';
-          fetchLiveMandates();
-        } else { showMsg('mandateError', data.error || 'SUBMISSION FAILED'); }
-      } catch(e) { showMsg('mandateError','NETWORK ERROR — RETRY'); }
-    }
-
-    // ── TAB SWITCHER ──
-    function switchTab(tab, e) {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-      document.getElementById('tab-' + tab).classList.add('active');
-      if (e && e.target) e.target.classList.add('active');
-    }
-
-    // ── INITIATE TRADE ──
-    function initiateTrade() {
-      const phoneNumber = "18023167296";
-      const entity  = document.getElementById('entityName').innerText.trim();
-      const message = encodeURIComponent(`[Romi Nexus Desk] Authorized Representative of ${entity} (${currentUserRole}) requesting trade initiation.`);
-      window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
-    }
-
-    // ── DEAL REPORT ──
-    async function submitDealReport() {
-      const commodity = document.getElementById('dealCommodity').value;
-      const volume    = document.getElementById('dealVolume').value.trim();
-      const value     = document.getElementById('dealValue').value.trim();
-
-      hideMsg('dealSuccess'); hideMsg('dealError');
-      if (!commodity || !volume || !value || parseFloat(value) <= 0) {
-        showMsg('dealError','ALL FIELDS ARE REQUIRED'); return;
-      }
-      try {
-        const url  = `${API_URL}?action=reportDeal&email=${encodeURIComponent(currentUserEmail)}&commodity=${encodeURIComponent(commodity)}&volume=${encodeURIComponent(volume)}&value=${encodeURIComponent(value)}`;
-        const res  = await fetch(url);
-        const data = await res.json();
-        if (data.success) {
-          const commission = parseFloat(data.commission).toLocaleString('en-US',{minimumFractionDigits:2});
-          showMsg('dealSuccess', `✓ REPORTED — COMMISSION DUE: $${commission}`);
-          document.getElementById('dealCommodity').value = '';
-          document.getElementById('dealVolume').value    = '';
-          document.getElementById('dealValue').value     = '';
-          const session = JSON.parse(localStorage.getItem('romi_nexus_session') || '{}');
-          const updated = Math.min(10.0, parseFloat(session.reputationScore||'5.0') + 0.5).toFixed(1);
-          session.reputationScore = updated;
-          localStorage.setItem('romi_nexus_session', JSON.stringify(session));
-          document.getElementById('repScoreText').innerHTML =
-            updated + ' <span style="font-size:11px;color:var(--text-muted)">/ 10.0</span>';
-          document.getElementById('repBarFill').style.width = (parseFloat(updated)*10) + "%";
-        } else { showMsg('dealError', data.error || 'SUBMISSION FAILED'); }
-      } catch(e) { showMsg('dealError','NETWORK ERROR — RETRY'); }
-    }
-
-    // ── HELPERS ──
-    function showMsg(id, text) {
-      const el = document.getElementById(id);
-      if (!el) return;
-      if (text) el.innerText = text;
-      el.style.display = "block";
-    }
-    function hideMsg(id) {
-      const el = document.getElementById(id);
-      if (el) el.style.display = "none";
-    }
-
-    // ── TAWK CHAT ──
-    function loadTawkChat() {
-      if (window.Tawk_API) return;
-      window.Tawk_API = window.Tawk_API || {};
-      window.Tawk_LoadStart = new Date();
-      var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-      s1.async = true;
-      s1.src = 'https://embed.tawk.to/69a0c9a64afa321c34c791b5/1jie17d06';
-      s1.charset = 'UTF-8';
-      s1.setAttribute('crossorigin','*');
-      s0.parentNode.insertBefore(s1, s0);
-    }
+    updateMarketStatus();
+    setInterval(updateMarketStatus, 60000);
   </script>
 
 </body>
