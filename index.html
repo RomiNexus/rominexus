@@ -37,14 +37,12 @@
       overflow-x: hidden;
     }
 
-    /* ── TICKER BAR ── */
     .ticker-wrap {
       background: #000;
       border-bottom: 1px solid var(--gold);
       height: 46px; overflow: hidden;
     }
 
-    /* ── MARKET STATUS BAR ── */
     .market-status-bar {
       background: #050505;
       border-bottom: 1px solid var(--border-bright);
@@ -67,7 +65,6 @@
     #clock { color: var(--text-muted); }
     .lic-tag { color: var(--text-muted); }
 
-    /* ── HEADER ── */
     header {
       background: #000;
       border-bottom: 1px solid var(--border);
@@ -80,9 +77,7 @@
       height: 36px; width: auto;
       opacity: 0.9; filter: brightness(1.1);
     }
-    .header-nav {
-      display: flex; align-items: center; gap: 6px;
-    }
+    .header-nav { display: flex; align-items: center; gap: 6px; }
     .nav-portal-btn {
       background: transparent;
       border: 1px solid var(--border-bright);
@@ -105,14 +100,12 @@
     }
     .nav-apply-btn:hover { background: var(--gold-hover); }
 
-    /* ── PAGE WRAP ── */
     .page-wrap {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 16px;
     }
 
-    /* ── HERO ── */
     .hero {
       padding: 70px 0 60px;
       border-bottom: 1px solid var(--border);
@@ -182,11 +175,6 @@
       margin-top: 4px;
     }
 
-    /* ── PRICE CARDS (TradingView single-quote) ── */
-    .price-section {
-      padding: 24px 0;
-      border-bottom: 1px solid var(--border);
-    }
     .price-section-label {
       font-size: 9px; color: var(--text-muted);
       letter-spacing: 2px; text-transform: uppercase;
@@ -205,7 +193,6 @@
     }
     .price-card:hover { border-color: var(--gold); }
 
-    /* ── SECTION WRAPPER ── */
     .section {
       padding: 60px 0;
       border-bottom: 1px solid var(--border);
@@ -231,7 +218,6 @@
       margin-bottom: 36px;
     }
 
-    /* ── PIPELINE ── */
     .pipeline-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -255,14 +241,12 @@
     .ps-title {
       font-size: 12px; font-weight: 700;
       color: var(--text); margin-bottom: 8px;
-      letter-spacing: 0.3px;
     }
     .ps-desc {
       font-size: 10px; color: var(--text-muted);
       line-height: 1.8;
     }
 
-    /* ── CREDENTIALS ── */
     .cred-panel {
       background: var(--bg-panel);
       border: 1px solid var(--border);
@@ -315,58 +299,70 @@
     .sys-line-item::before { content:'>'; color:var(--gold); }
     .sys-line-item:last-child { border-right: none; }
 
-    <!-- ═══════════════════════
-         INTAKE
-    ════════════════════════ -->
-    <section class="intake-section">
-      <div class="section-label">COUNTERPARTY ONBOARDING</div>
-      <h2 class="section-title">Global Due Diligence Portal.</h2>
-      <p class="section-sub">
-        Complete the institutional KYC/AML assessment to gain verified access to the Romi Nexus Terminal. Alternatively, reach the desk directly for general correspondence.
-      </p>
-
-      <div style="display:flex; flex-direction:column; gap:12px; max-width:700px;">
-
-        <div class="portal-access-panel">
-          <div class="pap-label">NEW COUNTERPARTIES</div>
-          <div class="pap-title">Request Access to the Institutional Terminal</div>
-          <div class="pap-desc">
-            Submit your institutional dossier for AI-assisted KYC/AML screening. Access is granted within 24–48 business hours to verified counterparties only. Upon approval, you will receive direct access to the live mandate blotter, commodity prices, and the trade desk.
-          </div>
-          <ul class="pap-checklist">
-            <li>Live mandate blotter — BUY &amp; SELL</li>
-            <li>Real-time prices across 14+ commodity classes</li>
-            <li>AI Clearance Matrix &amp; NRS score</li>
-            <li>Direct WhatsApp trade desk connection</li>
-            <li>Deal closure reporting &amp; commission tracking</li>
-          </ul>
-          <a href="https://tally.so/r/VL0dYN" target="_blank" class="btn-portal">
-            REQUEST VERIFIED ACCESS →
-          </a>
-        </div>
-
-        <div class="form-panel">
-          <div class="cred-header">
-            <span class="panel-tag">GENERAL INQUIRY</span>
-            <span class="panel-meta">CORRESPONDENCE ONLY</span>
-          </div>
-          <div class="form-panel-body">
-            <div class="form-panel-desc">
-              For partnership requests or general correspondence. This channel is for correspondence only — not trade initiation.
-            </div>
-            <a href="mailto:ops@rominexus.com?subject=Inquiry%20-%20Romi%20Group%20FZC" class="email-btn">
-              SEND EMAIL TO DESK →
-            </a>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
+    .intake-section { padding: 60px 0; border-bottom: 1px solid var(--border); }
+    .intake-panels {
+      display: flex; flex-direction: column;
+      gap: 12px; max-width: 700px;
+    }
+    .form-panel {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+    }
+    .form-panel-body { padding: 20px; }
+    .form-panel-desc {
+      font-size: 10px; color: var(--text-muted);
+      line-height: 1.8; margin-bottom: 16px;
+    }
+    .email-btn {
+      display: block; text-align: center;
+      background: transparent;
+      border: 1px solid var(--border-bright);
+      color: var(--text-muted);
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 2px; padding: 14px;
+      text-decoration: none; text-transform: uppercase;
+      transition: 0.2s;
+    }
+    .email-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .portal-access-panel {
+      background: rgba(212,175,55,0.03);
+      border: 1px solid rgba(212,175,55,0.2);
+      padding: 24px;
+      display: flex; flex-direction: column;
+      align-items: flex-start; gap: 14px;
+    }
+    .pap-label {
+      font-size: 8px; color: var(--text-muted);
+      letter-spacing: 2px; text-transform: uppercase;
+    }
+    .pap-title {
+      font-size: 14px; font-weight: 700;
+      color: var(--gold); letter-spacing: 0.5px;
+    }
+    .pap-desc {
+      font-size: 10px; color: var(--text-muted);
+      line-height: 1.9;
+    }
+    .pap-checklist { list-style: none; width: 100%; }
+    .pap-checklist li {
+      font-size: 10px; color: var(--text-muted);
+      padding: 7px 0; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .pap-checklist li:last-child { border-bottom: none; }
+    .pap-checklist li::before { content:'✓'; color:var(--success); font-size:9px; }
+    .btn-portal {
+      width: 100%; background: var(--gold); color: #000;
+      border: none; padding: 13px;
+      font-family: var(--mono); font-size: 10px;
+      font-weight: 700; letter-spacing: 2px;
+      cursor: pointer; transition: 0.2s;
+      text-decoration: none; display: block;
+      text-align: center; text-transform: uppercase;
+      margin-top: 6px;
+    }
     .btn-portal:hover { background: var(--gold-hover); }
 
-    /* ── FOOTER ── */
-    site-footer { }
     .footer-wrap {
       border-top: 1px solid var(--border);
       padding: 24px 0;
@@ -389,27 +385,26 @@
     }
     .footer-link:hover { color: var(--gold); }
 
-    /* ── RESPONSIVE ── */
     @media (max-width: 960px) {
-      .hero-grid    { grid-template-columns: 1fr; }
-      .pipeline-grid{ grid-template-columns: 1fr 1fr; }
-      .registry-grid{ grid-template-columns: 1fr 1fr; }
-      .intake-grid  { grid-template-columns: 1fr; }
+      .hero-grid      { grid-template-columns: 1fr; }
+      .pipeline-grid  { grid-template-columns: 1fr 1fr; }
+      .registry-grid  { grid-template-columns: 1fr 1fr; }
       .price-cards-grid { grid-template-columns: 1fr; }
+      .intake-panels  { max-width: 100%; }
     }
     @media (max-width: 600px) {
-      .pipeline-grid { grid-template-columns: 1fr; }
-      .registry-grid { grid-template-columns: 1fr; }
-      .hero-stats    { gap: 20px; }
-      .hero-cta-group{ flex-direction: column; }
-      .sys-lines     { flex-direction: column; }
-      .sys-line-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .pipeline-grid  { grid-template-columns: 1fr; }
+      .registry-grid  { grid-template-columns: 1fr; }
+      .hero-stats     { gap: 20px; }
+      .hero-cta-group { flex-direction: column; }
+      .sys-lines      { flex-direction: column; }
+      .sys-line-item  { border-right: none; border-bottom: 1px solid var(--border); }
     }
   </style>
 </head>
 <body>
 
-  <!-- ── TICKER TAPE (TradingView — original preserved) ── -->
+  <!-- ── TICKER TAPE ── -->
   <div class="ticker-wrap">
     <div class="tradingview-widget-container">
       <div class="tradingview-widget-container__widget"></div>
@@ -458,7 +453,7 @@
       <img src="logo.jpg" alt="Romi Nexus">
     </div>
     <nav class="header-nav">
-      <a href="[YOUR PORTAL URL]" class="nav-portal-btn">CLIENT PORTAL →</a>
+      <a href="https://portal.rominexus.com" class="nav-portal-btn">CLIENT PORTAL →</a>
       <a href="https://tally.so/r/VL0dYN" target="_blank" class="nav-apply-btn">APPLY FOR ACCESS →</a>
     </nav>
   </header>
@@ -484,7 +479,7 @@
             <a href="https://tally.so/r/VL0dYN" target="_blank" class="btn-primary">
               REQUEST VERIFIED ACCESS →
             </a>
-            <a href="[YOUR PORTAL URL]" class="btn-secondary">
+            <a href="https://portal.rominexus.com" class="btn-secondary">
               EXISTING CLIENT — LOGIN →
             </a>
           </div>
@@ -622,75 +617,50 @@
     </section>
 
     <!-- ═══════════════════════
-         INTAKE FORM
+         INTAKE
     ════════════════════════ -->
     <section class="intake-section">
       <div class="section-label">COUNTERPARTY ONBOARDING</div>
-      <h2 class="section-title">Global Due Diligence Portal.</h2>
+      <h2 class="section-title">Request Verified Access.</h2>
       <p class="section-sub">
-        Complete the intake form to begin the KYC/AML assessment process. Alternatively, verified counterparties may access the institutional terminal directly.
+        Submit your institutional dossier for AI-assisted KYC/AML screening. Access is granted within 24–48 business hours. Verified counterparties may log in directly via the Client Portal.
       </p>
-      <div class="intake-grid">
 
-        <!-- LEFT: TALLY FORM (original preserved) -->
+      <div class="intake-panels">
+
+        <div class="portal-access-panel">
+          <div class="pap-label">NEW COUNTERPARTIES</div>
+          <div class="pap-title">Access the Institutional Terminal</div>
+          <div class="pap-desc">
+            Complete the due diligence intake to begin your KYC/AML assessment. Upon approval, you will receive direct access to the Romi Nexus Institutional Terminal and live mandate blotter.
+          </div>
+          <ul class="pap-checklist">
+            <li>Live mandate blotter — BUY &amp; SELL</li>
+            <li>Real-time prices across 14+ commodity classes</li>
+            <li>AI Clearance Matrix &amp; NRS score</li>
+            <li>Direct WhatsApp trade desk connection</li>
+            <li>Deal closure reporting &amp; commission tracking</li>
+          </ul>
+          <a href="https://tally.so/r/VL0dYN" target="_blank" class="btn-portal">
+            REQUEST VERIFIED ACCESS →
+          </a>
+        </div>
+
         <div class="form-panel">
           <div class="cred-header">
-            <span class="panel-tag">KYC INTAKE FORM</span>
-            <span class="panel-meta">ENCRYPTED // TALLY.SO</span>
+            <span class="panel-tag">GENERAL INQUIRY</span>
+            <span class="panel-meta">CORRESPONDENCE ONLY</span>
           </div>
           <div class="form-panel-body">
             <div class="form-panel-desc">
-              Submit your institutional dossier for AI-assisted KYC/AML screening. Access is granted within 24–48 business hours to verified counterparties only.
+              For partnership requests or general correspondence. This channel is for correspondence only — not trade initiation.
             </div>
-            <div class="tally-wrap">
-              <iframe data-tally-src="https://tally.so/embed/VL0dYN?transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="200" frameborder="0" marginheight="0" marginwidth="0" title="Global Due Diligence Portal"></iframe>
-            </div>
-            <script>
-              var d=document,w="https://tally.so/widgets/embed.js",
-              v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};
-              if("undefined"!=typeof Tally)v();
-              else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}
-            </script>
-          </div>
-        </div>
-
-        <!-- RIGHT: PORTAL ACCESS + INQUIRY -->
-        <div style="display:flex; flex-direction:column; gap:12px;">
-
-          <div class="portal-access-panel">
-            <div class="pap-label">VERIFIED COUNTERPARTIES</div>
-            <div class="pap-title">Access the Institutional Terminal</div>
-            <div class="pap-desc">
-              If your KYC/AML dossier has been approved, access the Romi Nexus Institutional Terminal — live mandate blotter, commodity prices, clearance matrix, and direct trade desk connection.
-            </div>
-            <ul class="pap-checklist">
-              <li>Live mandate blotter — BUY &amp; SELL</li>
-              <li>Real-time prices across 14+ commodity classes</li>
-              <li>AI Clearance Matrix &amp; NRS score</li>
-              <li>Direct WhatsApp trade desk connection</li>
-              <li>Deal closure reporting &amp; commission tracking</li>
-            </ul>
-            <a href="[YOUR PORTAL URL]" class="btn-portal">
-              ACCESS INSTITUTIONAL TERMINAL →
+            <a href="mailto:ops@rominexus.com?subject=Inquiry%20-%20Romi%20Group%20FZC" class="email-btn">
+              SEND EMAIL TO DESK →
             </a>
           </div>
-
-          <div class="form-panel">
-            <div class="cred-header">
-              <span class="panel-tag">GENERAL INQUIRY</span>
-              <span class="panel-meta">CORRESPONDENCE ONLY</span>
-            </div>
-            <div class="form-panel-body">
-              <div class="form-panel-desc">
-                For partnership requests or general correspondence. This channel is for correspondence only — not trade initiation.
-              </div>
-              <a href="mailto:ops@rominexus.com?subject=Inquiry%20-%20Romi%20Group%20FZC" class="email-btn">
-                SEND EMAIL TO DESK →
-              </a>
-            </div>
-          </div>
-
         </div>
+
       </div>
     </section>
 
@@ -704,7 +674,7 @@
         </div>
         <div class="footer-right">
           <a href="https://tally.so/r/VL0dYN" target="_blank" class="footer-link">APPLY FOR ACCESS</a>
-          <a href="[YOUR PORTAL URL]" class="footer-link">CLIENT PORTAL</a>
+          <a href="https://portal.rominexus.com" class="footer-link">CLIENT PORTAL</a>
           <a href="mailto:ops@rominexus.com" class="footer-link">ops@rominexus.com</a>
         </div>
       </div>
@@ -713,7 +683,6 @@
   </div><!-- end page-wrap -->
 
   <script>
-    // ── CLOCK ──
     function updateClock() {
       const now = new Date();
       const gst = new Date(now.getTime() + (4 * 60 * 60 * 1000));
@@ -725,13 +694,12 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // ── MARKET STATUS (original logic preserved) ──
     function updateMarketStatus() {
-      const now   = new Date();
-      const day   = now.getUTCDay();
-      const hour  = now.getUTCHours();
-      const dot   = document.getElementById('market-dot');
-      const text  = document.getElementById('market-text');
+      const now  = new Date();
+      const day  = now.getUTCDay();
+      const hour = now.getUTCHours();
+      const dot  = document.getElementById('market-dot');
+      const text = document.getElementById('market-text');
       const isWeekend = (day === 6) || (day === 5 && hour >= 22) || (day === 0 && hour < 22);
       if (isWeekend) {
         dot.className  = "status-dot status-offline";
