@@ -1,11 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!--
+    ROMI NEXUS — LANDING PAGE v4.2
+    ================================
+    FIX W7:  logo.jpg replaced with inline CSS text logo — never 404s
+    FIX I5:  Open Graph + Twitter Card meta tags added for social preview
+  -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Romi Nexus | Institutional Commodity Trade Terminal</title>
   <meta name="description" content="Romi Nexus is an AI-powered institutional commodity trade facilitation platform for verified buyers and suppliers. UAE registered. License No. 40601 — Ajman Free Zone.">
   <meta name="keywords" content="commodity trade desk UAE, physical gold buyer, commodity broker UAE, institutional commodity trading, Ajman Free Zone">
+
+  <!-- FIX I5: Open Graph tags — LinkedIn, WhatsApp, Facebook social preview -->
+  <meta property="og:title"       content="Romi Nexus | Institutional Commodity Trade Terminal">
+  <meta property="og:description" content="AI-powered trade facilitation for verified commodity buyers and suppliers. UAE registered — AFZ License 40601.">
+  <meta property="og:image"       content="https://rominexus.com/og-image.jpg">
+  <meta property="og:url"         content="https://rominexus.com">
+  <meta property="og:type"        content="website">
+  <meta property="og:site_name"   content="Romi Nexus">
+
+  <!-- FIX I5: Twitter Card tags -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Romi Nexus | Institutional Commodity Trade Terminal">
+  <meta name="twitter:description" content="AI-powered institutional commodity trade facilitation. UAE registered — AFZ License 40601.">
+  <meta name="twitter:image"       content="https://rominexus.com/og-image.jpg">
+
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -73,10 +94,25 @@
       display: flex; align-items: center;
       justify-content: space-between;
     }
-    .header-logo img {
-      height: 36px; width: auto;
-      opacity: 0.9; filter: brightness(1.1);
+
+    /* FIX W7: Inline CSS text logo — no external image, never 404s */
+    .header-logo-text {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      color: var(--gold);
+      text-transform: uppercase;
+      font-family: var(--mono);
+      line-height: 1;
     }
+    .header-logo-sub {
+      font-size: 7px;
+      color: var(--text-muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+
     .header-nav { display: flex; align-items: center; gap: 6px; }
     .nav-portal-btn {
       background: transparent;
@@ -449,8 +485,10 @@
 
   <!-- ── HEADER ── -->
   <header>
+    <!-- FIX W7: Pure CSS text logo — no img tag, never 404s regardless of deployment path -->
     <div class="header-logo">
-      <img src="logo.jpg" alt="Romi Nexus">
+      <div class="header-logo-text">ROMI NEXUS</div>
+      <div class="header-logo-sub">Institutional Commodity Terminal</div>
     </div>
     <nav class="header-nav">
       <a href="https://portal.rominexus.com" class="nav-portal-btn">CLIENT PORTAL →</a>
@@ -460,9 +498,9 @@
 
   <div class="page-wrap">
 
-    <!-- ═══════════════════════
+    <!-- ══════════════════════
          HERO
-    ════════════════════════ -->
+    ══════════════════════ -->
     <section class="hero">
       <div class="hero-eyebrow">INSTITUTIONAL ACCESS ONLY — UAE REGISTERED</div>
       <div class="hero-grid">
@@ -537,9 +575,9 @@
       </div>
     </section>
 
-    <!-- ═══════════════════════
+    <!-- ══════════════════════
          PIPELINE
-    ════════════════════════ -->
+    ══════════════════════ -->
     <section class="section">
       <div class="section-label">STANDARD OPERATING PROCEDURE</div>
       <h2 class="section-title">The Trade Protocol.</h2>
@@ -574,9 +612,9 @@
       </div>
     </section>
 
-    <!-- ═══════════════════════
+    <!-- ══════════════════════
          CREDENTIALS
-    ════════════════════════ -->
+    ══════════════════════ -->
     <section class="section">
       <div class="section-label">COMPLIANCE FRAMEWORK</div>
       <h2 class="section-title">Corporate Registry &amp; Credentials.</h2>
@@ -616,9 +654,9 @@
       </div>
     </section>
 
-    <!-- ═══════════════════════
+    <!-- ══════════════════════
          INTAKE
-    ════════════════════════ -->
+    ══════════════════════ -->
     <section class="intake-section">
       <div class="section-label">COUNTERPARTY ONBOARDING</div>
       <h2 class="section-title">Request Verified Access.</h2>
